@@ -1,3 +1,5 @@
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+
 # Lightninglib 🌩️
 Lightning is an easy and powerful PROS template that users can use to program more advanced autonomous routines using PID controllers, multitasking, drive train functions, odometry, motion profiles, pure pursuit, etc.
 
