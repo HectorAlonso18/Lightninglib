@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 ## Constructors
 ### PID()
-Build PID object given constants and the sample_time.
+Build ``PID`` object given constants and the sample_time.
 
 <Tabs
   groupId="pid_constructor_1"

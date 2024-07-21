@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 ## Constructors
 
 ### FeedForward()
-Create a FeedForward object for the fiven constants.
+Create a ``FeedForward`` object for the fiven constants.
 
 <Tabs
   groupId="FF_constructor_1"
