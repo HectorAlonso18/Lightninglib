@@ -1385,3 +1385,44 @@ std::cout<<goal_path.is_reverse(); /*Output: False. */
 </Tabs>
 ---
 
+## Operators
+### `std::ostream &operator<<`
+Prints the ``Path`` coordinates in the integrated terminal. 
+
+
+<Tabs
+  groupId="Path_checkers_ready"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+std::ostream &operator<<(std::ostream &os, const Path &path);
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp {7}
+lightning::Path goal_path ({0,0,24,48},{0,24,48,64},true,3); 
+
+void autonomous(){
+goal_path.inject_points(); 
+goal_path.smoother(); 
+
+std::cout<<goal_path; //PRINTING THE PATH COORDINATES 
+
+}
+
+```
+</TabItem>
+
+</Tabs>
+
+---
