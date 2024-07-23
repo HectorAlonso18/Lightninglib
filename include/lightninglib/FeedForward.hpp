@@ -56,8 +56,31 @@ public:
    */
   void update(const double input);
 
+  
   /**
-   * @brief Get the kv object
+   * @brief Sets the kv constant. 
+   *
+   * @param kv The kv constant. 
+   */
+  void set_kv(const double kv); 
+  
+   /**
+   * @brief Sets the ks constant. 
+   *
+   * @param ks The ks constant. 
+   */
+  void set_ks(const double ks);
+
+  /**
+   * @brief Sets the ka constant. 
+   *
+   * @param kv The ka constant. 
+   */
+  void set_ka(const double ka);
+  
+
+  /**
+   * @brief Get the kv constant
    *
    * @return double kv
    */
