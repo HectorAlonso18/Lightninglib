@@ -56,7 +56,7 @@ private:
    * @brief Formula to get the distance btw two points using the index of the
    * path.
    * @param index the index of the path.
-   * @return the distance that exist.
+   * @return the distance that exist (inches).
    */
   double distance_btw_two_pts(const int index);
 
@@ -88,8 +88,8 @@ public:
  * This constructor initializes a Path object using the provided coordinates, 
  * reverse flag, and spacing value.
  * 
- * @param X a vector that includes the x coordinates of each point.
- * @param Y a vector that includes the y coordinates of each point.
+ * @param X a vector that includes the x coordinates (inches) of each point.
+ * @param Y a vector that includes the y coordinates (inches) of each point.
  * @param _reverse a boolean flag indicating if the path should be reversed. True if reversed.
  * @param _spacing the space that would exist between each point for the injection method.
  * @note For this constructor the B constant is setted to .75 and the tolerance a value of .001
@@ -103,8 +103,8 @@ public:
  * This constructor initializes a Path object using the provided coordinates, 
  * reverse flag, and spacing value and with B and Tolerance constants.
  * 
- * @param X a vector that includes the x coordinates of each point.
- * @param Y a vector that includes the y coordinates of each point.
+ * @param X a vector that includes the x coordinates (inches) of each point.
+ * @param Y a vector that includes the y coordinates (inches) of each point.
  * @param _reverse a boolean flag indicating if the path should be reversed. True if reversed.
  * @param _spacing the space that would exist between each point for the injection method.
  * @param B weight_smooth constant, larger b means a smoother path, a value between .75 and .98 works well. 
@@ -134,8 +134,8 @@ public:
 
 public:
   /**
-   * @brief Sets the maximum velocity for the path.
-   * @param velocity the max velocity.
+   * @brief Sets the maximum velocity (inches/second) for the path .
+   * @param velocity the max velocity (inches/second).
    */
   void set_max_lineal_velocity(double velocity);
 
