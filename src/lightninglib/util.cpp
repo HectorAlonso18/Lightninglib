@@ -10,9 +10,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 namespace lightning{
 namespace util {
-    /**
-    Boolean function. Very helpul for reverse ports 
-    */
+   
     bool is_reversed(double input){
         if(input < 0) return true; 
         return false; 
