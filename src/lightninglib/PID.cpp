@@ -158,8 +158,6 @@ unsigned int PID::get_sample_time() const { return sample_time; }
 
 double PID::get_output() const { return output; }
 
-float PID::get_target() const { return this->target; }
-
 float PID::get_error_tolerance() const { return this->error_tolerance; }
 
 float PID::get_derivative_tolerance() const {

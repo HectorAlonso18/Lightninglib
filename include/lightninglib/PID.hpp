@@ -94,8 +94,8 @@ public:
    * With that function you will update the proportional, integral, derivative
    * and output value.
    *
-   * @param input
-   *        the current reading. The input of the controller.
+   * @param error
+   *        the current error (target-input)
    *
    */
   virtual void update(const float error);
@@ -134,8 +134,8 @@ public:
   /**
    * @brief Sets integral zone.
    * @note  The integral zone is the zone where the intregal will not act.
-   * @param derivative_tolerance
-   *        The derivative tolerance.
+   * @param _integral_zone
+   *        The integral_zone
    */
   void set_integral_zone(const float _integral_zone);
 
@@ -213,12 +213,6 @@ public:
    * @return The current error.
    */
   float get_error() const;
-
-  /**
-   * @brief Gets the target that the controller is setted.
-   * @return the target.
-   */
-  virtual float get_target() const;
 
   /**
    * @brief Gets proportional constant [Kp].
