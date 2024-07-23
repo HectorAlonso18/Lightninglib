@@ -59,13 +59,15 @@ Copy constructor.
 <TabItem value="proto">
 
 ```cpp
-  FeedForward(const FeedForward &other);
+FeedForward(const FeedForward &other);
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
-   null
+
+```cpp {2}
+lightning::FeedForward speed_controller (5,1000,350); 
+lightning::FeedForward another_controller(speed_controller); 
 ```
 </TabItem>
 </Tabs> 
@@ -101,8 +103,19 @@ You should put this function inside of while loop to update the input to the cur
 </TabItem>
 
 <TabItem value="example">
-```cpp
-   null
+
+```cpp {7}
+//Controlling a Flywheel 
+void move_flywheel(lightning::FeedForward controller,const int target_rpm){
+  float velocity = get_flywheel_velocity(); 
+  while(1){
+    float velocity = get_flywheel_velocity(); 
+
+    controller.update(velocity);
+
+    flywheel.move_voltage(controller.get_output()); 
+  }
+}
 ```
 </TabItem>
 </Tabs> 
@@ -110,6 +123,109 @@ You should put this function inside of while loop to update the input to the cur
 | Parameters    |  |
 | ------------- | ------------- |
 | ``input``     | The actual input of the controller. "The current reading" |
+
+---
+
+## Setters
+### set_kv()
+Sets the kv constant. 
+<Tabs
+  groupId="FF_setters_kv"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+void set_kv(const double kv); 
+```
+</TabItem>
+
+<TabItem value="example">
+
+```cpp
+void autonomous(){
+velocity_control.set_kv(2.12); 
+}
+```
+</TabItem>
+</Tabs> 
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``kv``     | The kv constant.  |
+
+---
+
+### set_ks()
+Sets the ks constant. 
+<Tabs
+  groupId="FF_setters_ks"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+void set_ks(const double ks); 
+```
+</TabItem>
+
+<TabItem value="example">
+
+```cpp
+void autonomous(){
+velocity_control.set_ks(1500); 
+}
+```
+</TabItem>
+</Tabs> 
+
+| Parameters    |               |
+| ------------- | ------------- |
+| ``ks``     | The friction constant. |
+
+---
+
+### set_ka()
+Sets the ka constant. 
+<Tabs
+  groupId="FF_setters_ka"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+void set_ka(const double ka); 
+```
+</TabItem>
+
+<TabItem value="example">
+
+```cpp
+void autonomous(){
+velocity_control.set_ka(2.25); 
+}
+```
+</TabItem>
+</Tabs> 
+
+| Parameters    |               |
+| ------------- | ------------- |
+| ``ka``     | The acceleration constant.  |
 
 ---
 
@@ -160,8 +276,9 @@ Get the friction constant
 </TabItem>
 
 <TabItem value="example">
+
 ```cpp
-   null
+   double ks_constant = controller.get_ks(); 
 ```
 </TabItem>
 </Tabs> 
@@ -187,8 +304,9 @@ Gets the acceleration constant.
 </TabItem>
 
 <TabItem value="example">
+
 ```cpp
-   null
+   double ka_constant = controller.get_ka();
 ```
 </TabItem>
 </Tabs> 
@@ -198,7 +316,7 @@ Gets the acceleration constant.
 ### get_output
 Gets the current output of the controller.
 :::note
-You should put this output to your motors
+You should put this output to your motors. Sending as voltage. 
 :::
 <Tabs
   groupId="FF_getters_output"
@@ -217,8 +335,19 @@ You should put this output to your motors
 </TabItem>
 
 <TabItem value="example">
-```cpp
-   null
+
+```cpp {9}
+//Controlling a Flywheel 
+void move_flywheel(lightning::FeedForward controller,const int target_rpm){
+  float velocity = get_flywheel_velocity(); 
+  while(1){
+    float velocity = get_flywheel_velocity(); 
+
+    controller.update(velocity);
+
+    flywheel.move_voltage(controller.get_output()); 
+  }
+}
 ```
 </TabItem>
 </Tabs> 

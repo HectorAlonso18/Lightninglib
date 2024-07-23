@@ -6,6 +6,12 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Path
+:::warning
+The coordinates must to be in **(inches)**, orientation in **(degrees)** and velocity units in **(inches/seconds)**. 
+
+Otherwise, the code will **not work** as expected. 
+:::
+
 ## Constructors
 
 ### Path()

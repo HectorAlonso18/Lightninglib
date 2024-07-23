@@ -6,7 +6,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Tank Chassis
+:::warning
+The coordinates needs to be in **(inches)**, orientation in **(degrees)**, velocity units in **(inches/seconds)** and the acceleration units in **(inches/seconds<sup>2</sup>)**. 
 
+Otherwise, the code will **not work** as expected. 
+:::
 ## Constructors
 
 ### No Odometry
