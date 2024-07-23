@@ -24,11 +24,12 @@ Create a ``FeedForward`` object for the fiven constants.
 <TabItem value="proto">
 
 ```cpp
-  FeedForward(const double _kv, const double _ks, const double _ka);
+FeedForward(const double _kv, const double _ks, const double _ka);
 ```
 </TabItem>
 
 <TabItem value="example">
+
 ```cpp
 lightning::FeedForward speed_controller (5,1000,350); 
 ```

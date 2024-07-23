@@ -4204,3 +4204,137 @@ void autonomous() {
 
 **Returns:** The result of the division of Driven/Driving.
 
+## Auto setters
+### auto_set_max_velocity_with_position()
+Runs a test (your bot would runs in a straight line) to set the maximun real robot lineal velocity. 
+
+**The linear velocity is calculated using the change in position over time**
+
+:::danger
+The function is useful when you want to know the real maximun velocity of your robot-
+**Be careful using this function**, if the time is to much your robot may crash with the field.
+:::
+
+<Tabs
+  groupId="TankChassis_auto_setters_max_velocity_with_position"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+   void auto_set_max_velocity_with_position(const int time_msec, const float scale); 
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp 
+void autonomous() {
+    my_chassis.auto_set_max_velocity_with_position(4,.8); 
+}
+```
+</TabItem>
+
+</Tabs>
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``time_msec``  | The time in miliseconds that robot would run  at maximum velocity to make the math. |
+| ``scale``  |  The scale of velocity (.8,.9) would be nice. |
+
+---
+
+### autoset_max_vel_accel()
+Runs a test (your bot would runs in a straight line) to set the maximun real robot lineal velocity.
+
+**The linear velocity and acceleration are calculated using the motors RPMS**
+
+:::danger
+The function is useful when you want to know the real maximun velocity of your robot-
+**Be careful using this function**, if the time is to much your robot may crash with the field.
+:::
+
+<Tabs
+  groupId="TankChassis_auto_setters_max_vel_accel"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+   void autoset_max_vel_accel(const int time_msec, const float scale);  
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp 
+void autonomous() {
+    my_chassis.auto_set_max_vel_accel(2000,.8)
+}
+```
+</TabItem>
+
+</Tabs>
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``time_msec``  | The time in miliseconds that robot would run  at maximum velocity to make the math. |
+| ``scale``  |  The scale of velocity (.8,.9) would be nice. |
+
+---
+
+
+### auto_set_max_rpm()
+Runs a test (your bot would runs in a straight line) to set the maximun real robot lineal velocity.
+
+:::danger
+The function is useful when you want to know the real maximun velocity of your robot-
+**Be careful using this function**, if the time is to much your robot may crash with the field.
+:::
+
+<Tabs
+  groupId="TankChassis_auto_setters_max_rpm"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+   void auto_set_max_rpm(const int time_msec, const float scale); 
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp 
+void autonomous() {
+    my_chassis.auto_set_max_rpm(2000,.8); 
+}
+```
+</TabItem>
+
+</Tabs>
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``time_msec``  | The time in miliseconds that robot would run  at maximum velocity to make the math. |
+| ``scale``  |  The scale of velocity (.8,.9) would be nice. |
+
+---

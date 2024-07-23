@@ -200,7 +200,6 @@ Put angle in a -180 -180 degrees range.
 
 ```cpp
 template <typename T> T reduce_angle_180_to_180()
-
 ```
 </TabItem>
 

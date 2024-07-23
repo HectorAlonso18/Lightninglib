@@ -63,10 +63,12 @@ lightning::PID position_controller (2,1,1,10,1);
 </TabItem>
 
 <TabItem value="example">
+
 ```cpp
+
 lightning::PID controller (2,1,1,10,1);
 
-//Using copy constructor
+ //Using copy constructor
 lightning:: PID other_controller(controller); 
 
 ```
@@ -81,7 +83,7 @@ lightning:: PID other_controller(controller);
 ## Functions
 
 ### update()
-Updates the PID controller
+Updates the PID controller.
 
 :::note
 You should put this function inside of while loop to update the PID input.
@@ -108,7 +110,32 @@ With this function you will update the proportional, integral, derivative and ou
 
 
 <TabItem value="example">
-```cpp
+
+```cpp {15}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+  
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+
+  while (!arm_controller.target_arrived()) {
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+
+    left_arm.move_velocity(arm_controller.output());
+    right_arm.move_velocity(arm_controller.output());
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 
 ```
 </TabItem>
@@ -141,7 +168,32 @@ Checks if the target was reached.
 
 
 <TabItem value="example">
-```cpp
+
+```cpp {11}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+  
+  while (!arm_controller.target_arrived()) { //Have the arms arrived?. 
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+
+    left_arm.move_velocity(arm_controller.output());
+    right_arm.move_velocity(arm_controller.output());
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 
 ```
 
@@ -176,8 +228,32 @@ This function is neccesary to start in any procces or function where the control
 
 
 <TabItem value="example">
-```cpp
 
+```cpp {5}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+  
+  while (!arm_controller.target_arrived()) { //Have the arms arrived?. 
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+
+    left_arm.move_velocity(arm_controller.output());
+    right_arm.move_velocity(arm_controller.output());
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 ```
 
 </TabItem>
@@ -208,7 +284,12 @@ This function allows the user to set the maximum time limit after which the PID 
 </TabItem>
 
 <TabItem value="example">
+
 ```cpp
+lightning::PID arm_controller (2,1,1,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+}
 
 ```
 
@@ -244,8 +325,13 @@ For example: In a distance controller maybe the error tolerance would be .02 inc
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {4}
+lightning::PID arm_controller (2,1,1,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+arm_controller.set_error_tolerance(10); 
+}
 ```
 
 </TabItem>
@@ -276,8 +362,14 @@ Sets derivative tolerance.
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {5}
+lightning::PID arm_controller (2,1,1,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+arm_controller.set_error_tolerance(10); 
+arm_controller.set_derivative_tolerance(50);
+}
 ```
 </TabItem>
 </Tabs>
@@ -306,13 +398,37 @@ Sets integral zone.
 <TabItem value="proto">
 
 ```cpp
-     void set_integral_zone(const float _integral_zone);
+void set_integral_zone(const float _integral_zone);
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {4}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+  
+  while (!arm_controller.target_arrived()) { //Have the arms arrived?. 
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+
+    left_arm.move_velocity(arm_controller.output());
+    right_arm.move_velocity(arm_controller.output());
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 ```
 
 </TabItem>
@@ -342,14 +458,21 @@ The integral power limit would be the highest value of the integral.
 <TabItem value="proto">
 
 ```cpp
-     void set_integral_power_limit(const float _integral_power_limit);
+void set_integral_power_limit(const float _integral_power_limit);
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {6}
+lightning::PID arm_controller (2,1,.135,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+arm_controller.set_error_tolerance(10); 
+arm_controller.set_derivative_tolerance(50);
+arm_controller.set_integral_power_limit(100/arm_controller.get_ki());
+}
 ```
 </TabItem>
 </Tabs>
@@ -379,14 +502,22 @@ When the PID controller is approaching the target, a timer starts. If the timer 
 <TabItem value="proto">
 
 ```cpp
-     void set_jump_time(const float _jump_time);
+void set_jump_time(const float _jump_time);
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {7}
+lightning::PID arm_controller (2,1,.135,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+arm_controller.set_error_tolerance(10); 
+arm_controller.set_derivative_tolerance(50);
+arm_controller.set_integral_power_limit(100/arm_controller.get_ki());
+arm_controller.set_jump_time(500); 
+}
 ```
 </TabItem>
 </Tabs>
@@ -416,8 +547,17 @@ Sets the maximum output for the PID output.
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {8}
+lightning::PID arm_controller (2,1,.135,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+arm_controller.set_error_tolerance(10); 
+arm_controller.set_derivative_tolerance(50);
+arm_controller.set_integral_power_limit(100/arm_controller.get_ki());
+arm_controller.set_jump_time(500); 
+arm_controller.set_max(300); 
+}
 ```
 </TabItem>
 </Tabs>
@@ -447,7 +587,18 @@ Sets the min value for the PID output.
 </TabItem>
 
 <TabItem value="example">
-```cpp
+
+```cpp {9}
+lightning::PID arm_controller (2,1,.135,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+arm_controller.set_error_tolerance(10); 
+arm_controller.set_derivative_tolerance(50);
+arm_controller.set_integral_power_limit(100/arm_controller.get_ki());
+arm_controller.set_jump_time(500); 
+arm_controller.set_max(300); 
+arm_controller.set_min(0);
+}
 
 ```
 </TabItem>
@@ -479,8 +630,19 @@ Set the scale for the PID controller.
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {10}
+lightning::PID arm_controller (2,1,.135,10,1); 
+void autonomous(){
+arm_controller.set_stop_time(3000); 
+arm_controller.set_error_tolerance(10); 
+arm_controller.set_derivative_tolerance(50);
+arm_controller.set_integral_power_limit(100/arm_controller.get_ki());
+arm_controller.set_jump_time(500); 
+arm_controller.set_max(300); 
+arm_controller.set_min(0);
+arm_controller.set_scale(1); //Default
+}
 ```
 </TabItem>
 </Tabs>
@@ -512,8 +674,11 @@ Sets the proportional constant (kp) of the PID controller.
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+void autonomous(){
+controller.set_kp (5); 
+}
 ```
 </TabItem>
 </Tabs>
@@ -539,14 +704,18 @@ Sets the integral constant (ki) of the PID controller.
 <TabItem value="proto">
 
 ```cpp
-    void set_ki(const float _ki);
+void set_ki(const float _ki);
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {3}
+void autonomous(){
+controller.set_kp(5);
+controller.set_ki(.012);  
+}
 ```
 </TabItem>
 </Tabs>
@@ -572,14 +741,19 @@ Sets the derivative constant (kd) of the PID controller.
 <TabItem value="proto">
 
 ```cpp
-    void set_kd(const float _kd);
+void set_kd(const float _kd);
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {4}
+void autonomous(){
+controller.set_kp(5);
+controller.set_ki(.012);  
+controller.set_kd(1);
+}
 ```
 </TabItem>
 
@@ -604,14 +778,20 @@ Sets the sample time of the PID controller.
 <TabItem value="proto">
 
 ```cpp
-    void set_sample_time(const  unsigned int time_msec); 
+void set_sample_time(const  unsigned int time_msec); 
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {5}
+void autonomous(){
+controller.set_kp(5);
+controller.set_ki(.012);  
+controller.set_kd(1);
+controller.set_sample_time(10); 
+}
 ```
 </TabItem>
 
@@ -638,14 +818,15 @@ Gets the current error.
 <TabItem value="proto">
 
 ```cpp
-    float get_error() const;
+float get_error() const;
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float current_error = controller.get_error(); 
 ```
 </TabItem>
 
@@ -669,14 +850,15 @@ Gets proportional constant [Kp].
 <TabItem value="proto">
 
 ```cpp
-    float get_kp() const;
+float get_kp() const;
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float kp_constant = controller.get_kp(); 
 ```
 </TabItem>
 
@@ -700,14 +882,14 @@ Gets proportional constant [Ki].
 <TabItem value="proto">
 
 ```cpp
-    float get_ki() const;
-
+float get_ki() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float ki_constant = controller.get_ki(); 
 ```
 </TabItem>
 
@@ -731,14 +913,14 @@ Gets proportional constant [Kd].
 <TabItem value="proto">
 
 ```cpp
-    float get_kd() const;
-
+float get_kd() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float kd_constant = controller.get_kd(); 
 ```
 </TabItem>
 
@@ -762,14 +944,40 @@ Gets the proportion part of the output.
 <TabItem value="proto">
 
 ```cpp
-    double get_proportion() const;
+double get_proportion() const;
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {17}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+  
+  while (!arm_controller.target_arrived()) { //Have the arms arrived?. 
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+
+    float proportion = arm.controller.get_proportion(); //Proportion part
+
+    left_arm.move_velocity(proportion); //P controller 
+    right_arm.move_velocity(proportion); // P controller 
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 ```
 </TabItem>
 
@@ -794,14 +1002,40 @@ Gets the proportion part of the output.
 <TabItem value="proto">
 
 ```cpp
-    double get_integral() const;
-
+double get_integral() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {18}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+  
+  while (!arm_controller.target_arrived()) { //Have the arms arrived?. 
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+
+    float proportion = arm.controller.get_proportion(); //Proportion part
+    float integral = arm.controller.get_integral(); // Integral part
+
+    left_arm.move_velocity(proportion+integral); //PI controller 
+    right_arm.move_velocity(proportion+integral); // PI controller 
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 ```
 </TabItem>
 
@@ -826,14 +1060,41 @@ Gets the proportion part of the output.
 <TabItem value="proto">
 
 ```cpp
-    double get_derivative() const;
-
+double get_derivative() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {19}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+  
+  while (!arm_controller.target_arrived()) { //Have the arms arrived?. 
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+
+    float proportion = arm.controller.get_proportion(); //Proportion part
+    float integral = arm.controller.get_integral(); // Integral part
+    float derivative = arm.controller.get_derivative(); //Derivative part
+
+    left_arm.move_velocity(proportion+integral+derivative); //PID controller 
+    right_arm.move_velocity(proportion+integral+derivative); // PID controller 
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 ```
 </TabItem>
 
@@ -858,14 +1119,15 @@ Gets the sample time.
 <TabItem value="proto">
 
 ```cpp
-     unsigned int get_sample_time() const;
+unsigned int get_sample_time() const;
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+int controller_sample_time = controller.get_sample_time(); 
 ```
 </TabItem>
 
@@ -887,14 +1149,39 @@ Gets the current output from controller.
 <TabItem value="proto">
 
 ```cpp
-    double get_output() const;
-
+double get_output() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp {17}
+//A Function to control the arms position using a PID. 
+void move_arm(PID& arm_controller, float target){
+
+  arm_controller.set_integral_zone(target * .3);
+  arm_controller.initialization();
+                            
+                            //some function to get current data. 
+  float current_position  = get_current_arm_position(); 
+  float error = target - current_position; 
+  
+  while (!arm_controller.target_arrived()) { //Have the arms arrived?. 
+    current_position= get_current_arm_position();
+    error = target - current_position; 
+
+    arm_controller.update(error); //Updating pid controller.
+    
+    float output = arm_controller.get_output(); 
+
+    left_arm.move_velocity(output);  
+    right_arm.move_velocity(output); 
+    
+    pros::delay(turn_control.get_sample_time());
+  }
+
+  stop_arms();
+ }
 ```
 </TabItem>
 
@@ -917,14 +1204,15 @@ Retrieves the error tolerance of the PID controller.
 <TabItem value="proto">
 
 ```cpp
-    float get_error_tolerance() const;
+float get_error_tolerance() const;
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float error_tolerance = controller.get_error_tolerance(); 
 ```
 </TabItem>
 
@@ -945,14 +1233,14 @@ Retrieves the error tolerance of the PID controller.
 <TabItem value="proto">
 
 ```cpp
-    float get_derivative_tolerance() const;
-
+float get_derivative_tolerance() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float derivative_tolerance = controller.get_derivative_tolerance(); 
 ```
 </TabItem>
 
@@ -975,14 +1263,14 @@ Retrieves the integral zone of the PID controller.
 <TabItem value="proto">
 
 ```cpp
-   float get_integral_zone() const;
-
+float get_integral_zone() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float integral_zone = controller.get_integral_zone(); 
 ```
 </TabItem>
 
@@ -1006,14 +1294,15 @@ Retrieves the integral power limit of the PID controller.
 <TabItem value="proto">
 
 ```cpp
-    float get_integral_power_limit() const;
+float get_integral_power_limit() const;
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float integral_power_limit = controller.get_integral_power_limit(); 
 ```
 </TabItem>
 
@@ -1036,14 +1325,14 @@ Retrieves the maximum value allowed for the PID controller output.
 <TabItem value="proto">
 
 ```cpp
-    float get_max() const;
-
+float get_max() const;
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float max_value = controller.get_max();
 ```
 </TabItem>
 
@@ -1066,14 +1355,15 @@ Retrieves the minimum value allowed for the PID controller output.
 <TabItem value="proto">
 
 ```cpp
-    float get_min() const;
+float get_min() const;
 
 ```
 </TabItem>
 
 <TabItem value="example">
-```cpp
 
+```cpp
+float min_value = get_min();
 ```
 </TabItem>
 
