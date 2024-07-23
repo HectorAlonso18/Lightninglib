@@ -7,34 +7,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #include "lightninglib/PurePursuit.hpp"
 #include "lightninglib/Math.h"
 #include <iostream>
-/**
- * @param p1: A vector of length two in the format {Y, X} that contains Robot::y
- * and Robot::x
- * @param p2: A vector of length two in the format {Y, X} that contains the Y
- * and X coordinate of the target point
- * @return: Provides the distance between the two points using the standard
- * distance formula
- */
+
 double distance(std::vector<double> p1, std::vector<double> p2) {
   return sqrt(pow(p1[0] - p2[0], 2) + pow(p1[1] - p2[1], 2));
 }
 
-/**
-  * @desc: Calculates the next step of our pure pursuit mvoement given a segment
- of the waypoint path and our current position
-  * @param start: A vector of length two in the format {Y, X} containing the
- first point of a two-point segment of the waypoint path
-  * @param end: A vector of length two in the format {Y, X} containing the
- second point of a two-point segment of the waypoint path
-  * @param cur: A vector of length two in the format {Y, X} that contains
- Robot::y and Robot::x
-  * @param radius: A scalar representing how far our lookahead distance should
- be- in other words, how early we should start turning in anticipation of a
- change in direction
- * @return: The intersection between a circle centered on our Robot's current
- position with radius @param radius and the line formed between @param start and
- @param end
- */
+
 std::vector<double> get_intersection(std::vector<double> start,
                                      std::vector<double> end,
                                      std::vector<double> cur, double radius) {
