@@ -256,4 +256,6 @@ However, there are a different approach that allows you to have a more precise c
 
 To achieve this we use the next equation: 
 
-
+$$
+y = \frac{x^{n}}{127^{(n-1)}}
+$$
