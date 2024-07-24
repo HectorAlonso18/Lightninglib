@@ -30,7 +30,7 @@ The template was initially created for [ITESM Teams](https://www.instagram.com/t
 ## Lightning Demostration
 Team ```ITESM1```have been using **Lightning** since OVER-UNDER having great results in Worlds. Getting to **semifinals**.
 
-![ITESM](itesm1_team.png)
+![ITESM_TEAM_VEX_U](/img/itesm1_foto_portada.jpg)
 
 
 In the following YouTube videos, you can appreciate the results of using Lightning in both testing and competition scenarios. 
