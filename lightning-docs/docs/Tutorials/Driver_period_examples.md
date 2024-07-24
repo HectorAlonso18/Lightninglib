@@ -259,3 +259,6 @@ To achieve this we use the next equation:
 $$
 y = \frac{x^{n}}{127^{(n-1)}}
 $$
+
+[Foro](https://www.vexforum.com/t/what-do-you-think-is-a-more-efficient-way-to-drive-your-robot/64857/42?u=hector_a)
+
