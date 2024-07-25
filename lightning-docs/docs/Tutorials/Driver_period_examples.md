@@ -16,6 +16,8 @@ The **Driver Controlled Period** is one of the most important aspects in VEX. Fo
 In this tutorial, you will learn how to program the driver period using Lightning.
 
 # Ensure you have declared your **drive train**
+You are not sure to how declare your chassis?, check the [Declaring your chassis tutorial.](http://localhost:3000/docs/Tutorials/Declaring_your_chassis)
+
 Your chassis declaration needs to be **global**. This means that each function can interact with your chassis. The easiest way to do this is to make your chassis declaration at the top of the ```main.cpp``` file.
 
 You need more information about **Global Variables**? check [this](https://www.geeksforgeeks.org/cpp-global-variables/) 
