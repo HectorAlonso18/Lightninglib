@@ -114,14 +114,14 @@ lightning::tank_odom_e_t::ADI_ONE_ODOM,
 {20,19,18,17},    //Right side ports (using a negative number will reverse it!)
 5,   //IMU port 
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
-3.25, //Wheel Diameter
+3.25, //Wheel Diameter in inches
 1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
 {-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!)
-2.507, //Forward tracking wheel  diameter
+2.507, //Forward tracking wheel  diameter in inches
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
 {-1,-1},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
-0, //Sideways tracking wheel  diameter
-0); //Forward tracking wheel  diameter
+0, //Sideways tracking wheel  diameter in inches
+0); //Forward tracking wheel  diameter in inches
 
 
 ```
@@ -186,7 +186,7 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 | ``right_side_ports``  | A vector/list of the right motors ports of the drivetrain **(using a negative number will reverse it!)**.|
 | ``gyro_port``  | The IMU port.|
 | ``gearset``  |  What is the cartridge of you drivetrain (blue,green, red)?|
-| ``wheel_diameter``  |  What is the side of the drivetrain wheels ?|
+| ``wheel_diameter``  |  What is the side of the drivetrain wheels in **inches**?|
 | ``gear_ratio``  |  What is the gear ratio (Is the result of Driven/Driving, Drive:Driving)?|
 | ``Encoder_Forward_Tracker_ports``  | Forward ADI ENCODER PORTS **(using a negative number will reverse it!)**!|
 | ``Forward_Tracker_diameter``  |  The wheel diameter of your forward tracker **(must to be in inches)**.|
@@ -316,10 +316,10 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 | ``gearset``  |  What is the cartridge of you drivetrain (blue,green, red)?|
 | ``wheel_diameter``  |  What is the side of the drivetrain wheels ?|
 | ``gear_ratio``  |  What is the gear ratio (Is the result of Driven/Driving, Drive:Driving)?|
-| ``Rotation_Forward_Tracker_ports``  | Forward V5 ROTATION SENSOR PORT **(using a negative number will reverse it!)**!|
+| ``Rotation_Forward_Tracker_port``  | Forward V5 ROTATION SENSOR PORT **(using a negative number will reverse it!)**!|
 | ``Forward_Tracker_diameter``  |  The wheel diameter of your forward tracker **(must to be in inches)**.|
 | ``Forward_Tracker_distance_to_center``  |  the distance that exist between the forward tracker  and the robot center point **(must to be in inches)**.|
-| ``Rotation_SideWays_Tracker_ports``  |Sideways V5 ROTATION SENSOR PORT **(using a negative number will reverse it!)**!|
+| ``Rotation_SideWays_Tracker_port``  |Sideways V5 ROTATION SENSOR PORT **(using a negative number will reverse it!)**!,setting 0 would cancel the tracker!|
 | ``Sideways_Tracker_diameter``  |  The wheel diameter of your sideways tracker **(must to be in inches)**.|
 | ``Sidways_Tracker_distance_to_center``  |  the distance that exist between the sideways tracker  and the robot center point **(must to be in inches)**.|
 
