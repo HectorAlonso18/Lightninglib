@@ -1,6 +1,6 @@
 ---
-sidebar_label: Driver period examples 
-sidebar_position: 1
+sidebar_label: Programming the Driver period
+sidebar_position: 2
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -252,13 +252,114 @@ void opcontrol() {
 ## Arcade with exponential
 You may notice that simply using rates is not the most effective way to control your chassis. This is because applying rates always reduces the robot's velocity. In short, **you will never fully utilize your drive-train while using rates**.
 
-However, there are a different approach that allows you to have a more precise control and in the same time you can use the 100% of your chassis power. 
+However, there is a different approach that allows you to have more precise control while using 100% of your chassis power.
 
-To achieve this we use the next equation: 
+To achieve this, we use the following equation:
 
 $$
 y = \frac{x^{n}}{127^{(n-1)}}
 $$
 
-[Foro](https://www.vexforum.com/t/what-do-you-think-is-a-more-efficient-way-to-drive-your-robot/64857/42?u=hector_a)
+This function smooths the joystick input based on a specified exponent and maximum value. The smoothing function adjusts the joystick value to create a more gradual response.
+
+If we plot the equation´s output, we get this: 
+![smoothing_plot](/img/smoothing_plot.png)
+
+You may notice that as we increase the exponent, the output becomes smoother. Additionally, if the exponent is an even number, the output function will be purely positive. However, don't worry; in the template, you can use odd or even numbers without any issues!
+
+You can see more information about this equation [here.](https://www.vexforum.com/t/what-do-you-think-is-a-more-efficient-way-to-drive-your-robot/64857/42?u=hector_a)
+
+Also thanks to [_Colossus](https://www.vexforum.com/u/_Colossus) for providing valuable information! 
+
+### Well and how i use it 🤔?
+Easy, just use `arcade_exponential()`!. 
+
+#### Function prototype 
+```cpp title="main.cpp"
+void arcade_exponential(pros::Controller &control,
+                                     const lightning::tank_op_arcade_e_t arcade,
+                                     int n_x,
+                                     int n_y)
+```
+Where: 
+| Parameters    |  |
+| ------------- | ------------- |
+| ``control``  | The control. |
+| ``arcade``  | The tank_op_arcade_e_t to set for the chassis.|
+| ``n_x``  |  The exponential for the joystick x axis. |
+| ``n_y``  | The exponential for the joystick y axis. |
+
+---
+
+With that established, in this function you can set an arcade configuration and then select the exponential for each movement(turns or backward-forward). For example, if you want smoother output from turns , you should increase ``n_x``, and if you want to increase the smoothing for forward and backward movement you have to increase `n_y`.
+
+:::note
+If you want a normal output, set the corresponding exponent (``n_x`` or `n_y`) to **1**. 
+:::
+
+#### Examples
+Lets suppose that we want a smoother output for turns.
+
+<Tabs
+  groupId="Tutorials_drive_period_examples_adding_rates"
+  defaultValue="left_arcade"
+  values={[
+    { label: 'Left Arcade',  value: 'left_arcade', },
+    { label: 'Right Arcade ',  value: 'right_arcade', },
+    { label: 'Double Arcade',  value: 'double_arcade', },
+  ]
+}>
+
+<TabItem value="left_arcade">
+
+```cpp {4} title="main.cpp"
+void opcontrol() {
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
+  while (true) {
+   my_chassis.arcade_exponential(master,E_TANK_OP_ARCADE_LEFT,3,1);  
+
+   pros::delay(lightning::util::DELAY_TIME); 
+  }
+}
+
+```
+</TabItem>
+
+<TabItem value="right_arcade">
+
+```cpp {4} title="main.cpp"
+void opcontrol() {
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
+  while (true) {
+   my_chassis.arcade_exponential(master,E_TANK_OP_ARCADE_RIGHT,3,1);  
+
+   pros::delay(lightning::util::DELAY_TIME); 
+  }
+}
+```
+</TabItem>
+
+<TabItem value="double_arcade">
+
+```cpp {4} title="main.cpp"
+void opcontrol() {
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
+  while (true) {
+   my_chassis.arcade_exponential(master,E_TANK_OP_ARCADE_DOUBLE,3,1);  
+
+   pros::delay(lightning::util::DELAY_TIME); 
+  }
+}
+```
+</TabItem>
+
+</Tabs>  
+
+# Ready to drive!
+
+Congratulations, with this guide you now are able to do: 
+* Programing the driver period. 
+* Use tank configuration. 
+* Use different arcade configurations. 
+* Use an exponential method to smooth your joystick output for more control. 
 
