@@ -112,9 +112,9 @@ To declare your chassis is neccesary to provide important information about your
 | ------------- | ------------- |
 | ``odom_config``  |What odometry configuration you would like to use?.| 
 | ``Forward_Tracker_diameter``  |  The wheel diameter of your forward tracker **(must to be in inches)**.|
-| ``Forward_Tracker_distance_to_center``  |  the distance that exist between the forward tracker  and the robot center point **(must to be in inches)**.|
+| ``Forward_Tracker_distance_to_center``  |  The distance that exist between the forward tracker  and the robot center point **(must to be in inches)**.|
 | ``Sideways_Tracker_diameter``  |  The wheel diameter of your sideways tracker **(must to be in inches)**.|
-| ``Sidways_Tracker_distance_to_center``  |  the distance that exist between the sideways tracker  and the robot center point **(must to be in inches)**.|
+| ``Sidways_Tracker_distance_to_center``  |  The distance that exist between the sideways tracker  and the robot center point **(must to be in inches)**.|
 
 ### If you are using ADI Encoders
 :::warning
@@ -137,7 +137,7 @@ Please keep this in mind! Introducing letters to the constructor will not work; 
 | Parameters    |  |
 | ------------- | ------------- |
 | ``Encoder_Forward_Tracker_ports``  | Forward ADI ENCODER PORTS **(using a negative number will reverse it!)**!|
-| ``Encoder_SideWays_Tracker_ports``  |//SIDEWAYS ADI ENCODER PORTS **(using a negative number will reverse it!)**, setting -1,-1 would cancel the tracker!|
+| ``Encoder_SideWays_Tracker_ports``  |Sideways ADI ENCODER PORTS **(using a negative number will reverse it!)**, setting -1,-1 would cancel the tracker!|
 
 ### If you are using v5 Rotation Sensors
 | Parameters    |  |
@@ -161,8 +161,8 @@ lightning::tank_odom_e_t::NO_ODOM,
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
 3.25, //Wheel Diameter in inches
 1.3333); //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
-
 ```
+---
 ## Declaring ADI_ONE_ODOM
 In this configuration is vital to cancel the ``sideways tracker``, because you are using only one tracking wheel.
 For this reason, we cancel the ``sideways tracker`` by setting the ports in this way ``{-1,-1}``. 
@@ -184,7 +184,140 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 
 2.507, //Forward tracking wheel  diameter in inches
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
 {-1,-1},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 0, //Sideways tracking wheel  diameter
-0); //Forward tracking wheel  diameter
+0); //Distance that exist between the Sideways tracker and the robot rotation center.
 ```
+---
+## Declaring ADI_TWO_ODOM
+```cpp title="main.cpp"
+//Chassis declaration using just ONE tracking wheel!!!!!! 
+lightning::TankChassis my_chassis( 
+ //Odometry configuration, with ADI tracking wheel
+lightning::tank_odom_e_t::ADI_TWO_ODOM,
+//Declaration of drivetrain motors
+{-11,-12,-13,-14}, //Left side ports (using a negative number will reverse it!)
+{20,19,18,17},    //Right side ports (using a negative number will reverse it!)
+5,   //IMU port 
+pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
+3.25, //Wheel Diameter in inches
+1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
+{-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!), top wire is connected to A and the bottom wire is connected to B.
+
+2.507, //Forward tracking wheel  diameter in inches
+1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
+{-3,-4},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!,
+//top wire is connected to C and the bottom wire is connected to D.
+
+2.507, //Sideways tracking wheel  diameter
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
+```
+---
+## Declaring ADI_TWO_ROTATED_ODOM
+```cpp title="main.cpp"
+//Chassis declaration using just ONE tracking wheel!!!!!! 
+lightning::TankChassis my_chassis( 
+ //Odometry configuration, with ADI tracking wheel
+lightning::tank_odom_e_t::ADI_TWO_ROTATED_ODOM,
+//Declaration of drivetrain motors
+{-11,-12,-13,-14}, //Left side ports (using a negative number will reverse it!)
+{20,19,18,17},    //Right side ports (using a negative number will reverse it!)
+5,   //IMU port 
+pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
+3.25, //Wheel Diameter in inches
+1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
+{-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!), top wire is connected to A and the bottom wire is connected to B.
+
+2.507, //Forward tracking wheel  diameter in inches
+1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
+{-3,-4},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!,
+//top wire is connected to C and the bottom wire is connected to D.
+
+2.507, //Sideways tracking wheel  diameter
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
+```
+---
+## Declaring ROTATION_ONE_ODOM
+In this configuration is vital to cancel the ``sideways tracker``, because you are using only one tracking wheel.
+For this reason, we cancel the ``sideways tracker`` by setting the port in ``0``. 
+```cpp title="main.cpp"
+//Chassis declaration using just ONE tracking wheel!!!!!! 
+lightning::TankChassis my_chassis( 
+ //Odometry configuration
+lightning::tank_odom_e_t::ROTATION_ONE_ODOM,
+//Declaration of drivetrain motors
+{-11,-12,-13,-14}, //Left side ports (using a negative number will reverse it!)
+{20,19,18,17},    //Right side ports (using a negative number will reverse it!)
+5,   //IMU port 
+pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
+3.25, //Wheel Diameter
+1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
+1, //Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!), 
+2.507, //Forward tracking wheel  diameter
+1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
+0,//Sideways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
+0, //Sideways tracking wheel  diameter
+0 //Distance that exist between the Sideways tracker and the robot rotation center.
+); 
+```
+---
+## Declaring ROTATION_TWO_ODOM
+```cpp title="main.cpp"
+//Chassis declaration using TWO tracking wheels!!!!!! 
+lightning::TankChassis my_chassis( 
+ //Odometry configuration
+lightning::tank_odom_e_t::ROTATION_TWO_ODOM,
+//Declaration of drivetrain motors
+{-11,-12,-13,-14}, //Left side ports (using a negative number will reverse it!)
+{20,19,18,17},    //Right side ports (using a negative number will reverse it!)
+5,   //IMU port 
+pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
+3.25, //Wheel Diameter
+1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+1, //Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!)
+2.507, //Forward tracking wheel  diameter
+1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
+2,//Sideways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
+2.507, //Sideways tracking wheel  diameter
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
+```
+---
+
+## Declaring ROTATION_TWO_ROTATED_ODOM
+```cpp title="main.cpp"
+//Chassis declaration using TWO ROTATED tracking wheels!!!!!! 
+lightning::TankChassis my_chassis( 
+ //Odometry configuration
+lightning::tank_odom_e_t::ROTATION_TWO_ROTATED_ODOM,
+//Declaration of drivetrain motors
+{-11,-12,-13,-14}, //Left side ports (using a negative number will reverse it!)
+{20,19,18,17},    //Right side ports (using a negative number will reverse it!)
+5,   //IMU port 
+pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
+3.25, //Wheel Diameter
+1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
+1, //Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!)
+2.507, //Forward tracking wheel  diameter
+1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
+2,//Sidways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
+2.507, //Sideways tracking wheel  diameter
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
+```
+## Program autonomous routines 🤖 and driver period 🎮
+Now, you can start programming!
+:::tip
+Check the tutorials to know how program an autonomous routines and the driver period. 
+:::
+
+Check how to program the autonomous routines and the [driver period](http://localhost:3000/docs/Tutorials/Driver_period_examples). 
+
