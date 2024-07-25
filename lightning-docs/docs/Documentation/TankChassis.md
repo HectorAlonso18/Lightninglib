@@ -116,12 +116,14 @@ lightning::tank_odom_e_t::ADI_ONE_ODOM,
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
 3.25, //Wheel Diameter in inches
 1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
 {-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!)
 2.507, //Forward tracking wheel  diameter in inches
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
 {-1,-1},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 0, //Sideways tracking wheel  diameter in inches
-0); //Forward tracking wheel  diameter in inches
+0); //Sideways that exist between the forward tracker and the robot rotation center.
 
 
 ```
@@ -144,9 +146,10 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 {-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!)
 2.507, //Forward tracking wheel  diameter
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
 {-3,-4},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
-1.783); //Forward tracking wheel  diameter
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
 
 
 ```
@@ -166,13 +169,14 @@ lightning::tank_odom_e_t::ADI_TWO_ROTATED_ODOM,
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
 3.25, //Wheel Diameter
 1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
 {-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!)
 2.507, //Forward tracking wheel  diameter
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
+
 {-3,-4},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
-1.783); //Forward tracking wheel  diameter
-
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
 
 ```
 </TabItem>
@@ -221,10 +225,10 @@ TankChassis constructor with odometry using the V5 rotation sensors.
  const char gyro_port, const pros::motor_gearset_e_t gearset, 
  float wheel_diameter, 
  float gear_ratio,
- const int Rotation_Forward_Tracker_ports, 
+ const int Rotation_Forward_Tracker_port, 
  const float  Forward_Tracker_diameter, 
  const float  Forward_Tracker_distance_to_center,
- const int Rotation_SideWays_Tracker_ports,
+ const int Rotation_SideWays_Tracker_port,
  const float SideWays_Tracker_wheel_diameter, 
  const float SideWays_Tracker_distance_to_center);
 ```
@@ -245,14 +249,15 @@ lightning::tank_odom_e_t::ROTATION_ONE_ODOM,
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
 3.25, //Wheel Diameter
 1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
 1, //Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!), 
 2.507, //Forward tracking wheel  diameter
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
-0,//Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
+
+0,//Sideways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
 0, //Sideways tracking wheel  diameter
-0); //Forward tracking wheel  diameter
-
-
+0 //Distance that exist between the Sideways tracker and the robot rotation center.
+); 
 ```
 </TabItem>
 
@@ -273,9 +278,10 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 1, //Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!)
 2.507, //Forward tracking wheel  diameter
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
-2,//Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
+
+2,//Sideways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
-1.783); //Forward tracking wheel  diameter
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
 
 ```
 </TabItem>
@@ -294,12 +300,14 @@ lightning::tank_odom_e_t::ROTATION_TWO_ROTATED_ODOM,
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
 3.25, //Wheel Diameter
 1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+
 1, //Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!)
 2.507, //Forward tracking wheel  diameter
 1.783, //Distance that exist between the forward tracker and the robot rotation center.
-2,//Forward V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
+
+2,//Sideways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
-1.783); //Forward tracking wheel  diameter
+1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
 
 
 ```
@@ -318,10 +326,10 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 | ``gear_ratio``  |  What is the gear ratio (Is the result of Driven/Driving, Drive:Driving)?|
 | ``Rotation_Forward_Tracker_port``  | Forward V5 ROTATION SENSOR PORT **(using a negative number will reverse it!)**!|
 | ``Forward_Tracker_diameter``  |  The wheel diameter of your forward tracker **(must to be in inches)**.|
-| ``Forward_Tracker_distance_to_center``  |  the distance that exist between the forward tracker  and the robot center point **(must to be in inches)**.|
+| ``Forward_Tracker_distance_to_center``  |  The distance that exist between the forward tracker  and the robot center point **(must to be in inches)**.|
 | ``Rotation_SideWays_Tracker_port``  |Sideways V5 ROTATION SENSOR PORT **(using a negative number will reverse it!)**!,setting 0 would cancel the tracker!|
 | ``Sideways_Tracker_diameter``  |  The wheel diameter of your sideways tracker **(must to be in inches)**.|
-| ``Sidways_Tracker_distance_to_center``  |  the distance that exist between the sideways tracker  and the robot center point **(must to be in inches)**.|
+| ``Sidways_Tracker_distance_to_center``  |  The distance that exist between the sideways tracker  and the robot center point **(must to be in inches)**.|
 
 ---
 
