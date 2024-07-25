@@ -1,6 +1,6 @@
 ---
 sidebar_label: How to create tasks
-sidebar_position: 3
+sidebar_position: 4
 ---
 # What are tasks?
 
