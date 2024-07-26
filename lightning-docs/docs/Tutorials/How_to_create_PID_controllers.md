@@ -1,5 +1,5 @@
 ---
-sidebar_label: How to create PID
+sidebar_label: How to create a PID
 sidebar_position: 5
 ---
 
