@@ -357,7 +357,9 @@ void opcontrol() {
 
 </Tabs>  
 
-# Ready to drive!
+---
+
+## Ready to drive! 🏎️ 
 
 Congratulations, with this guide you now are able to do: 
 * Programing the driver period. 
