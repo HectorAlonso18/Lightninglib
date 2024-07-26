@@ -971,7 +971,7 @@ void autonomous(){
 Drives the robot from a starting point to a target point. **Different versions of this function are available below.** 
 
 :::note
-The robot **MUST** to be facing the target point. 
+The robot **MUST** to be facing the target point with the front or back side of the chassis.
 :::
 
 #### Using custom PID controllers and inches units. 

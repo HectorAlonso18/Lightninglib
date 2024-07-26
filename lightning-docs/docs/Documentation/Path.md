@@ -306,7 +306,7 @@ goal_path.set_max_lineal_velocity(10); //10 (inches/second).
 Makes all the calculations that need to calculates the target velocities.
 
 :::note
-Is neccesary to set the max velocity first
+Is neccesary to set the max velocity first.
 :::
 
 <Tabs
@@ -339,7 +339,7 @@ goal_path.smoother();
 
 goal_path.set_max_lineal_velocity(10); //10 (inches/second).
 
-goal_path.make_cals(); 
+goal_path.make_cals(1.15);  
 pros::delay(10); //giving some time to make the calculations. 
 
 }
@@ -348,6 +348,10 @@ pros::delay(10); //giving some time to make the calculations.
 </TabItem>
 
 </Tabs>  
+
+|   Param |   | 
+|  --  | --- | 
+|  ``k``  | it is constant, how slow you want the robot to go around turns. (aroud 1-5) | 
 
 ---
 
