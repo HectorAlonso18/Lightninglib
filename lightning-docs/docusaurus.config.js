@@ -47,7 +47,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/HectorAlonso18/Lightninglib/tree/main',
           
             //Math functions 
           remarkPlugins: [remarkMath],
@@ -84,7 +84,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'Lightninglib',
+        title: 'Lightning',
         logo: {
           alt: 'Lightninglib Logo',
           src: 'img/logo.svg',
