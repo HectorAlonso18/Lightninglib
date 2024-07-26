@@ -298,33 +298,44 @@ Depending in your system, you may want to use a different controller.
 * `PD` controller: This controller includes both the proportional and derivative parts of the ``PID`` controller.
 * `PI` controller:  This controller includes both the proportional and integral parts of the ``PID`` controller.
 
-If you prefer to use one of these controllers instead of a full PID controller, simply set the corresponding gains to zero.
+If you prefer to use one of these controllers instead of a full PID controller, simply set the corresponding gains to some desired value. 
 
 ### For P controller
 | Parameters   | Example               |
 | ------------- | ------------- |
-| ``ki``  |   ``controller.set_ki(0)``|
-| ``kd``  |   ``controller.set_kd(0)``|
-| ``derivative_tolerance``  |   ``controller.set_derivative_tolerance(0)``|
-| ``integral_power_limit``  |   ``controller.set_integral_power_limit(0); ``|
-| ``integral_zone``  |   ``controller.set_integral_zone(0);``|
-
+| ``kp``  |   ``controller.set_kp()`` or using the constructor.|
+| ``sample_time``  |   ``controller.set_sample_time()`` or using the constructor.|
+| ``scale``  |   ``controller.set_scale()`` or using the constructor.|
+| ``max``  |   ``controller.set_max()``|
+| ``error_tolerance``  |   ``controller.set_error_tolerance() ``|
+| ``stop_time``  |   ``controller.set_stop_time() ``|
 ---
 
 ### For PD controller
 | Parameters   | Example               |
 | ------------- | ------------- |
-| ``ki``  |   ``controller.set_ki(0)``|
-| ``integral_power_limit``  |   ``controller.set_integral_power_limit(0); ``|
-| ``integral_zone``  |   ``controller.set_integral_zone(0);``|
-
+| ``kp``  |   ``controller.set_kp()`` or using the constructor.|
+| ``kd``  |   ``controller.set_kd()`` or using the constructor.|
+| ``sample_time``  |   ``controller.set_sample_time()`` or using the constructor.|
+| ``scale``  |   ``controller.set_scale()`` or using the constructor.|
+| ``max``  |   ``controller.set_max()``.|
+| ``error_tolerance``  |   ``controller.set_error_tolerance(0) ``.|
+| ``derivative_tolerance``  |   ``controller.set_error_tolerance() ``.|
+| ``stop_time``  |   ``controller.set_stop_time() ``.|
 ---
 
 ### For PI controller
 | Parameters   | Example               |
 | ------------- | ------------- |
-| ``kd``  |   ``controller.set_kd(0)``|
-| ``derivative_tolerance``  |   ``controller.set_derivative_tolerance(0)``|
+| ``kp``  |   ``controller.set_kp()`` or using the constructor.|
+| ``ki``  |   ``controller.set_ki()`` or using the constructor.|
+| ``sample_time``  |   ``controller.set_sample_time()`` or using the constructor.|
+| ``scale``  |   ``controller.set_scale()`` or using the constructor.|
+| ``max``  |   ``controller.set_max()``.|
+| ``error_tolerance``  |   ``controller.set_error_tolerance() ``.|
+| ``integral_power_limit``  |   ``controller.set_integral_power_limit() ``.|
+| ``integral_zone``  |   ``controller.set_integral_zone()``.|
+| ``stop_time``  |   ``controller.set_stop_time() ``.|
 
 
 ---
