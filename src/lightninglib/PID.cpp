@@ -126,8 +126,6 @@ void PID::set_jump_time(const float _jump_time) { jump_time = _jump_time; }
 
 void PID::set_max(const float _max) { max = _max; }
 
-void PID::set_min(const float _min) {min = _min;}
-
 void PID::set_scale(const float _scale){this->scale = _scale;}
 
 void PID::set_kp(const float _kp) { this->kp = _kp; }
@@ -173,8 +171,6 @@ float PID::get_integral_power_limit() const {
 float PID::get_jump_time() const { return this->jump_time; }
 
 float PID::get_max() const { return this->max; }
-
-float PID::get_min() const {return this->min; }
 
 bool PID::target_arrived() const { return arrived; }
 

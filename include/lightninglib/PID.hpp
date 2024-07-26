@@ -39,8 +39,7 @@ protected:
   double derivative;
 
   float max;
-  float min; 
-
+ 
   float scale; 
 
   double output;
@@ -163,13 +162,6 @@ public:
    *        The max value of the output. 
    */
   void set_max(const float _max);
-  
-  /**
-   *@brief Set the min value for the PID output.  
-   *@param _min 
-   *        The min value for the output. 
-   */
-  void set_min(const float _min); 
   
   /**
    *@brief Set the scale for the PID controller. 
@@ -303,13 +295,6 @@ public:
   * @return the maximum value allowed.
   */
   float get_max() const;
-
-  /**
-  * @brief Retrieves the minimum value allowed for the PID controller output.
-  * 
-  * @return the minimum value allowed.
-  */
-  float get_min() const; 
 
   /**
    * @brief Checks if the target was reached.
