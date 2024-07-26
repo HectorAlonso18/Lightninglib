@@ -568,48 +568,6 @@ arm_controller.set_max(300);
 
 ---
 
-### set_min()
-Sets the min value for the PID output.  
-<Tabs
-  groupId="pid_setters_min"
-  defaultValue="proto"
-  values={[
-    { label: 'Prototype',  value: 'proto', },
-    { label: 'Example',  value: 'example', },
-  ]
-}>
-
-<TabItem value="proto">
-
-```cpp
-      void set_min(const float _min);
-```
-</TabItem>
-
-<TabItem value="example">
-
-```cpp {9}
-lightning::PID arm_controller (2,1,.135,10,1); 
-void autonomous(){
-arm_controller.set_stop_time(3000); 
-arm_controller.set_error_tolerance(10); 
-arm_controller.set_derivative_tolerance(50);
-arm_controller.set_integral_power_limit(100/arm_controller.get_ki());
-arm_controller.set_jump_time(500); 
-arm_controller.set_max(300); 
-arm_controller.set_min(0);
-}
-
-```
-</TabItem>
-</Tabs>
-
-| Parameters    |                |
-| ------------- | ------------- |
-| ``_min``     | The min value for the output.  |
-
----
-
 ### set_scale()
 Set the scale for the PID controller.
 
@@ -1339,36 +1297,5 @@ float max_value = controller.get_max();
 </Tabs>
 
 **Returns:** The maximum values allowed. 
-
-### get_min()
-Retrieves the minimum value allowed for the PID controller output.
-
-<Tabs
-  groupId="pid_getters_min"
-  defaultValue="proto"
-  values={[
-    { label: 'Prototype',  value: 'proto', },
-    { label: 'Example',  value: 'example', },
-  ]
-}>
-
-<TabItem value="proto">
-
-```cpp
-float get_min() const;
-
-```
-</TabItem>
-
-<TabItem value="example">
-
-```cpp
-float min_value = get_min();
-```
-</TabItem>
-
-</Tabs>
-
-**Returns:** The minimum value allowed for the PID controller output. 
 
 ---
