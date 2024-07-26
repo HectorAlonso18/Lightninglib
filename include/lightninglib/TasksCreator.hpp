@@ -6,20 +6,20 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #pragma once
 
-#include "pros/rtos.hpp"
 #include <list>
 #include <map>
 #include <memory>
 #include <string>
 
+#include "pros/rtos.hpp"
 
 namespace lightning {
 class TaskManager {
-private:
+ private:
   std::map<std::string, std::unique_ptr<pros::Task>> manager;
   std::list<std::string> name_tasks_list;
 
-private:
+ private:
   /**
    * @brief Checks if the task already exist.
    *
@@ -30,7 +30,7 @@ private:
    */
   bool task_exists(const std::string &task_name);
 
-public:
+ public:
   /**
    * @brief Construct a new TaskManager object (A way no manage and create task).
    *
@@ -41,7 +41,7 @@ public:
   friend std::ostream &operator<<(std::ostream &os,
                                   const TaskManager &task_manager);
 
-public:
+ public:
   /**
    * Start a task passing a void function.
    *
@@ -68,4 +68,4 @@ public:
    */
   void print_current_tasks();
 };
-} // namespace lightning
+}  // namespace lightning

@@ -5,34 +5,24 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
 #include "lightninglib/PID.hpp"
-#include "lightninglib/Math.h"
+
 #include <cmath>
+
+#include "lightninglib/Math.h"
+
 
 namespace lightning {
 
-
 PID::PID(const float _kp, const float _ki, const float _kd,
-         unsigned int _sample_time,const float _scale)
-    : kp(_kp), ki(_ki), kd(_kd), target(0), first(true), arrived(false),
-      jump_time(0), sample_time(_sample_time), current_error(0), prev_error(0),
-      delta_error(0), error_tolerance(0), derivative_tolerance(0),
-      integral_raw(0), integral_zone(0), integral_power_limit(0),
-      proportional(0), integral(0), derivative(0), max(0), output(0),
-      contador(0), stop_time_msec(0), scale(_scale) {}
+         unsigned int _sample_time, const float _scale)
+    : kp(_kp), ki(_ki), kd(_kd), target(0), first(true), arrived(false), jump_time(0), sample_time(_sample_time), current_error(0), prev_error(0), delta_error(0), error_tolerance(0), derivative_tolerance(0), integral_raw(0), integral_zone(0), integral_power_limit(0), proportional(0), integral(0), derivative(0), max(0), output(0), contador(0), stop_time_msec(0), scale(_scale) {}
 
 PID::PID(const PID &other)
-    : kp(other.kp), ki(other.ki), kd(other.kd), target(0), first(true),
-      arrived(false), jump_time(other.jump_time),
-      sample_time(other.sample_time), current_error(0), prev_error(0),
-      delta_error(0), error_tolerance(other.error_tolerance),
-      derivative_tolerance(other.derivative_tolerance), integral_raw(0),
-      integral_zone(0), integral_power_limit(other.integral_power_limit), proportional(0), integral(0),
-      derivative(0), max(other.max), output(0), contador(0), stop_time_msec(0) ,scale(other.scale) {}
+    : kp(other.kp), ki(other.ki), kd(other.kd), target(0), first(true), arrived(false), jump_time(other.jump_time), sample_time(other.sample_time), current_error(0), prev_error(0), delta_error(0), error_tolerance(other.error_tolerance), derivative_tolerance(other.derivative_tolerance), integral_raw(0), integral_zone(0), integral_power_limit(other.integral_power_limit), proportional(0), integral(0), derivative(0), max(other.max), output(0), contador(0), stop_time_msec(0), scale(other.scale) {}
 
 void PID::update(const float error) {
- 
-  this->current_error = error; 
-  
+  this->current_error = error;
+
   proportional = kp * current_error;
 
   if (first) {
@@ -71,10 +61,9 @@ void PID::update(const float error) {
 
   if (fabs(current_error) <= error_tolerance &&
       fabs(derivative) <= derivative_tolerance) {
-
-    if (contador >= jump_time) { 
+    if (contador >= jump_time) {
       arrived = true;
-       contador = 0;
+      contador = 0;
     }
 
     else {
@@ -82,18 +71,18 @@ void PID::update(const float error) {
     }
     contador = contador + sample_time;
   }
-  
- 
-  if (contador_stop_time>= this->stop_time_msec) { 
-    contador_stop_time=0; 
-    arrived=true;
+
+  if (contador_stop_time >= this->stop_time_msec) {
+    contador_stop_time = 0;
+    arrived = true;
   }
 
-  contador_stop_time += sample_time; 
+  contador_stop_time += sample_time;
 
   output = (proportional + integral + derivative);
-  output = output > max ? max : output < -max ? -max : output;
-  output*=this->scale; 
+  output = output > max ? max : output < -max ? -max
+                                              : output;
+  output *= this->scale;
 
   // std::cout<<"\nTiempo: "<<contador;
 }
@@ -126,7 +115,7 @@ void PID::set_jump_time(const float _jump_time) { jump_time = _jump_time; }
 
 void PID::set_max(const float _max) { max = _max; }
 
-void PID::set_scale(const float _scale){this->scale = _scale;}
+void PID::set_scale(const float _scale) { this->scale = _scale; }
 
 void PID::set_kp(const float _kp) { this->kp = _kp; }
 
@@ -134,9 +123,9 @@ void PID::set_ki(const float _ki) { this->ki = _ki; }
 
 void PID::set_kd(const float _kd) { this->kd = _kd; }
 
-void PID::set_sample_time(const  unsigned int time_msec){
-  this->sample_time = time_msec; 
-} 
+void PID::set_sample_time(const unsigned int time_msec) {
+  this->sample_time = time_msec;
+}
 
 float PID::get_error() const { return current_error; }
 
@@ -187,10 +176,9 @@ void PID::initialization() {
   integral = 0;
   derivative = 0;
   contador = 0;
-  contador_stop_time=0; 
+  contador_stop_time = 0;
 
   output = 0;
 }
 
-
-} // namespace lightning
+}  // namespace lightning

@@ -5,9 +5,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
 #include "lightninglib\Path.hpp"
+
+#include <cmath>
+
 #include "lightninglib\Math.h"
 #include "pros\rtos.hpp"
-#include <cmath>
+
 
 namespace lightning {
 
@@ -71,8 +74,8 @@ Path::Path(const std::vector<double> &X, const std::vector<double> &Y,
   smoothed = false;
 
   ready = false;
-  
-  //aqui era  =  reverse
+
+  // aqui era  =  reverse
   this->reverse = _reverse;
 
   this->spacing = _spacing;
@@ -132,7 +135,6 @@ void Path::inject_points() {
   new_points.reserve(this->size);
 
   for (int i = 0; i < path.size() - 1; i++) {
-
     double vectorX = path[i + 1][0] - path[i][0];
     double vectorY = path[i + 1][1] - path[i][1];
 
@@ -179,7 +181,6 @@ void Path::smoother() {
   while (change >= Path::tolerance) {
     change = 0;
     for (int i = 1; i < Path::path.size() - 1; i++) {
-
       for (int j = 0; j < Path::path[i].size(); j++) {
         double aux = newPath[i][j];
         newPath[i][j] +=
@@ -198,12 +199,11 @@ void Path::smoother() {
 }
 
 void Path::calc_curvature_vector() {
-
   std::vector<double> aux;
   aux.reserve(this->size);
 
   for (int i = 0; i < this->size; i++) {
-    aux.emplace_back(0.0); // Llenar el vector con ceros
+    aux.emplace_back(0.0);  // Llenar el vector con ceros
   }
 
   aux[0] = 0;
@@ -225,7 +225,7 @@ void Path::calc_distance_vector() {
   distance_at_point.reserve(this->size);
 
   for (int i = 0; i < this->size; i++) {
-    distance_at_point.emplace_back(0.0); // Llenar el vector con ceros
+    distance_at_point.emplace_back(0.0);  // Llenar el vector con ceros
   }
 
   distance_at_point[0] = 0;
@@ -245,7 +245,7 @@ void Path::calc_maximum_lineal_velocities(const float k) {
   aux.reserve(this->size);
 
   for (int i = 0; i < this->size; i++) {
-    aux.emplace_back(0.0); // Llenar el vector con ceros
+    aux.emplace_back(0.0);  // Llenar el vector con ceros
   }
 
   for (auto i = 0; i < aux.size(); i++) {
@@ -260,7 +260,7 @@ void Path::calc_target_lineal_velocities() {
   velocities.reserve(this->size);
 
   for (int i = 0; i < this->size; i++) {
-    velocities.emplace_back(0.0); // Llenar el vector con ceros
+    velocities.emplace_back(0.0);  // Llenar el vector con ceros
   }
 
   velocities[Path::path.size() - 1] = 0;
@@ -387,4 +387,4 @@ bool Path::is_ready() const { return ready; }
 
 bool Path::is_reverse() const { return this->reverse; }
 
-} // namespace lightning
+}  // namespace lightning

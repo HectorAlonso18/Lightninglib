@@ -8,20 +8,20 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 namespace lightning {
 class FeedForward {
-private:
+ private:
   double kv;
   double ks;
   double ka;
 
-private:
+ private:
   double velocity;
   double acceleration;
   double prev_velocity;
 
-private:
+ private:
   double output;
 
-public:
+ public:
   /**
    * @brief Create a FeedForward object for the fiven constants
    *
@@ -56,28 +56,26 @@ public:
    */
   void update(const double input);
 
-  
   /**
-   * @brief Sets the kv constant. 
+   * @brief Sets the kv constant.
    *
-   * @param kv The kv constant. 
+   * @param kv The kv constant.
    */
-  void set_kv(const double kv); 
-  
-   /**
-   * @brief Sets the ks constant. 
+  void set_kv(const double kv);
+
+  /**
+   * @brief Sets the ks constant.
    *
-   * @param ks The ks constant. 
+   * @param ks The ks constant.
    */
   void set_ks(const double ks);
 
   /**
-   * @brief Sets the ka constant. 
+   * @brief Sets the ka constant.
    *
-   * @param kv The ka constant. 
+   * @param kv The ka constant.
    */
   void set_ka(const double ka);
-  
 
   /**
    * @brief Get the kv constant
@@ -106,4 +104,4 @@ public:
    */
   double get_output(void) const;
 };
-} // namespace lightning
+}  // namespace lightning

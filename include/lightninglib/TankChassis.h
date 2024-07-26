@@ -10,7 +10,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 namespace lightning {
 
 typedef enum {
-  NO_ODOM =0,
+  NO_ODOM = 0,
 
   ADI_ONE_ODOM,
   ADI_TWO_ODOM,
@@ -19,21 +19,20 @@ typedef enum {
   ROTATION_ONE_ODOM,
   ROTATION_TWO_ODOM,
   ROTATION_TWO_ROTATED_ODOM
-  
-} tank_odom_e_t; 
 
-
-typedef enum{
-  LEFT_SWING=0,
-  RIGHT_SWING
-} swing_direction_e_t; 
+} tank_odom_e_t;
 
 typedef enum {
-  E_TANK_OP_ARCADE_LEFT = 0,       // Left stick configuration
-  E_TANK_OP_ARCADE_RIGHT,          // Right stick configuration
-  E_TANK_OP_ARCADE_DOUBLE         // Double stick configuration
+  LEFT_SWING = 0,
+  RIGHT_SWING
+} swing_direction_e_t;
+
+typedef enum {
+  E_TANK_OP_ARCADE_LEFT = 0,  // Left stick configuration
+  E_TANK_OP_ARCADE_RIGHT,     // Right stick configuration
+  E_TANK_OP_ARCADE_DOUBLE     // Double stick configuration
 } tank_op_arcade_e_t;
 
-} // namespace lightning
+}  // namespace lightning
 
 #endif

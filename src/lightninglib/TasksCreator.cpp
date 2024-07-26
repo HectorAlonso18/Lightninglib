@@ -5,7 +5,9 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
 #include "lightninglib/TasksCreator.hpp"
+
 #include <iostream>
+
 
 namespace lightning {
 TaskManager::TaskManager() {
@@ -26,19 +28,17 @@ bool TaskManager::task_exists(const std::string &task_name) {
 void TaskManager::start_task(const std::string &task_name,
                              void (*func)(void *)) {
   if (!task_exists(task_name)) {
-
     manager.insert(std::pair<std::string, std::unique_ptr<pros::Task>>(
         task_name, std::move(std::make_unique<pros::Task>(
                        func, (void *)"PROS", TASK_PRIORITY_DEFAULT,
                        TASK_STACK_DEPTH_DEFAULT, ""))));
 
     name_tasks_list.push_back(
-        task_name); // lista para poder ver las tasks activas
+        task_name);  // lista para poder ver las tasks activas
   }
 }
 
 void TaskManager::kill_task(const std::string &task_name) {
-
   if (task_exists(task_name) == true) {
     manager[task_name]->remove();
     manager[task_name].release();
@@ -61,4 +61,4 @@ std::ostream &operator<<(std::ostream &os, const TaskManager &task_manager) {
   return os;
 }
 
-} // namespace lightning
+}  // namespace lightning

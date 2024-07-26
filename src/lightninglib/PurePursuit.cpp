@@ -5,13 +5,15 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
 #include "lightninglib/PurePursuit.hpp"
-#include "lightninglib/Math.h"
+
 #include <iostream>
+
+#include "lightninglib/Math.h"
+
 
 double distance(std::vector<double> p1, std::vector<double> p2) {
   return sqrt(pow(p1[0] - p2[0], 2) + pow(p1[1] - p2[1], 2));
 }
-
 
 std::vector<double> get_intersection(std::vector<double> start,
                                      std::vector<double> end,

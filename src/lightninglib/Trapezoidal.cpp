@@ -5,15 +5,14 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
 #include "lightninglib/Trapezoidal.hpp"
+
 #include "pros/rtos.hpp"
+
 
 namespace lightning {
 TrapezoidalProfile::TrapezoidalProfile(float max_velocity,
                                        float max_acceleration)
-    : max_velocity(max_velocity), max_acceleration(max_acceleration),
-      velocities(0), size(0), accel_time(0), accel_distance(0),
-      desaccel_distance(0), velocity_constant_distance(0), total_time(0),
-      ready(false) {}
+    : max_velocity(max_velocity), max_acceleration(max_acceleration), velocities(0), size(0), accel_time(0), accel_distance(0), desaccel_distance(0), velocity_constant_distance(0), total_time(0), ready(false) {}
 
 std::ostream &operator<<(std::ostream &os, const TrapezoidalProfile &profile) {
   for (int i = 0; i < profile.size; i++) {
@@ -25,7 +24,6 @@ std::ostream &operator<<(std::ostream &os, const TrapezoidalProfile &profile) {
 }
 
 void TrapezoidalProfile::update(float target, float sample_time_sec) {
-
   accel_time = max_velocity / max_acceleration;
   accel_distance = 0.5 * max_acceleration * accel_time * accel_time;
   desaccel_distance = accel_distance;
@@ -35,7 +33,7 @@ void TrapezoidalProfile::update(float target, float sample_time_sec) {
 
   const int total_steps = static_cast<int>(total_time / sample_time_sec);
 
-  this->velocities = std::vector<float>(); // Asigna un nuevo vector vacío
+  this->velocities = std::vector<float>();  // Asigna un nuevo vector vacío
   this->size = 0;
 
   float current_time = 0;
@@ -72,8 +70,7 @@ void TrapezoidalProfile::update(float target, float sample_time_sec) {
 bool TrapezoidalProfile::is_ready() const { return this->ready; }
 
 void TrapezoidalProfile::reset() {
-
-  this->velocities = std::vector<float>(); // Asigna un nuevo vector vacío
+  this->velocities = std::vector<float>();  // Asigna un nuevo vector vacío
   this->size = 0;
 
   ready = false;
@@ -131,4 +128,4 @@ std::vector<float> TrapezoidalProfile::get_velocities() const {
 }
 
 std::size_t TrapezoidalProfile::get_size() const { return this->size; }
-} // namespace lightning
+}  // namespace lightning

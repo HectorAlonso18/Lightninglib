@@ -5,7 +5,9 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
 #include "lightninglib/Odom_tracker.hpp"
+
 #include "lightninglib/Math.h"
+
 
 namespace lightning {
 OdomTracker::OdomTracker() {}
@@ -21,8 +23,7 @@ void OdomTracker::set_position(float x_position, float y_position,
                                float orientation_degrees,
                                float forward_position,
                                float sideways_position) {
-
-  this->x_position = x_position;                               
+  this->x_position = x_position;
   this->y_position = y_position;
   this->orientation_degrees = orientation_degrees;
 
@@ -33,17 +34,13 @@ void OdomTracker::set_position(float x_position, float y_position,
 void OdomTracker::update_position(float ForwardTracker_position,
                                   float SidewaysTracker_position,
                                   float orientation_degrees) {
-
-
   float forward_delta_position =
       ForwardTracker_position - this->forward.position;
   float sideways_delta_position =
       SidewaysTracker_position - this->sideways.position;
-  
 
-  this->forward.position = ForwardTracker_position; 
-  this->sideways.position = SidewaysTracker_position; 
-
+  this->forward.position = ForwardTracker_position;
+  this->sideways.position = SidewaysTracker_position;
 
   float orientation_rad = to_rad(orientation_degrees);
   float prev_orientation_rad = to_rad(this->orientation_degrees);
@@ -87,10 +84,9 @@ void OdomTracker::update_position(float ForwardTracker_position,
 
   float X_position_delta = local_polar_length * cos(global_polar_angle);
   float Y_position_delta = local_polar_length * sin(global_polar_angle);
- 
+
   this->x_position += X_position_delta;
   this->y_position += Y_position_delta;
-  
 }
 
-} // namespace lightning
+}  // namespace lightning
