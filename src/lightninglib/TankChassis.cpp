@@ -115,33 +115,30 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   this->current_index =0; 
 
   left_side.set_encoder_units(integrated_encoders_unit); 
-  right_side.set_encoder_units(integrated_encoders_unit); 
-  
-  if (odom_config==ADI_ONE_ODOM) {
-    this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center; 
-    this->ForwardTracker_diameter = Forward_Tracker_diameter; 
-    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / 360; 
+  right_side.set_encoder_units(integrated_encoders_unit);
 
-    this->SideWays_center_distance = 0; 
-    this->SideWays_diameter =0; 
-    this->SideWaysTracker_frequency=0; 
-    odom.set_physical_distances(this->ForwardTracker_center_distance,this->SideWays_center_distance); 
-
-  }
-
-  if(odom_config == ADI_TWO_ODOM || odom_config==ADI_TWO_ROTATED_ODOM){
-    this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center; 
-    this->ForwardTracker_diameter = Forward_Tracker_diameter; 
+  if (odom_config == ADI_ONE_ODOM) {
+    this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center;
+    this->ForwardTracker_diameter = Forward_Tracker_diameter;
     this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / 360;
 
-    this->SideWays_center_distance = SideWays_Tracker_distance_to_center; 
-    this->SideWays_diameter = SideWays_Tracker_wheel_diameter; 
-    this->SideWaysTracker_frequency = (M_PI * SideWays_Tracker_wheel_diameter)/360; 
-
-    odom.set_physical_distances(this->ForwardTracker_center_distance,this->SideWays_center_distance); 
-
+    this->SideWays_center_distance = 0;
+    this->SideWays_diameter = 0;
+    this->SideWaysTracker_frequency = 0;
+    odom.set_physical_distances(this->ForwardTracker_center_distance, this->SideWays_center_distance);
   }
 
+  if (odom_config == ADI_TWO_ODOM || odom_config == ADI_TWO_ROTATED_ODOM) {
+   this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center;
+   this->ForwardTracker_diameter = Forward_Tracker_diameter;
+   this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / 360;
+
+   this->SideWays_center_distance = SideWays_Tracker_distance_to_center;
+   this->SideWays_diameter = SideWays_Tracker_wheel_diameter;
+   this->SideWaysTracker_frequency = (M_PI * SideWays_Tracker_wheel_diameter) / 360;
+
+   odom.set_physical_distances(this->ForwardTracker_center_distance, this->SideWays_center_distance);
+  }
 }
 
 TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<std::int8_t>& left_side_ports, const std::initializer_list<std::int8_t> right_side_ports, const char gyro_port, 
@@ -1030,6 +1027,9 @@ void TankChassis::arcade_exponential(pros::Controller &control,
   static float power = 0;
   static float turn = 0;
 
+  n_x = abs(n_x); 
+  n_y = abs(n_y); 
+
   if (arcade == lightning::E_TANK_OP_ARCADE_LEFT) {
     raw_joystick_x =control.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
     raw_joystick_y =control.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
@@ -1066,7 +1066,6 @@ void TankChassis::reset_odometry() {
   this->SideWaysTracker_position_inches=0;  
   orientation=0; 
   gyro.reset(); 
-  pros::delay(3000); 
 }
 
 
@@ -1074,12 +1073,12 @@ void TankChassis::reset_IMU(){
   this->gyro.reset(); 
 } 
 
- void TankChassis::tare_motors_position(){
+void TankChassis::tare_motors_position(){
   this->left_side.tare_position(); 
   pros::delay(100);
   this->right_side.tare_position(); 
   pros::delay(100);
- }
+}
 
 
 
