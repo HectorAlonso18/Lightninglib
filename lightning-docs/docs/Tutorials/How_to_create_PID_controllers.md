@@ -8,7 +8,7 @@ sidebar_position: 5
 ## Introduction
 The Proportional-Integral-Derivative (PID) control is the most common control algortihm used in VEX. 
 
-In lighitning, you are able to create PID controllers by using the ``PID`` class. Check the [PID documentation](http://localhost:3000/docs/Documentation/PID) for more information. 
+In lighitning, you are able to create PID controllers by using the ``PID`` class. Check the [PID documentation](/docs/Documentation/PID) for more information. 
 
 For more details about what a PID controller is, how it works, and how to tune it, refer to this  [article](https://wiki.purduesigbots.com/software/control-algorithms/pid-controller) written by [BLRS](https://purduesigbots.com/)(Purdue SIGBots). 
 

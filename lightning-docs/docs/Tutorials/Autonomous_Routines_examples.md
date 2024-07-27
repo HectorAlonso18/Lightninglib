@@ -271,7 +271,7 @@ void autonomous(){
     my_chassis.move_with_motion_profile(test_profile);
 }
 ```
-Check the [TrapezoidalProfile Documentation](http://localhost:3000/docs/Documentation/Trapezoidal) for more information.
+Check the [TrapezoidalProfile Documentation](/docs/Documentation/Trapezoidal) for more information.
 
 You can see the ``TrapezoidalProfile`` in action in this [video](https://www.youtube.com/watch?v=WZaXgi8o368). 
 
@@ -279,7 +279,7 @@ You can see the ``TrapezoidalProfile`` in action in this [video](https://www.you
 
 ## Driving to a point
 :::note
-You need to have odometry, using a odometry configuration that lightning supports, check the [Declaring your chassis tutorial](http://localhost:3000/docs/Tutorials/Declaring_your_chassis) to get more information .
+You need to have odometry, using a odometry configuration that lightning supports, check the **[Declaring your chassis tutorial](/docs/Tutorials/Declaring_your_chassis)** to get more information .
 :::
 
 Drives the robot from a starting point to a target point. The robot **MUST** to be facing the target point with the front or back side of the chassis.
@@ -338,7 +338,7 @@ void autonomous(){
 
 ## Following a path
 :::note
-You need to have odometry, using a odometry configuration that lightning supports,check the [Declaring your chassis tutorial](http://localhost:3000/docs/Tutorials/Declaring_your_chassis) to get more information .
+You need to have odometry, using a odometry configuration that lightning supports,check the **[Declaring your chassis tutorial](/docs/Tutorials/Declaring_your_chassis)** to get more information .
 :::
 
 You can create a pre-computated path and make that you robot follow it using ``follow_path()``. 
@@ -438,7 +438,7 @@ my_chassis.follow_path(pick_triball,25); //Following the path (pick_triball),
 To see more information about, please check: 
 
 1. **Path Documentation** 
-    * [lightning Path Documentation](http://localhost:3000/docs/Documentation/Path). 
+    * [lightning Path Documentation](/docs/Documentation/Path). 
 
 2. **Pure Pursuit**
     * [Pure pursuit and LookAheadDistance](https://la.mathworks.com/help/nav/ug/pure-pursuit-controller.html).
@@ -610,7 +610,7 @@ my_chassis.follow_path(pick_triball,25);
 pros::delay(10); 
 autonomous_task_manager.kill_task("MULTITASK_ACTIONS_PATH");
 ```
-If you have doubts please check the [How to create task tutorial.](http://localhost:3000/docs/Tutorials/Using_TaskManager_Class)
+If you have doubts please check the [How to create tasks tutorial.](/docs/Tutorials/Using_TaskManager_Class)
 
 ---
 

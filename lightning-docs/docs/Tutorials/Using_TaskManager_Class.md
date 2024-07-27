@@ -218,5 +218,5 @@ void autonomous(){
 ## Congratulations! 🎉
 You finished the tutorial! Now you can start creating task in your code. 
 
-For more information check the [TaskManager Documentation.](http://localhost:3000/docs/Documentation/TaskManager)
+For more information check the [TaskManager Documentation.](/docs/Documentation/TaskManager)
 

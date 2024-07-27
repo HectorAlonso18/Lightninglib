@@ -319,5 +319,5 @@ Now, you can start programming!
 Check the tutorials to know how program an autonomous routines and the driver period. 
 :::
 
-Check how to program the autonomous routines and the [driver period](http://localhost:3000/docs/Tutorials/Driver_period_examples). 
+Check how to program the autonomous routines and the [driver period](/docs/Tutorials/Driver_period_examples). 
 

@@ -3,7 +3,7 @@ sidebar_label: Upgrading
 sidebar_position: 2
 ---
 
-To upgrade the lightning version in your PROS project check the latest releases [here](https://github.com/HectorAlonso18/Lightninglib/tree/main). 
+To upgrade the Lightning version in your PROS project check the latest releases [here](https://github.com/HectorAlonso18/Lightninglib/tree/main). 
 
 ## Install Lightning
 Install ```lightinglib@x.x.x.zip``` and put it in your program folder using the file explorer.

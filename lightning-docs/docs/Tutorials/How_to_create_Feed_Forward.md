@@ -22,7 +22,7 @@ During the [SPIN-UP](https://www.youtube.com/watch?v=wIZgvVDZc2Y&t=89s&pp=ygUZc3
 # FeedForward Tutorial
 ## Creating a FeedForward controller
 Creating a FeedForward controller is matter of using the constructor for the ``FeedForward`` class. 
-Check the [FeedForward Documentation](http://localhost:3000/docs/Documentation/Feed_Forward) for more information about it. 
+Check the [FeedForward Documentation](/docs/Documentation/Feed_Forward) for more information about it. 
 
 ```cpp title="main.cpp"
 lightning::FeedForward speed_controller (
