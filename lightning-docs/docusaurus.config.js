@@ -13,7 +13,7 @@ import rehypeKatex from 'rehype-katex';
 const config = {
   title: 'Lightning',
   tagline: 'A dazzling PROS template',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/lightning_logo.ico',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
@@ -87,7 +87,7 @@ const config = {
         title: 'Lightning',
         logo: {
           alt: 'Lightninglib Logo',
-          src: 'img/logo.svg',
+          src: 'img/lightning_logo.svg',
         },
         items: [
           {
