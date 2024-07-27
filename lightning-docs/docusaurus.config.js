@@ -94,8 +94,11 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Lightning',
           },
+          {to:'/docs/category/getting-started-',label:'Start',positon:'left'},
+          {to: '/docs/category/documentation-',label:'Docs',position:'left'},
+          {to:'/docs/category/tutorials-',label:'Tutorials',position:'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/HectorAlonso18/Lightninglib',
