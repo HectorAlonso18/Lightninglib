@@ -35,17 +35,28 @@ Team ```ITESM1```have been using **Lightning** since OVER-UNDER having great res
 
 In the following YouTube videos, you can appreciate the results of using Lightning in both testing and competition scenarios. 
 
-* [Pure Pursuit testing](https://www.youtube.com/watch?v=6EuZdJf89HI)
-* [Trapezoidal Profile](https://www.youtube.com/watch?v=WZaXgi8o368)
-* [ITESM1 OVER UNDER Worlds Autonomous Routine](https://www.youtube.com/watch?v=hosBW9l6dMY)
-* [ITESM1 OVER UNDER Worlds Q-F autonomous](https://youtu.be/sDA6RqO024Y)
-* [ITESM1 OVER UNDER Worlds QUAL autonomous](https://www.youtube.com/watch?v=LpFiJdZ04_4)
+* **Pure Pursuit testing**
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6EuZdJf89HI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+* **Trapezoidal Profile**
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WZaXgi8o368" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+* **ITESM1 OVER UNDER Worlds Autonomous Routine**
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hosBW9l6dMY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+* **ITESM1 OVER UNDER Worlds Q-F autonomous**
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sDA6RqO024Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+* **ITESM1 OVER UNDER Worlds QUAL autonomous**
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LpFiJdZ04_4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 ## Development
-Lightninglib is developed by Héctor Alonso from team ITESM1.  
+Lightning is developed by Héctor Alonso from team ``ITESM1``.  
 
 ---
 
 ## Future work
-We will working to introduce more features to lightning! and also creating the documentation page where you could see all the documentation that you need to use lightning. 
+We will working to introduce more features to Lightning! and also creating the documentation page where you could see all the documentation that you need to use Lightning. 
