@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'Easy to use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/lightning_logo.svg').default,
     description: (
       <>
         With Lightning, users can easily program advanced autonomous routines using features like PID controllers, odometry, pure pursuit, and more.
