@@ -271,7 +271,7 @@ void autonomous(){
     my_chassis.move_with_motion_profile(test_profile);
 }
 ```
-Check the [TrapezoidalProfile Documentation](/docs/Documentation/Trapezoidal) for more information.
+Check the [TrapezoidalProfile Documentation](/docs/Documentation/Trapezoidal) and the [Using Trapezoidal profilers tutorial](/docs/Tutorials/Using_Trapezoidal_profilers) for more information.
 
 You can see the ``TrapezoidalProfile`` in action in this [video](https://www.youtube.com/watch?v=WZaXgi8o368). 
 
@@ -438,9 +438,12 @@ my_chassis.follow_path(pick_triball,25); //Following the path (pick_triball),
 To see more information about, please check: 
 
 1. **Path Documentation** 
-    * [lightning Path Documentation](/docs/Documentation/Path). 
+    * [Lightning Path Documentation](/docs/Documentation/Path). 
 
-2. **Pure Pursuit**
+2. **Using Paths Tutorial**
+    * [Path Tutorial](/docs/Tutorials/Using_Paths).
+
+3. **Pure Pursuit**
     * [Pure pursuit and LookAheadDistance](https://la.mathworks.com/help/nav/ug/pure-pursuit-controller.html).
     * [Basic Pure Pursuit](https://wiki.purduesigbots.com/software/control-algorithms/basic-pure-pursuit).
 
@@ -610,7 +613,7 @@ my_chassis.follow_path(pick_triball,25);
 pros::delay(10); 
 autonomous_task_manager.kill_task("MULTITASK_ACTIONS_PATH");
 ```
-If you have doubts please check the [How to create tasks tutorial.](/docs/Tutorials/Using_TaskManager_Class)
+If you have doubts please check the [How to create tasks tutorial.](/docs/Tutorials/Using_TaskManager_Class) and the [TaskManager Documentation](/docs/Documentation/TaskManager)
 
 ---
 
