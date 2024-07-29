@@ -12,6 +12,7 @@ Install ```lightinglib@x.x.x.zip``` and put it in your program folder using the 
 1. Click on the **PROS** logo located in the left side of your screen. 
 2. Then click on Integrated Terminal. 
 
+![Integrated Termianl](/img/Open_pros_terminal.png)
 ## Apply Lightning 
 In the Integrated Terminal type the next commands. 
 ### Fetching lightning

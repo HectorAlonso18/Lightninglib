@@ -40,6 +40,9 @@ The easiest way to do it is as follows:
 1. Open ```Visual Studio Code```. 
 2. Go to ```File```.
 3. Then click on ```Open Folder```.
+
+![OpenFolder](/img/Open_folder_vsc_tutorial.png)
+
 4. File explorer will open. Now, Select the extrated folder. 
 5. Most of the times, the folder will be in your ```Dowloads``` directory. 
 
