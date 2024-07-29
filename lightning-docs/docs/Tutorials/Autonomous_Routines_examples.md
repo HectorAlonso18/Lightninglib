@@ -443,7 +443,10 @@ To see more information about, please check:
 2. **Using Paths Tutorial**
     * [Path Tutorial](/docs/Tutorials/Using_Paths).
 
-3. **Pure Pursuit**
+3. **LightningPlanner**
+    * [Lightning Planner](/docs/Python_utilities/LightningPlanner)
+
+4. **Pure Pursuit**
     * [Pure pursuit and LookAheadDistance](https://la.mathworks.com/help/nav/ug/pure-pursuit-controller.html).
     * [Basic Pure Pursuit](https://wiki.purduesigbots.com/software/control-algorithms/basic-pure-pursuit).
 

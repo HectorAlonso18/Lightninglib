@@ -46,6 +46,10 @@ lightning::Path goal_path (
 Is recommended that the first point of your path be the same as the current robot location. 
 :::
 
+Also you can use the [Lightning Planner utility](/docs/Python_utilities/LightningPlanner) to create your path more easily.Planning your autonomous routine directly from your computer, eliminating the need for field measurements.
+
+![Lightning Planner](/img/LPlanner_teaser_field.png)
+
 ---
 
 ### Upgrading the path
