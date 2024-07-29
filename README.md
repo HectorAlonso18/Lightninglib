@@ -70,7 +70,7 @@ lightning::Path my_path({185.0, 11.0, -180.0},{-88.0, -4.0, 1.0},false,3)
 
 2. **Install Python**: ``LightningPlanner`` requires Python to run. Most systems have Python installed by default, but it's a good idea to check. You can verify if Python is properly installed and running by typing the following command in your terminal: 
 
-> .[!NOTE]
+> [!NOTE]
 > You can run ``LightningPlanner`` from the **PROS Integrated Terminal**, Also, ``PROS`` has python already installed  
 
 ```sh
