@@ -82,7 +82,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/Lightning_social_card.png',
       navbar: {
         title: 'Lightning',
         logo: {
@@ -99,6 +99,7 @@ const config = {
           {to:'/docs/category/getting-started-',label:'Start',positon:'left'},
           {to: '/docs/category/documentation-',label:'Docs',position:'left'},
           {to:'/docs/category/tutorials-',label:'Tutorials',position:'left'},
+          {to:"/docs/category/python-utilities--",label:"Python Utilities",position:'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/HectorAlonso18/Lightninglib',
