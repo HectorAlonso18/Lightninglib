@@ -1,7 +1,7 @@
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 # Python utilities 🐍
-Lightning has different python utilities to **maximize** the user experience. 
+``Lightning`` has different python utilities to **maximize** the user experience. 
 
 ---
 
@@ -34,11 +34,11 @@ Plan your autonomous routes without the necessity of physical measurements.
 ---
 
 ### How it works
-1. **Generate Waypoints:** Click to set waypoints for your robot's path.
+1. **Generate Waypoints:** `Click` to set waypoints for your robot's path.
 
 ![Planner](LPlanner_teaser_field.png)
 
-2. **Print Coordinates:** Right-click to view all the coordinates you’ve generated.
+2. **Print Coordinates:** `Right-click` to view all the coordinates you’ve generated.
 ```console
 Origin: x: 0 (inches)  y:  0 (inches)
 x: 2.59 (inches)  y: 28.18 (inches)
@@ -48,7 +48,7 @@ X:  [185.0, 11.0, -180.0]
 Y:  [-88.0, -4.0, 1.0]
 ```
 
-3. **Save Coordinates:** Press 's' to save the waypoints to a text file in the Field_waypoints directory.
+3. **Save Coordinates:** Press `s` to save the waypoints to a text file in the Field_waypoints directory.
 ```txt
 X: {185.0, 11.0, -180.0}
 Y: {-88.0, -4.0, 1.0}
@@ -59,11 +59,32 @@ You can paste this new coordinates to your `Lightning project` and construct a n
 lightning::Path my_path({185.0, 11.0, -180.0},{-88.0, -4.0, 1.0},false,3)
 ```
 
-4. **Reset:** Press 'r' to reset the coordinates and start planning from scratch.
+4. **Reset:** Press ``r`` to reset the coordinates and start planning from scratch.
 
-5. **Exit:** Press 'q' to exit the program
+5. **Exit:** Press ``q`` to exit the program.
 
 ---
 
+## Getting Started
+1. **Open your Lightning example project**.  
+
+2. **Install Python**: ``LightningPlanner`` requires Python to run. Most systems have Python installed by default, but it's a good idea to check. You can verify if Python is properly installed and running by typing the following command in your terminal: 
+
+> .[!NOTE]
+> You can run ``LightningPlanner`` from the **PROS Integrated Terminal**, Also, ``PROS`` has python already installed  
+
+```sh
+python
+```
+If Python is not installed, you can download and install it [here](https://www.python.org/)
+
+
+3. **Run the Program**:
+```sh
+python lightning_planner.py
+```
+
+
+---
 ## License
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, you can obtain one at http://mozilla.org/MPL/2.0/.
