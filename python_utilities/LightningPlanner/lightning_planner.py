@@ -10,6 +10,7 @@ import time
 
 cancha = turtle
 
+
 def close_field(): 
     cancha.bye()
 
@@ -139,7 +140,7 @@ if(competition=="VEXU"):
            
 
 
-cancha = turtle.Screen()  # Define la cancha como una pantalla que se va a mostrar
+cancha = turtle.Screen() # Define la cancha como una pantalla que se va a mostrar
 cancha.title("Welcome to LightningPlanner")
 cancha.setup(width=size_turtle, height=size_turtle)  # Define las medidas de la cancha
 cancha.bgpic(field_path)
@@ -171,7 +172,8 @@ def coordenadas(x, y):
         turtle.pensize(0)
         turtle.goto(xcero, ycero)
         turtle.pensize(5)
-        turtle
+      
+        print("Origin: x:", 0,"(inches) ", "y: ", 0,"(inches)")
         lock = 1
         turtle.shape(bot_path)
      
@@ -210,7 +212,7 @@ def reset():
     turtle.onscreenclick(print_cords, 3)
     
     #Reseteamos eventos de teclas
-
+    print("RESET")
     cancha.onkey(close_field, "q")
     cancha.listen()
 
