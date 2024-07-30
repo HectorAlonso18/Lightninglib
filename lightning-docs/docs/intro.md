@@ -19,6 +19,7 @@ The template was initially created for [ITESM Teams](https://www.instagram.com/t
 ## Features
 * TankDrive support.
 * Odometry class.
+* Support all odometry configurations (One tracking wheel, two tracking wheels and two rotated tracking wheels)
 * Generic PID class.
 * Generic FeedForward class.
 * Pure pursuit.
