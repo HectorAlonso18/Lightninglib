@@ -57,6 +57,33 @@ In the following YouTube videos, you can appreciate the results of using Lightni
 Lightning is developed by Héctor Alonso from team ``ITESM1``.  
 
 ---
+## Installation
+How to install and upgrade Lightning can be found [here](/docs/category/getting-started-).
+
+---
+
+## Docs
+Lightning Documentation can be found [here](/docs/category/documentation-).
+
+---
+
+## Tutorials
+Lightning tutorials can be found [here](/docs/category/tutorials-).
+
+---
+
+## Python utilities
+The Python utilities information can be found [here](/docs/category/python-utilities--). 
+
+---
 
 ## Future work
 We will working to introduce more features to Lightning! and also creating the documentation page where you could see all the documentation that you need to use Lightning. 
+
+---
+## Do you found a bug 🐛? 
+Feel free to email me at `hector_alonso_ibarra@outlook.com`
+
+---
+## License 
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, you can obtain one at http://mozilla.org/MPL/2.0/.
