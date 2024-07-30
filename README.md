@@ -26,6 +26,13 @@ This project could not exist without the support of the VEX community. I hope th
 * Multitasking. 
 * Different Math functions. 
 ---
+
+## Python utilities 🐍
+``Lightning`` has different python utilities to maximize the user experience.
+
+* LightningPlanner: Plan your autonomous routes without the necessity of physical measurements.  
+
+---
 ## Lightning Demostration
 In the following YouTube videos, you can appreciate the results of using Lightning in both testing and competition scenarios. 
 
