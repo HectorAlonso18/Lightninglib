@@ -1,4 +1,8 @@
 #include "main.h"
+#include "liblvgl/llemu.hpp"
+#include "lightninglib/TankChassis.h"
+#include "lightninglib/TankChassis.hpp"
+#include "pros/motors.h"
 
 //Chassis declaration, for Odometry with a one tracking wheel using ADI, ENCODER 
 lightning::TankChassis my_chassis( 
@@ -9,24 +13,34 @@ lightning::tank_odom_e_t::ADI_ONE_ODOM,
 {20,19,18,17},    //Right side ports (using a negative number will reverse it!)
 5,   //IMU port 
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
-3.25, //Wheel Diameter
+3.25, //Wheel Diameter in inches
 1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
 {-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
-2.507, //Forward tracking wheel  diameter
-1.783, //Distance that exist between the forward tracker and the robot rotation center.
+2.507, //Forward tracking wheel  diameter in inches
+1.783, //Distance that exist between the forward tracker and the robot rotation center in inches.
 {-1,-1},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
-0, //Sideways tracking wheel  diameter
-0); //Forward tracking wheel  diameter
+0, //Sideways tracking wheel  diameter in inches
+0); //Forward tracking wheel  diameter in inches
 
+/*DECLARATION OF A CHASSIS WITHOUT ODOMETRY
+lightning::TankChassis chassis_without_odometry(
+  lightning::tank_odom_e_t::NO_ODOM, //No odometry 
+  {1,2,3}, //Left side ports (using a negative number will reverse it!)
+  {4,5,6}, //Right side ports (using a negative number will reverse it!)
+  7, //IMU port 
+  pros::E_MOTOR_GEAR_BLUE, //Which motor cartride are you using, blue,red,green? 
+  3.25, //Wheel Diameter in inches
+  1.3333 //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+); */
 
 
 /*Odometry function 
-This function is dedicated to make the math for your odometry system. 
-WARNING: If you have and want odometry, dont delete the function. 
-NOTE: if your odometry configuration is "NO_ODOM" you can erase the function. 
+This function is dedicated to make the math for your odometry system and print the odometry information. 
+WARNING: If you have and want odometry, don´t delete the function. 
 */
-void init_odometry(void*) {
+void init_track(void*) {
   while (1) {
+    if(!(my_chassis.get_odometry_configuration()== lightning::NO_ODOM)){
     static char buffer_x[32];
     static char buffer_y[32];
     static char buffer_theta[32];
@@ -39,6 +53,13 @@ void init_odometry(void*) {
     pros::lcd::set_text(3, buffer_y);
     pros::lcd::set_text(4, buffer_theta);
     my_chassis.track_pose();
+   }
+
+    else {
+    static char buffer_theta[32];
+    snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
+    pros::lcd::set_text(2, buffer_theta);
+    }
   }
 }
 
@@ -46,26 +67,30 @@ void init_odometry(void*) {
 void initialize() {
   pros::lcd::initialize(); 
   pros::lcd::set_text(1, "Lightning");
- /*
- Restarting the encoders and IMU,
- It s recommended to use a 3000 milliseconds delay. 
- */
- my_chassis.reset_odometry(); 
- pros::delay(3000); 
- 
- /*
- However, you should use the function "reset_IMU", that function allows you to reset the IMU sensor
- (Is recommended to use a 3000 milliseconds delay). 
- */
- //my_chassis.reset_IMU(); 
 
- 
- 
- //Finally, a function to set the initial pose of your robot
- //You could erase this function if you dont have odometry but still using set_orientation to set the initial robot orientation.
- my_chassis.set_coordinates(0_in, 0_in, 0_deg);  
- 
- //my_chassis.set_orientation(0_deg);
+  //If the user has odometry...
+  if(!(my_chassis.get_odometry_configuration()==lightning::NO_ODOM)){
+    /*
+    Restarting the encoders and IMU,
+    It s recommended to use a 3000 milliseconds delay. 
+    */
+    my_chassis.reset_odometry(); 
+    pros::delay(3000); 
+    //Setting the initial pose of your robot
+    my_chassis.set_coordinates(0_in, 0_in, 0_deg);  
+  }
+  
+  //If the user has not odometry...
+  else{
+     /*
+    Restarting the IMU,
+    It s recommended to use a 3000 milliseconds delay. 
+    */
+    my_chassis.reset_IMU(); 
+    pros::delay(3000); 
+    //Setting the initial orientation
+    my_chassis.set_orientation(0_deg);
+  }
 
 }
 
@@ -89,8 +114,11 @@ void competition_initialize() {}
 
 lightning::TaskManager AUTON_TASKS; //YOU CAN USE THIS MANAGER TO CREATE AND MANAGE TASK DURING THE AUTONOMOUS PERIOD
 void autonomous() {
-  AUTON_TASKS.start_task("ODOMETRY", init_odometry); //WE WOULD RUNNING THE ODOMETRY FUNCTION DURING THE AUTONOMOUS PERIOD
-  
+  //This task would run your odometry system and printing the coordinates and orientation.
+  //However, if you dont have an odometry system, the task will print the current orientation.  
+  AUTON_TASKS.start_task("TRACK_AND_PRINT", init_track);
+
+
   //CONFIGURING PID CONSTANTS
 
   /*
@@ -204,7 +232,10 @@ void opcontrol() {
 
   while (true) {
    my_chassis.arcade(master);  //DRIVING ROBOT IN ARCADE MODE 
-
+   
+   /**
+   If you want tank configuration use: my_chassis.tank(master); 
+   */
    pros::delay(lightning::util::DELAY_TIME); 
   }
 }
