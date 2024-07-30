@@ -2797,7 +2797,48 @@ void initialize() {
 | ``orientation``  | The orientation in **okapi unit**. |
 
 ---
+### set_odometry_rotation()
+Sets the odometry rotation for the odometry position system. 
+The odometry rotation is needed for ROTATED configurations like: ``ADI_TWO_ROTATED_ODOM`` and ``ROTATION_TWO_ROTATED_ODOM``. 
 
+:::note
+For example if your tracking wheels are rotated to -45 degrees, you use ``set_odometry_rotation(-45)``; 
+:::
+
+<Tabs
+  groupId="TankChassis_telemetry_set_odometry_rotation"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+  void set_odometry_rotation(const double angle_of_rotation_deg); 
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp 
+void initialize() {
+ my_chassis.set_odometry_rotation(angle_of_rotation_deg);  
+}
+
+```
+</TabItem>
+
+</Tabs>  
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``angle_of_rotation_deg``  | The angle of rotation in degrees.|
+
+---
 ### set_orientation()
 Sets the robot´s absolute orientation in **degrees**. 
 <Tabs
@@ -2837,7 +2878,41 @@ void initialize() {
 | ``orientation``  | The orientation in **okapi unit**. |
 
 ---
+### get_odometry_rotation()
+Gets the odometry rotation in degrees.  
+The odometry rotation is needed for ROTATED configurations like: ADI_TWO_ROTATED_ODOM and ROTATION_TWO_ROTATED_ODOM
 
+<Tabs
+  groupId="TankChassis_telemetry_get_odometry_rotation"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+   double get_odometry_rotation(); 
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp 
+void initialize() {
+ angle_of_rotation = my_chassis.get_odometry_rotation();  
+}
+```
+</TabItem>
+
+</Tabs>  
+
+**Returns:** The tracking wheels rotation from the robots center. 
+
+---
 ### get_pose()
 Gets the current pose (the position and orientation vector).
 <Tabs
