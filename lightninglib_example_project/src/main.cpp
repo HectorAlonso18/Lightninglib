@@ -1,6 +1,6 @@
 #include "main.h"
 
-//Chassis declaration
+//Chassis declaration, for Odometry with a one tracking wheel using ADI, ENCODER 
 lightning::TankChassis my_chassis( 
  //Odometry configuration
 lightning::tank_odom_e_t::ADI_ONE_ODOM,
@@ -18,26 +18,41 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 0, //Sideways tracking wheel  diameter
 0); //Forward tracking wheel  diameter
 
+
+
 /*Odometry function 
 This function is dedicated to make the math for your odometry system. 
 WARNING: If you have and want odometry, dont delete the function. 
 NOTE: if your odometry configuration is "NO_ODOM" you can erase the function. 
 */
-void init_odometry(void*){
-    while (1) {
-    my_chassis.track_pose();      
+void init_odometry(void*) {
+  while (1) {
+    static char buffer_x[32];
+    static char buffer_y[32];
+    static char buffer_theta[32];
+
+    snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
+    snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
+    snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
+
+    pros::lcd::set_text(2, buffer_x);
+    pros::lcd::set_text(3, buffer_y);
+    pros::lcd::set_text(4, buffer_theta);
+    my_chassis.track_pose();
   }
 }
 
 
 void initialize() {
+  pros::lcd::initialize(); 
+  pros::lcd::set_text(1, "Lightning");
  /*
  Restarting the encoders and IMU,
  It s recommended to use a 3000 milliseconds delay. 
  */
- my_chassis.reset_odometry(); //IF you don´t have odometry, you must delete the function. 
+ my_chassis.reset_odometry(); 
  pros::delay(3000); 
-
+ 
  /*
  However, you should use the function "reset_IMU", that function allows you to reset the IMU sensor
  (Is recommended to use a 3000 milliseconds delay). 
@@ -107,8 +122,7 @@ void autonomous() {
   turn_controller.set_error_tolerance(1); 
   turn_controller.set_jump_time(100); 
   turn_controller.set_max(300);
-  turn_controller.set_min(0); 
-  
+
   //using the pid object. 
   my_chassis.turn_absolute(turn_controller,180_deg); 
   
