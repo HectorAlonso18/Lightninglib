@@ -1,21 +1,27 @@
+/*
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 #pragma once
 
 namespace lightning {
 class FeedForward {
-private:
+ private:
   double kv;
   double ks;
   double ka;
 
-private:
+ private:
   double velocity;
   double acceleration;
   double prev_velocity;
 
-private:
+ private:
   double output;
 
-public:
+ public:
   /**
    * @brief Create a FeedForward object for the fiven constants
    *
@@ -51,7 +57,28 @@ public:
   void update(const double input);
 
   /**
-   * @brief Get the kv object
+   * @brief Sets the kv constant.
+   *
+   * @param kv The kv constant.
+   */
+  void set_kv(const double kv);
+
+  /**
+   * @brief Sets the ks constant.
+   *
+   * @param ks The ks constant.
+   */
+  void set_ks(const double ks);
+
+  /**
+   * @brief Sets the ka constant.
+   *
+   * @param kv The ka constant.
+   */
+  void set_ka(const double ka);
+
+  /**
+   * @brief Get the kv constant
    *
    * @return double kv
    */
@@ -77,4 +104,4 @@ public:
    */
   double get_output(void) const;
 };
-} // namespace lightning
+}  // namespace lightning

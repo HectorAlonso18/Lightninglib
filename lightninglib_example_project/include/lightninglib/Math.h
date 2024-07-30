@@ -1,3 +1,9 @@
+/*
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 #pragma once
 
 #include <cmath>
@@ -5,14 +11,14 @@
 
 #define M_PI 3.14159265358979323846
 
-
 /**
  * @brief Sign function.
  * @tparam T
  * @param num
  * @return Sign, -1 if its negative or 1 if its positive.
  */
-template <typename T> T sign(const T &num) { return (num >= 0) ? 1 : -1; }
+template <typename T>
+T sign(const T &num) { return (num >= 0) ? 1 : -1; }
 
 /**
  * @brief Translate degrees to radians.
@@ -20,7 +26,8 @@ template <typename T> T sign(const T &num) { return (num >= 0) ? 1 : -1; }
  * @param num
  * @return Angle in radians.
  */
-template <typename T> T to_rad(const T &num) { return num * M_PI / 180; }
+template <typename T>
+T to_rad(const T &num) { return num * M_PI / 180; }
 
 /**
  * @brief Translate radians to degrees.
@@ -28,7 +35,8 @@ template <typename T> T to_rad(const T &num) { return num * M_PI / 180; }
  * @param num
  * @return Angle in degrees.
  */
-template <typename T> T to_degrees(const T &num) { return (num * 180) / M_PI; }
+template <typename T>
+T to_degrees(const T &num) { return (num * 180) / M_PI; }
 
 /**
  * @brief Put angle in a 0-360 degrees range.
@@ -36,7 +44,8 @@ template <typename T> T to_degrees(const T &num) { return (num * 180) / M_PI; }
  * @param degrees
  * @return The angle in range.
  */
-template <typename T> T reduce_angle_0_to_360(T degrees) {
+template <typename T>
+T reduce_angle_0_to_360(T degrees) {
   while (!(degrees >= 0 && degrees <= 360)) {
     degrees = degrees < 0     ? degrees += 360
               : degrees > 360 ? degrees -= 360
@@ -52,7 +61,8 @@ template <typename T> T reduce_angle_0_to_360(T degrees) {
  * @param degrees
  * @return the angle in range.
  */
-template <typename T> T reduce_angle_180_to_180(T degrees) {
+template <typename T>
+T reduce_angle_180_to_180(T degrees) {
   while (!(degrees >= -180 && degrees <= 180)) {
     degrees = degrees < -180  ? degrees += 360
               : degrees > 180 ? degrees -= 360
@@ -62,14 +72,13 @@ template <typename T> T reduce_angle_180_to_180(T degrees) {
   return (degrees);
 }
 
-
 /**
  * @brief Gets the angle in degrees between two points.
  * @tparam T1
  * @tparam T2
  * @param current
  * @param target
- * @return the angle in degrees. 
+ * @return the angle in degrees.
  */
 template <typename T1, typename T2>
 auto get_angle_btw_points(const std::vector<T1> &current,
@@ -97,7 +106,7 @@ auto get_angle_btw_points(const std::vector<T1> &current,
  * @tparam T2
  * @param p1 Current
  * @param p2 Target
- * @return Distance. 
+ * @return Distance.
  */
 template <typename T1, typename T2>
 auto distance_btw_points(const std::vector<T1> &p1, const std::vector<T2> &p2) {
@@ -132,18 +141,19 @@ auto linear_to_rpm(const T1 &lineal_velocity, const T2 &wheel_diameter) {
 
 /**
  * @brief Swaps the first two elements of a vector.
- * 
+ *
  * @tparam T1 Type of the elements in the vector.
  * @param a The input vector.
  * @return std::vector<T1> A vector with the first two elements swapped.
  */
-template <typename T1> std::vector<T1> swap_vector(const std::vector<T1> &a) {
+template <typename T1>
+std::vector<T1> swap_vector(const std::vector<T1> &a) {
   return {a[1], a[0]};
 }
 
 /**
  * @brief Adds two vectors element-wise.
- * 
+ *
  * @tparam T1 Type of the elements in the vectors.
  * @param a The first input vector.
  * @param b The second input vector.
@@ -156,7 +166,7 @@ std::vector<T1> vector_add(const std::vector<T1> &a, const std::vector<T1> &b) {
 
 /**
  * @brief Subtracts the second vector from the first vector element-wise.
- * 
+ *
  * @tparam T1 Type of the elements in the vectors.
  * @param a The first input vector.
  * @param b The second input vector.
@@ -169,7 +179,7 @@ std::vector<T1> vector_sub(const std::vector<T1> &a, const std::vector<T1> &b) {
 
 /**
  * @brief Computes the dot product of two vectors.
- * 
+ *
  * @tparam T1 Type of the elements in the vectors.
  * @param a The first input vector.
  * @param b The second input vector.
@@ -182,7 +192,7 @@ auto vector_dot(const std::vector<T1> &a, const std::vector<T1> &b) {
 
 /**
  * @brief Multiplies each element of a vector by a scalar.
- * 
+ *
  * @tparam T1 Type of the elements in the vector.
  * @tparam T2 Type of the scalar.
  * @param a The input vector.

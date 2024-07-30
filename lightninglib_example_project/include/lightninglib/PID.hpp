@@ -1,16 +1,22 @@
+/*
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 #pragma once
 
 namespace lightning {
 class PID {
-protected:
+ protected:
   float kp;
   float ki;
   float kd;
 
-private:
+ private:
   float target;
 
-protected:
+ protected:
   bool first;
   bool arrived;
 
@@ -33,19 +39,17 @@ protected:
   double derivative;
 
   float max;
-  float min; 
 
-  float scale; 
+  float scale;
 
   double output;
 
   int contador;
-  int contador_stop_time; 
+  int contador_stop_time;
 
-  float stop_time_msec; 
+  float stop_time_msec;
 
-public:
-
+ public:
   /**
    * @brief Build PID object given constants and the sample_time.
    *
@@ -78,7 +82,7 @@ public:
    */
   ~PID() = default;
 
-public:
+ public:
   /**
    * @brief Updates the PID controller
    *
@@ -88,24 +92,23 @@ public:
    * With that function you will update the proportional, integral, derivative
    * and output value.
    *
-   * @param input
-   *        the current reading. The input of the controller.
+   * @param error
+   *        the current error (target-input)
    *
    */
   virtual void update(const float error);
 
-public:
- 
+ public:
   /**
-  * @brief Sets the stop time limit for the PID controller.
-  *
-  * This function allows the user to set the maximum time limit after which the PID controller output will be set to zero.
-  *
-  * @param _stop_time_msec The stop time limit in milliseconds. If more than this time elapses,
-  *        the PID controller output will be forced to zero.
-  */
-  void set_stop_time(const float _stop_time_msec);  
- 
+   * @brief Sets the stop time limit for the PID controller.
+   *
+   * This function allows the user to set the maximum time limit after which the PID controller output will be set to zero.
+   *
+   * @param _stop_time_msec The stop time limit in milliseconds. If more than this time elapses,
+   *        the PID controller output will be forced to zero.
+   */
+  void set_stop_time(const float _stop_time_msec);
+
   /**
    * @brief Sets error tolerance.
    *
@@ -128,8 +131,8 @@ public:
   /**
    * @brief Sets integral zone.
    * @note  The integral zone is the zone where the intregal will not act.
-   * @param derivative_tolerance
-   *        The derivative tolerance.
+   * @param _integral_zone
+   *        The integral_zone
    */
   void set_integral_zone(const float _integral_zone);
 
@@ -141,78 +144,64 @@ public:
    */
   void set_integral_power_limit(const float _integral_power_limit);
 
- /**
- * @brief Sets the jump time limit for the PID controller.
- * 
- * @param jump_time The jump time limit in milliseconds.
- * 
- * @note When the PID controller is approaching the target, a timer starts. If the timer reaches
- *       the jump time limit, the PID controller operation is halted.
- */
+  /**
+   * @brief Sets the jump time limit for the PID controller.
+   *
+   * @param jump_time The jump time limit in milliseconds.
+   *
+   * @note When the PID controller is approaching the target, a timer starts. If the timer reaches
+   *       the jump time limit, the PID controller operation is halted.
+   */
   void set_jump_time(const float _jump_time);
 
   /**
    * @brief Sets the maximum output for the PID output.
    * @param max
-   *        The max value of the output. 
+   *        The max value of the output.
    */
   void set_max(const float _max);
-  
+
   /**
-   *@brief Set the min value for the PID output.  
-   *@param _min 
-   *        The min value for the output. 
-   */
-  void set_min(const float _min); 
-  
-  /**
-   *@brief Set the scale for the PID controller. 
+   *@brief Set the scale for the PID controller.
    *@param _scale scaling factor that limits the output of the PID controller.
    *        For example, a value of 0.5 limits the output to 50% of its maximum value.
    */
   void set_scale(const float _scale);
-  
+
   /**
-  * @brief Sets the proportional constant (kp) of the PID controller.
-  * 
-  * @param _kp The new value for the proportional constant.
-  */
+   * @brief Sets the proportional constant (kp) of the PID controller.
+   *
+   * @param _kp The new value for the proportional constant.
+   */
   void set_kp(const float _kp);
 
   /**
-  * @brief Sets the integral constant (ki) of the PID controller.
-  * 
-  * @param _ki The new value for the integral constant.
-  */
+   * @brief Sets the integral constant (ki) of the PID controller.
+   *
+   * @param _ki The new value for the integral constant.
+   */
   void set_ki(const float _ki);
 
-
   /**
-  * @brief Sets the derivative constant (kd) of the PID controller.
-  * 
-  * @param _kd The new value for the derivative constant.
-  */
+   * @brief Sets the derivative constant (kd) of the PID controller.
+   *
+   * @param _kd The new value for the derivative constant.
+   */
   void set_kd(const float _kd);
-  
-  /**
-  * @brief Sets the sample time of the PID controller.
-  * 
-  * @param time_msec The new sample time in milliseconds.
-  */
-  void set_sample_time(const  unsigned int time_msec); 
 
-public:
+  /**
+   * @brief Sets the sample time of the PID controller.
+   *
+   * @param time_msec The new sample time in milliseconds.
+   */
+  void set_sample_time(const unsigned int time_msec);
+
+ public:
   /**
    * @brief Gets the current error.
    * @return The current error.
    */
   float get_error() const;
-
-  /**
-   * @brief Gets the target that the controller is setted.
-   * @return the target.
-   */
-  virtual float get_target() const;
 
   /**
    * @brief Gets proportional constant [Kp].
@@ -261,55 +250,48 @@ public:
    * @return the current output from controller.
    */
   double get_output() const;
-  
+
   /**
-  * @brief Retrieves the error tolerance of the PID controller.
-  * 
-  * @return the current error tolerance value.
-  */
+   * @brief Retrieves the error tolerance of the PID controller.
+   *
+   * @return the current error tolerance value.
+   */
   float get_error_tolerance() const;
 
   /**
-  * @brief Retrieves the derivative tolerance of the PID controller.
-  * 
-  * @return the current derivative tolerance value.
-  */
+   * @brief Retrieves the derivative tolerance of the PID controller.
+   *
+   * @return the current derivative tolerance value.
+   */
   float get_derivative_tolerance() const;
 
   /**
-  * @brief Retrieves the integral zone of the PID controller.
-  * 
-  * @return the current integral zone value.
-  */
+   * @brief Retrieves the integral zone of the PID controller.
+   *
+   * @return the current integral zone value.
+   */
   float get_integral_zone() const;
 
   /**
-  * @brief Retrieves the integral power limit of the PID controller.
-  * 
-  * @return the current integral power limit value.
-  */
+   * @brief Retrieves the integral power limit of the PID controller.
+   *
+   * @return the current integral power limit value.
+   */
   float get_integral_power_limit() const;
 
   /**
-  * @brief Retrieves the jump time limit of the PID controller.
-  * 
-  * @return the current jump time limit value.
-  */
+   * @brief Retrieves the jump time limit of the PID controller.
+   *
+   * @return the current jump time limit value.
+   */
   float get_jump_time() const;
 
   /**
-  * @brief Retrieves the maximum value allowed for the PID controller output.
-  * 
-  * @return the maximum value allowed.
-  */
+   * @brief Retrieves the maximum value allowed for the PID controller output.
+   *
+   * @return the maximum value allowed.
+   */
   float get_max() const;
-
-  /**
-  * @brief Retrieves the minimum value allowed for the PID controller output.
-  * 
-  * @return the minimum value allowed.
-  */
-  float get_min() const; 
 
   /**
    * @brief Checks if the target was reached.
@@ -326,6 +308,4 @@ public:
   void initialization();
 };
 
-
-
-} // namespace lightning
+}  // namespace lightning
