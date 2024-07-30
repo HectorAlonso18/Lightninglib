@@ -56,6 +56,8 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
 
   this->current_index = 0;
 
+  this->odometry_rotation_deg=0; 
+
   left_side.set_encoder_units(integrated_encoders_unit);
   right_side.set_encoder_units(integrated_encoders_unit);
 
@@ -87,6 +89,9 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   this->pose[0] = 0;
   this->pose[1] = 0;
   this->pose[2] = 0;
+
+  this->odometry_rotation_deg=0; 
+
 
   this->current_index = 0;
 
@@ -154,6 +159,8 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   this->pose[1] = 0;
   this->pose[2] = 0;
 
+  this->odometry_rotation_deg=0; 
+
   this->current_index = 0;
 
   left_side.set_encoder_units(integrated_encoders_unit);
@@ -185,8 +192,8 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
 }
 
 void TankChassis::track_pose() {
-  const float cos_theta = cos(to_rad(-45));
-  const float sin_theta = sin(to_rad(-45));
+  const float cos_theta = cos(to_rad(this->odometry_rotation_deg));
+  const float sin_theta = sin(to_rad(this->odometry_rotation_deg));
 
   while (1) {
     odom.update_position(get_ForwardTracker_position(), get_SideWays_position(), get_orientation());
@@ -213,6 +220,10 @@ void TankChassis::set_coordinates(const okapi::QLength x, const okapi::QLength y
   odom.set_position(x.convert(okapi::inch), y.convert(okapi::inch), orientation_deg.convert(okapi::degree), get_ForwardTracker_position(), get_SideWays_position());
   set_orientation(orientation_deg);
 }
+
+void TankChassis::set_odometry_rotation(const double angle_of_rotation_deg){
+  this->odometry_rotation_deg = angle_of_rotation_deg; 
+} 
 
 void TankChassis::set_drive_constants(float kp, float ki, float kd, float max, float scale, float integral_power_limit, float derivative_tolerance) {
   drive_pid.set_kp(kp);
@@ -778,6 +789,10 @@ void TankChassis::stop() {
   this->left_side.brake();
   this->right_side.brake();
 }
+
+double TankChassis::get_odometry_rotation(){
+  return this->odometry_rotation_deg; 
+} 
 
 std::vector<double> TankChassis::get_pose() {
   return this->pose;

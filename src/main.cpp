@@ -1,6 +1,8 @@
 #include "main.h"
+#include "liblvgl/llemu.hpp"
 #include "lightninglib/TasksCreator.hpp"
 #include "lightninglib/util.hpp"
+#include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
 
 
@@ -27,14 +29,27 @@ This function is dedicated to make the math for your odometry system.
 WARNING: If you have and want odometry, dont delete the function. 
 NOTE: if your odometry configuration is "NO_ODOM" you can erase the function. 
 */
-void init_odometry(void*){
-    while (1) {
-    my_chassis.track_pose();      
+void init_odometry(void*) {
+  while (1) {
+    static char buffer_x[32];
+    static char buffer_y[32];
+    static char buffer_theta[32];
+
+    snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
+    snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
+    snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
+
+    pros::lcd::set_text(2, buffer_x);
+    pros::lcd::set_text(3, buffer_y);
+    pros::lcd::set_text(4, buffer_theta);
+    my_chassis.track_pose();
   }
 }
 
-
 void initialize() {
+  pros::lcd::initialize(); 
+  pros::lcd::set_text(1, "Lightning");
+ 
  /*
  Restarting the encoders and IMU,
  It s recommended to use a 3000 milliseconds delay. 

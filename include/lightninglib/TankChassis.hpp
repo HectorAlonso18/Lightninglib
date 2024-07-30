@@ -74,6 +74,8 @@ class TankChassis {
   double abs_global_x;
   double abs_global_y;
 
+  double odometry_rotation_deg; 
+
  private:
   float power_driver;
   float turn_driver;
@@ -157,6 +159,14 @@ class TankChassis {
    * @param orientation_deg the orientation in QAngle unit.
    */
   void set_coordinates(const okapi::QLength x, const okapi::QLength y, const okapi::QAngle orientation_deg);
+  
+  /**
+    *@brief Sets the odometry rotation for the odometry position system. 
+    * The odometry rotation is needed for ROTATED configurations like: ADI_TWO_ROTATED_ODOM and ROTATION_TWO_ROTATED_ODOM
+    *@param angle_of_rotation_deg The angle of rotation in degrees
+    * @note For example if your tracking wheels are rotated to -45 degrees, you use set_odometry_rotation(-45); 
+   */
+  void set_odometry_rotation(const double angle_of_rotation_deg); 
 
   /**
    * @brief Sets the DrivePID constants for the Drive PID controller.
@@ -664,6 +674,13 @@ class TankChassis {
   void tank(pros::Controller& control);
 
  public:
+
+  /**
+    *@brief Gets the odometry rotation in degrees.  
+    * The odometry rotation is needed for ROTATED configurations like: ADI_TWO_ROTATED_ODOM and ROTATION_TWO_ROTATED_ODOM
+   */
+  double get_odometry_rotation(); 
+
   /**
    * @brief Gets the current pose (the position and orientation vector)
    * @return The pose vector
