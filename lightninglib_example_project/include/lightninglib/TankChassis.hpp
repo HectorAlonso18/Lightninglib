@@ -674,7 +674,9 @@ class TankChassis {
   void tank(pros::Controller& control);
 
  public:
-
+  
+  lightning::tank_odom_e_t get_odometry_configuration(); 
+  
   /**
     *@brief Gets the odometry rotation in degrees.  
     * The odometry rotation is needed for ROTATED configurations like: ADI_TWO_ROTATED_ODOM and ROTATION_TWO_ROTATED_ODOM
