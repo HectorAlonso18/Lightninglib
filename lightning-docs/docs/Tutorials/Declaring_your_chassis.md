@@ -53,13 +53,16 @@ have odometry.
 ---
 
 ### With one tracking wheel
-If you have just one tracking wheel you can use the following configurations: 
+If you have just one tracking wheel similar to you can use the following configurations: 
 
 | Odometry configuration    |  |
 | ------------- | ------------- |
 | ``ADI_ONE_ODOM``  | Use this configuration if you are using the  [ADI Encoder](https://kb.vex.com/hc/en-us/articles/360039512851-Using-the-V5-3-Wire-Optical-Shaft-Encoder).|
 | `` ROTATION_ONE_ODOM``  | Use this configuration if you are using the [v5 Rotation Sensor](https://kb.vex.com/hc/en-us/articles/360051368331-Using-the-V5-Rotation-Sensor).  |
 
+**One Tracking wheel preview**
+
+![ONE_TRACKING_WHEEL](/img/ODOM_ONE_RENDER.png)
 
 ---
 
@@ -71,12 +74,20 @@ If you have just two tracking wheels you can use the following configurations:
 | ``ADI_TWO_ODOM``  | Use this configuration if you are using the  [ADI Encoders](https://kb.vex.com/hc/en-us/articles/360039512851-Using-the-V5-3-Wire-Optical-Shaft-Encoder).|
 | `` ROTATION_TWO_ODOM``  | Use this configuration if you are using the [v5 Rotation Sensors](https://kb.vex.com/hc/en-us/articles/360051368331-Using-the-V5-Rotation-Sensor).  |
 
+**Two Tracking wheel preview**
+
+![TWO_TRACKING_WHEEL](/img/TWO_ODOM_RENDER.png)
+
 ---
 
 ### With two rotated tracking wheels
-If you have two tracking wheels, you can rotate both of them. This way, you can make better use of the space on your robot.
+If you have two tracking wheels, you can rotate them by a certain number of degrees. This allows you to make better use of the space on your robot.
 
-With lightning, you can use this configuration. The tracking wheels need to be rotated -45 degrees.
+Although the tracking wheels will be offset, they will remain perpendicular to each other. Therefore, this configuration is possible.
+
+With ``Lightning``, you can use this configuration.
+
+After declaring your chassis, you can specify the tracking wheels' rotation angle using `set_odometry_rotation()` 
 
 The available configurations are the following: 
 
@@ -84,6 +95,10 @@ The available configurations are the following:
 | ------------- | ------------- |
 | ``ADI_TWO_ROTATED_ODOM``  | Use this configuration if you are using the  [ADI Encoders](https://kb.vex.com/hc/en-us/articles/360039512851-Using-the-V5-3-Wire-Optical-Shaft-Encoder).|
 | `` ROTATION_TWO_ROTATED_ODOM``  | Use this configuration if you are using the [v5 Rotation Sensors](https://kb.vex.com/hc/en-us/articles/360051368331-Using-the-V5-Rotation-Sensor).  |
+
+**Two Rotated Tracking wheels preview**
+
+![TWO_TRACKING_WHEEL](/img/ROTATED_ODOM_ROBOT.png)
 
 ---
 
@@ -240,6 +255,11 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 
 2.507, //Sideways tracking wheel  diameter
 1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
+
+void initialize(){
+    //the tracking wheel are rotated -45 degrees from the robots center rotation
+    my_chassis.set_odometry_rotation(-45); 
+}
 ```
 ---
 ## Declaring ROTATION_ONE_ODOM
@@ -312,6 +332,10 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 2,//Sidways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
 1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
+void initialize(){
+    //the tracking wheel are rotated -45 degrees from the robots center rotation
+    my_chassis.set_odometry_rotation(-45); 
+}
 ```
 ## Program autonomous routines 🤖 and driver period 🎮
 Now, you can start programming!
