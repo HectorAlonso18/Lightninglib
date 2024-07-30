@@ -18,7 +18,7 @@ The template was initially created for [ITESM Teams](https://www.instagram.com/t
 ---
 ## Features
 * TankDrive support.
-* Odometry class
+* Odometry class.
 * Generic PID class.
 * Generic FeedForward class.
 * Pure pursuit.
