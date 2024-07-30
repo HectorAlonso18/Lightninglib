@@ -77,6 +77,8 @@ If Python is not installed, you can download and install it [here](https://www.p
 
 3. **Run the Program**:
 ```sh
+cd python_utilities
+cd LightningPlanner
 python lightning_planner.py
 ```
 

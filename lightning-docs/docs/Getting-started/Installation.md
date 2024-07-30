@@ -21,7 +21,7 @@ you still need to have PROS installed.
 Don´t have PROS installed? Don´t worry! you can find how to install it on the [Getting Started](https://pros.cs.purdue.edu/v5/getting-started/index.html) page of the PROS documentation site.
 
 ## Download Lightning
-Once you have installed PROS it is time to install Lightning. Check the last releases of the project [here](https://github.com/HectorAlonso18/Lightninglib). 
+Once you have installed PROS it is time to install Lightning. Check the last releases of the project [here](https://github.com/HectorAlonso18/Lightninglib/releases).
 
 Then, install the last version of ```lightninglib_example_project-x.x.x.zip```.
 
