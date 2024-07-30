@@ -790,6 +790,10 @@ void TankChassis::stop() {
   this->right_side.brake();
 }
 
+lightning::tank_odom_e_t TankChassis::get_odometry_configuration(){
+  return this->odom_configuration; 
+}
+
 double TankChassis::get_odometry_rotation(){
   return this->odometry_rotation_deg; 
 } 
