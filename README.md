@@ -1,6 +1,7 @@
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
-# Lightninglib 🌩️
+![Lightning](https://hectoralonso18.github.io/Lightninglib/assets/images/Lightning_social_card-e363187a4826ffa2dbbc4f8a6b760ddb.png)
+# Lightning 🌩️
 Lightning is an easy and powerful PROS template that users can use to program more advanced autonomous routines using PID controllers, multitasking, drive train functions, odometry, motion profiles, pure pursuit, etc.
 
 The template was initially created for [ITESM Teams](https://www.instagram.com/tec_robotics/) and was inspired by other incredible templates such as:
@@ -32,6 +33,8 @@ This project could not exist without the support of the VEX community. I hope th
 
 * LightningPlanner: Plan your autonomous routes without the necessity of physical measurements.  
 
+More information about Python utilities can be found [here](https://hectoralonso18.github.io/Lightninglib/docs/category/python-utilities--).
+
 ---
 ## Lightning Demostration
 In the following YouTube videos, you can appreciate the results of using Lightning in both testing and competition scenarios. 
@@ -43,8 +46,30 @@ In the following YouTube videos, you can appreciate the results of using Lightni
 * [ITESM1 OVER UNDER Worlds QUAL autonomous](https://www.youtube.com/watch?v=LpFiJdZ04_4)
 
 ---
+## Installation 
+How to install Lightning can be found [here](https://hectoralonso18.github.io/Lightninglib/docs/Getting-started/Installation). 
+
+---
+
+## Upgrading
+How to upgrade Lightning can be found [here](https://hectoralonso18.github.io/Lightninglib/docs/Getting-started/Upgrading).
+
+---
+## Tutorials
+Lightning tutorials can be found [here](https://hectoralonso18.github.io/Lightninglib/docs/category/tutorials-).
+
+---
+
+## Documentation
+The Lightning Documentation can be found [here](https://hectoralonso18.github.io/Lightninglib/docs/category/documentation-).
+
+---
+
 ## Future work
 We working to introduce more features to lightning! and also creating the documentation page where you could see all the documentation that you need to use lightning. 
 
+---
 
+## License
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, you can obtain one at http://mozilla.org/MPL/2.0/.
 
