@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://HectorAlonso18.github.io/Lightninglib/blog</id>
+    <title>Lightning Blog</title>
+    <updated>2024-07-31T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://HectorAlonso18.github.io/Lightninglib/blog"/>
+    <subtitle>Lightning Blog</subtitle>
+    <icon>https://HectorAlonso18.github.io/Lightninglib/img/lightning_logo.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Lightning is out!🥳]]></title>
+        <id>https://HectorAlonso18.github.io/Lightninglib/blog/Lightningout</id>
+        <link href="https://HectorAlonso18.github.io/Lightninglib/blog/Lightningout"/>
+        <updated>2024-07-31T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[I am excited to announce that Lightning is finally out! After a year of hard work and dedication, Lightning is now available for everyone. I’ve put in countless hours to bring you a powerful and versatile tool, and i can't wait for you to start using it.]]></summary>
+        <content type="html"><![CDATA[<p>I am excited to announce that Lightning is finally out! After a year of hard work and dedication, Lightning is now available for everyone. I’ve put in countless hours to bring you a powerful and versatile tool, and i can't wait for you to start using it.</p>
+<p>I want to thank my team, <code>ITESM1</code>, for giving me the opportunity to test and create <code>Lightning</code>. I also want to extend my gratitude to my great friend <a href="https://www.linkedin.com/in/kevindeleon97/" target="_blank" rel="noopener noreferrer">Kevin Giovanni de León Pérez</a> for teaching me VEX programming during my freshman years, and to <a href="https://www.linkedin.com/in/leticia-siller-a0a14428a/" target="_blank" rel="noopener noreferrer">Leticia Siller</a> for helping me with the Lightning artwork.</p>
+<p>A special thanks goes to the VEX community, and especially to the development teams behind  <a href="https://ez-robotics.github.io/EZ-Template/" target="_blank" rel="noopener noreferrer">EZ-Template</a> , <a href="https://jacksonarearobotics.github.io/JAR-Template/" target="_blank" rel="noopener noreferrer">JAR Template</a>, <a href="https://github.com/Ryan4253/ryanlib/tree/main" target="_blank" rel="noopener noreferrer">ryanlib</a>, <a href="https://github.com/OkapiLib/OkapiLib" target="_blank" rel="noopener noreferrer">Okapilib</a>, <a href="https://github.com/LemLib/LemLib/tree/master" target="_blank" rel="noopener noreferrer">Lemlib</a> for providing incredible VEX open source projects that served as invaluable resources.</p>
+<p><img decoding="async" loading="lazy" alt="Lightning-social-card" src="https://hectoralonso18.github.io/Lightninglib/assets/images/Lightning_social_card-e363187a4826ffa2dbbc4f8a6b760ddb.png" width="1280" height="720" class="img_ev3q"></p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="lightning">Lightning<a class="hash-link" aria-label="Direct link to Lightning" title="Direct link to Lightning" href="https://hectoralonso18.github.io/Lightninglib/blog/Lightningout#lightning">​</a></h2>
+<p><code>Lightning</code> is an easy and powerful PROS template that users can use to program more advanced autonomous routines using PID controllers, multitasking, drive train functions, odometry, motion profiles, pure pursuit, etc.</p>
+<p>The template was initially created for <a href="https://www.instagram.com/tec_robotics/" target="_blank" rel="noopener noreferrer">ITESM Teams</a> and was inspired by other incredible templates such as:</p>
+<ul>
+<li><a href="https://github.com/EZ-Robotics/EZ-Template?tab=readme-ov-file" target="_blank" rel="noopener noreferrer">EZ-template</a></li>
+<li><a href="https://github.com/JacksonAreaRobotics/JAR-Template" target="_blank" rel="noopener noreferrer">JAR-template</a></li>
+<li><a href="https://github.com/OkapiLib/OkapiLib" target="_blank" rel="noopener noreferrer">OkapiLib</a></li>
+<li><a href="https://github.com/LemLib/LemLib/blob/master/README.md?plain=1" target="_blank" rel="noopener noreferrer">LemLib</a></li>
+<li><a href="https://github.com/Ryan4253/ryanlib" target="_blank" rel="noopener noreferrer">ryanlib</a></li>
+</ul>
+<p>With this project, I had the opportunity to learn different topics related to programming and software development.</p>
+<p>This project could not exist without the support of the VEX community. I hope this library can help many programmers around! 😉</p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a class="hash-link" aria-label="Direct link to Features" title="Direct link to Features" href="https://hectoralonso18.github.io/Lightninglib/blog/Lightningout#features">​</a></h2>
+<ul>
+<li>TankDrive support.</li>
+<li>Odometry class</li>
+<li>Generic PID class.</li>
+<li>Generic FeedForward class.</li>
+<li>Pure pursuit.</li>
+<li>Path planning and Motion profile.</li>
+<li>Multitasking.</li>
+<li>Different Math functions.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="python-utilities-">Python utilities 🐍<a class="hash-link" aria-label="Direct link to Python utilities 🐍" title="Direct link to Python utilities 🐍" href="https://hectoralonso18.github.io/Lightninglib/blog/Lightningout#python-utilities-">​</a></h2>
+<p><code>Lightning</code> has different python utilities to maximize the user experience.</p>
+<ul>
+<li>LightningPlanner: Plan your autonomous routes without the necessity of physical measurements.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="lightning-demostration">Lightning Demostration<a class="hash-link" aria-label="Direct link to Lightning Demostration" title="Direct link to Lightning Demostration" href="https://hectoralonso18.github.io/Lightninglib/blog/Lightningout#lightning-demostration">​</a></h2>
+<p>In the following YouTube videos, you can appreciate the results of using Lightning in both testing and competition scenarios.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=6EuZdJf89HI" target="_blank" rel="noopener noreferrer">Pure Pursuit testing</a></li>
+<li><a href="https://www.youtube.com/watch?v=WZaXgi8o368" target="_blank" rel="noopener noreferrer">Trapezoidal Profile</a></li>
+<li><a href="https://www.youtube.com/watch?v=hosBW9l6dMY" target="_blank" rel="noopener noreferrer">ITESM1 OVER UNDER Worlds Autonomous Routine</a></li>
+<li><a href="https://youtu.be/sDA6RqO024Y" target="_blank" rel="noopener noreferrer">ITESM1 OVER UNDER Worlds Q-F autonomous</a></li>
+<li><a href="https://www.youtube.com/watch?v=LpFiJdZ04_4" target="_blank" rel="noopener noreferrer">ITESM1 OVER UNDER Worlds QUAL autonomous</a></li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="future-work">Future work<a class="hash-link" aria-label="Direct link to Future work" title="Direct link to Future work" href="https://hectoralonso18.github.io/Lightninglib/blog/Lightningout#future-work">​</a></h2>
+<p>We working to introduce more features to lightning! and also creating the documentation page where you could see all the documentation that you need to use lightning.</p>
+<hr>]]></content>
+        <author>
+            <name>Héctor Alonso</name>
+            <uri>https://github.com/HectorAlonso18</uri>
+        </author>
+        <category label="Lightning" term="Lightning"/>
+        <category label="Release" term="Release"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Welcome]]></title>
+        <id>https://HectorAlonso18.github.io/Lightninglib/blog/welcome</id>
+        <link href="https://HectorAlonso18.github.io/Lightninglib/blog/welcome"/>
+        <updated>2024-07-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to the official Lightning blog. In this blog, we will announce new releases, share tutorials, report bugs, provide information on bug fixes, and much more. Stay tuned for updates and tips on how to make the most out of Lightning!]]></summary>
+        <content type="html"><![CDATA[<p>Welcome to the official Lightning blog. In this blog, we will announce new releases, share tutorials, report bugs, provide information on bug fixes, and much more. Stay tuned for updates and tips on how to make the most out of Lightning!</p>
+<p><img decoding="async" loading="lazy" alt="Docusaurus Plushie" src="https://hectoralonso18.github.io/Lightninglib/assets/images/lightning_banner_welcome-6cae7281d1ddbae8323b087773f5d546.jpg" width="1600" height="900" class="img_ev3q"></p>]]></content>
+        <author>
+            <name>Héctor Alonso</name>
+            <uri>https://github.com/HectorAlonso18</uri>
+        </author>
+        <category label="Lightning" term="Lightning"/>
+    </entry>
+</feed>

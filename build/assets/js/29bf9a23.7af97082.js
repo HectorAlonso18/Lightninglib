@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunklightning_docs=self.webpackChunklightning_docs||[]).push([[8051],{1067:t=>{t.exports=JSON.parse('{"metadata":{"permalink":"/Lightninglib/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

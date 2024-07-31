@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunklightning_docs=self.webpackChunklightning_docs||[]).push([[7472],{5513:i=>{i.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Lightning is out!\ud83e\udd73","permalink":"/Lightninglib/blog/Lightningout","unlisted":false},{"title":"Welcome","permalink":"/Lightninglib/blog/welcome","unlisted":false}]}')}}]);
