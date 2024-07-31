@@ -72,6 +72,7 @@ We working to introduce more features to lightning! and also creating the docume
 
 ## Do you found a bug🐛 or a problem?
 Feel free to ask questions or report issues by contacting me at my email: ``hector_alonso_ibarra@outlook.com``
+
 ---
 
 ## License
