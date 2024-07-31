@@ -70,6 +70,10 @@ We working to introduce more features to lightning! and also creating the docume
 
 ---
 
+## Do you found a bug🐛 or a problem?
+Feel free to ask questions or report issues by contacting me at my email: ``hector_alonso_ibarra@outlook.com``
+---
+
 ## License
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, you can obtain one at http://mozilla.org/MPL/2.0/.
 
