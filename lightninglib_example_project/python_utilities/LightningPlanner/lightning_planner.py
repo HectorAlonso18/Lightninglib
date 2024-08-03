@@ -196,8 +196,8 @@ def coordenadas(x, y):
 
         print("x: %.2f" % x_respecto,"(inches) ", "y: %.2f" % y_respecto,"(inches)")
         turtle.goto(x, y)
-        xs.append(x)
-        ys.append(y)
+        xs.append(x_respecto)
+        ys.append(y_respecto)
 
 
 def reset():  
