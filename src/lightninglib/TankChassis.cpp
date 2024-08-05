@@ -373,7 +373,8 @@ void TankChassis::drive_to_point(PID& drive_controller, PID& turn_controller, st
   if (reverse) {
     target_orientation -= 180;
   }
-
+  
+  double turn_error = reduce_angle_180_to_180(target_orientation - get_orientation());
   turn_controller.set_integral_zone(target_orientation * .3);
   turn_controller.initialization();
 
@@ -384,11 +385,11 @@ void TankChassis::drive_to_point(PID& drive_controller, PID& turn_controller, st
   int sign = reverse ? -1 : 1;
 
   while (!drive_controller.target_arrived()) {
-    drive_error = distance_btw_points(target, this->position);
-    double turn_error = reduce_angle_180_to_180(target_orientation - get_orientation());
-
+    turn_error = reduce_angle_180_to_180(target_orientation - get_orientation());
+    drive_error = sin(to_rad(turn_error))*distance_btw_points(target, this->position);
+    
     turn_controller.update(turn_error);
-    drive_controller.update(drive_error * sign);
+    drive_controller.update(drive_error);
 
     left_side.move_velocity(drive_controller.get_output() + turn_controller.get_output());
     right_side.move_velocity(drive_controller.get_output() - turn_controller.get_output());
