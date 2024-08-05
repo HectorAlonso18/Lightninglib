@@ -18,6 +18,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #include "okapi/api/units/QLength.hpp"
 #include "pros/misc.h"
 #include "pros/motors.h"
+#include "pros/rtos.h"
 #include "pros/rtos.hpp"
 
 
@@ -367,6 +368,55 @@ void TankChassis::drive_distance(const okapi::QLength distance, const okapi::QAn
   drive_distance(this->drive_pid, turn_pid, distance.convert(okapi::inch), target_orientation.convert(okapi::degree));
 }
 
+void TankChassis::drive_to_pose(PID& drive_controller, PID& turn_controller, std::vector<double> target_point, double orientation, float lead){
+  double target_orientation =0;
+  double turn_error = 0;
+
+  turn_controller.initialization();
+
+  double drive_error =0;
+  drive_controller.initialization();
+
+  double h = 0;
+  std::vector<double> carrot_point {0,0}; 
+
+  while (!drive_controller.target_arrived() && !turn_controller.target_arrived()) {
+    h = distance_btw_points(target_point, this->position);
+    carrot_point[0] = target_point[0] - ( h * cos(to_rad(orientation))) * lead;   
+    carrot_point[1]= target_point[1] - ( h * sin(to_rad(orientation))) * lead; 
+    
+    target_orientation = get_angle_btw_points(this->position, carrot_point);    
+    turn_error = reduce_angle_180_to_180(target_orientation - get_orientation());
+
+    drive_error = sin(to_rad(turn_error))*distance_btw_points(carrot_point, this->position);
+    
+    drive_controller.set_integral_zone(drive_error*.45); 
+    turn_controller.set_integral_zone(turn_error*.3); 
+
+    turn_controller.update(turn_error);
+    drive_controller.update(drive_error);
+
+    left_side.move_velocity(drive_controller.get_output() + turn_controller.get_output());
+    right_side.move_velocity(drive_controller.get_output() - turn_controller.get_output());
+    
+    pros::delay(drive_controller.get_sample_time());
+  }
+
+  stop();
+}
+
+void TankChassis::drive_to_pose(PID& drive_controller, PID& turn_controller, std::vector<okapi::QLength> target_point, okapi::QAngle orientation, okapi::QLength lead){
+  drive_to_pose(drive_controller,turn_controller,{target_point[0].convert(okapi::inch), target_point[1].convert(okapi::inch)}, orientation.convert(okapi::degree), lead.convert(okapi::inch)); 
+}
+
+void TankChassis::drive_to_pose(std::vector<double> target_point, double orientation, float lead){
+  drive_to_pose(this->drive_pid,this->turn_pid,target_point,orientation,lead); 
+}
+
+void TankChassis::drive_to_pose(std::vector<okapi::QLength> target_point, okapi::QAngle orientation, okapi::QLength lead){
+  drive_to_pose({target_point[0].convert(okapi::inch), target_point[1].convert(okapi::inch)},orientation.convert(okapi::degree), lead.convert(okapi::inch)); 
+}
+
 void TankChassis::drive_to_point(PID& drive_controller, PID& turn_controller, std::vector<double> target, bool reverse) {
   double target_orientation = get_angle_btw_points(this->position, target);
 
@@ -384,7 +434,7 @@ void TankChassis::drive_to_point(PID& drive_controller, PID& turn_controller, st
 
   int sign = reverse ? -1 : 1;
 
-  while (!drive_controller.target_arrived()) {
+  while (!drive_controller.target_arrived() && !turn_controller.target_arrived()) {
     turn_error = reduce_angle_180_to_180(target_orientation - get_orientation());
     drive_error = sin(to_rad(turn_error))*distance_btw_points(target, this->position);
     

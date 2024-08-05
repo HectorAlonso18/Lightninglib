@@ -284,11 +284,55 @@ class TankChassis {
    *        The new motors chassis voltage from -127 to 127
    */
   void move(const int voltage);
+  
+  /**
+    * @brief Drives the robot from a starting pose to a target pose, using the boomerang controller.
+    *@param drive_controller A PID controller designated for controlling the forward and backward movements of the robot.
+    *@param turn_controller A PID controller designated for turns.
+    *@param target_point  The target point {x,y} in inches.
+    *@param orientation The orientation in degrees. 
+    *@param lead is the gain that controls how far the carrot point is away from the end point. Can be a value between 0 and 1.
+    *@note The boomerang controller just make the math to calculate the target coordinates in each cycle, the power calculatios are made
+    * Using two PID controllers
+   */
+  void drive_to_pose(PID& drive_controller, PID& turn_controller, std::vector<double> target_point, double orientation, float lead); 
+  
+  /**
+    * @brief Drives the robot from a starting pose to a target pose, using the boomerang controller.
+    *@param drive_controller A PID controller designated for controlling the forward and backward movements of the robot.
+    *@param turn_controller A PID controller designated for turns.
+    *@param target_point  The target point {x,y} in okapi units.
+    *@param orientation The orientation in okapi units. 
+    *@param lead is the gain that controls how far the carrot point is away from the end point. in okapi units.
+    *@note The boomerang controller just make the math to calculate the target coordinates in each cycle, the power calculatios are made
+    * Using two PID controllers
+   */
+  void drive_to_pose(PID& drive_controller, PID& turn_controller, std::vector<okapi::QLength> target_point, okapi::QAngle orientation, okapi::QLength lead); 
+  
+  /**
+    * @brief Drives the robot from a starting pose to a target pose, using the boomerang controller.
+    *@param target_point  The target point {x,y} in inches.
+    *@param orientation The orientation in degrees. 
+    *@param lead is the gain that controls how far the carrot point is away from the end point. Can be a value between 0 and 1.
+    *@note The boomerang controller just make the math to calculate the target coordinates in each cycle, the power calculatios are made
+    * Using two PID controllers
+   */
+  void drive_to_pose(std::vector<double> target_point, double orientation, float lead); 
+
+   /**
+    * @brief Drives the robot from a starting pose to a target pose, using the boomerang controller.
+    *@param target_point  The target point {x,y} in okapi units.
+    *@param orientation The orientation in okapi units. 
+    *@param lead is the gain that controls how far the carrot point is away from the end point. in okapi units.
+    *@note The boomerang controller just make the math to calculate the target coordinates in each cycle, the power calculatios are made
+    * Using two PID controllers
+   */
+  void drive_to_pose(std::vector<okapi::QLength> target_point, okapi::QAngle orientation, okapi::QLength lead); 
 
   /**
    *@brief Drives the robot from a starting point to a target point using custom PID controller (Created for the user).
    *@param drive_controller a PID controller designated for controlling the forward and backward movements of the robot.
-   *@param turn_controlle a PID controller designated for turns.
+   *@param turn_controller a PID controller designated for turns.
    *@param target the target point {x,y} in inches.
    *@param reverse true if you want to go backwards.
    *@note The robot MUST to be facing the target point.
@@ -298,7 +342,7 @@ class TankChassis {
   /**
    *@brief Drives the robot from a starting point to a target point using custom PID controller (Created for the user) using okapi units.
    *@param drive_controller a PID controller designated for controlling the forward and backward movements of the robot.
-   *@param turn_controlle a PID controller designated for turns.
+   *@param turn_controller a PID controller designated for turns.
    *@param target the target point {x,y} in okapi units, for example could be in inches, centimeters, meters, etc.
    *@param reverse true if you want to go backwards.
    *@note The robot MUST to be facing the target point.
@@ -409,7 +453,8 @@ class TankChassis {
    * @param target_orientation The target orientation in which you want the robot to stay, Using okapi units.
    */
   void drive_distance(const okapi::QLength distance, const okapi::QAngle target_orientation);
-
+   
+  
   /**
    *@brief Makes the robot turn to a certain orientation using a user-defined PID controller.
    *@param turn_control the user PID controller.
