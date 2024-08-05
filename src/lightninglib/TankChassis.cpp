@@ -617,6 +617,29 @@ void TankChassis::turn_relative(double degrees) {
   turn_relative(this->turn_pid, degrees);
 }
 
+void TankChassis::turn_to_point(PID& turn_control, std::vector<double> point){
+  double target_orientation = get_angle_btw_points(this->position, point); 
+  this->turn_absolute(turn_control,target_orientation); 
+}
+
+void TankChassis::turn_to_point(std::vector<double> point){
+   double target_orientation = get_angle_btw_points(this->position, point); 
+   this->turn_absolute(target_orientation); 
+}
+
+void TankChassis::turn_to_point(PID& turn_control, std::vector<okapi::QLength> point){
+  std::vector<double> converted_point = {point[0].convert(okapi::inch), point[1].convert(okapi::inch)}; 
+  double target_orientation = get_angle_btw_points(this->position, converted_point); 
+  this->turn_absolute(turn_control ,target_orientation); 
+}
+
+void TankChassis::turn_to_point(std::vector<okapi::QLength> point){
+  std::vector<double> converted_point = {point[0].convert(okapi::inch), point[1].convert(okapi::inch)}; 
+  double target_orientation = get_angle_btw_points(this->position, converted_point); 
+  this->turn_absolute(target_orientation); 
+}
+
+
 void TankChassis::swing_turn_absolute(PID& swing_control, lightning::swing_direction_e_t swing_direction, double target_orientation, const int opposite_speed_rpm) {
   target_orientation = reduce_angle_0_to_360(target_orientation);
   // swing_control.set_target(target_orientation);

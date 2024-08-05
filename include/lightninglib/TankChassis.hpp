@@ -519,6 +519,36 @@ class TankChassis {
   void turn_relative(double degrees);
 
   /**
+   *@brief Makes the robot turn to a target point given by the user. 
+   *@param turn_control the user PID controller.
+   *@param point  The target point in inches.
+   *@note the turning direction is determinated depending of which direction means less travel.
+   */
+  void turn_to_point(PID& turn_control, std::vector<double> point); 
+
+   /**
+   *@brief Makes the robot turn to a target point given by the user. 
+   *@param point  The target point in inches.
+   *@note the turning direction is determinated depending of which direction means less travel.
+   */
+  void turn_to_point(std::vector<double> point); 
+
+  /**
+   *@brief Makes the robot turn to a target point given by the user. 
+   *@param turn_control the user PID controller.
+   *@param point  The target point in okapi units.
+   *@note the turning direction is determinated depending of which direction means less travel.
+   */
+  void turn_to_point(PID& turn_control, std::vector<okapi::QLength> point); 
+
+   /**
+   *@brief Makes the robot turn to a target point given by the user. 
+   *@param point  The target point in okapi units.
+   *@note the turning direction is determinated depending of which direction means less travel.
+   */
+  void turn_to_point(std::vector<okapi::QLength> point); 
+
+  /**
    *@brief Makes the robot turn to a certain orientation using a user-defined PID controller, blocking one side of the drive train, making a 'swing'.
    *@param swing_control the user PID controller.
    *@param swing_direction what side do you want to block?
