@@ -233,6 +233,7 @@ void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
 
   while (true) {
+    //Left stick as default
    my_chassis.arcade(master);  //DRIVING ROBOT IN ARCADE MODE 
    
    /**
