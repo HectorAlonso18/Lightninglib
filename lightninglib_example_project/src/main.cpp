@@ -39,26 +39,28 @@ This function is dedicated to make the math for your odometry system and print t
 WARNING: If you have and want odometry, don´t delete the function. 
 */
 void init_track(void*) {
-  while (1) {
-    if(!(my_chassis.get_odometry_configuration()== lightning::NO_ODOM)){
+ while (1) {
     static char buffer_x[32];
     static char buffer_y[32];
     static char buffer_theta[32];
 
-    snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
-    snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
-    snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
+    if (my_chassis.get_odometry_configuration() != lightning::NO_ODOM) {
 
-    pros::lcd::set_text(2, buffer_x);
-    pros::lcd::set_text(3, buffer_y);
-    pros::lcd::set_text(4, buffer_theta);
-    my_chassis.track_pose();
-   }
+      snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
+      snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
+      snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
+
+      pros::lcd::set_text(2, buffer_x);
+      pros::lcd::set_text(3, buffer_y);
+      pros::lcd::set_text(4, buffer_theta);
+      my_chassis.track_pose();
+      pros::delay(10);
+    }
 
     else {
-    static char buffer_theta[32];
-    snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
-    pros::lcd::set_text(2, buffer_theta);
+      snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
+      pros::lcd::set_text(2, buffer_theta);
+      pros::delay(10);
     }
   }
 }
