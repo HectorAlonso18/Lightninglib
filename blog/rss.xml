@@ -4,10 +4,65 @@
         <title>Lightning Blog</title>
         <link>https://HectorAlonso18.github.io/Lightninglib/blog</link>
         <description>Lightning Blog</description>
-        <lastBuildDate>Wed, 31 Jul 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 15 Sep 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Lightning On Youtube! 📽️]]></title>
+            <link>https://HectorAlonso18.github.io/Lightninglib/blog/Lightning on Youtube</link>
+            <guid>https://HectorAlonso18.github.io/Lightninglib/blog/Lightning on Youtube</guid>
+            <pubDate>Sun, 15 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[During the last month, I have been uploading lightning tutorials on my Youtube channel.]]></description>
+            <content:encoded><![CDATA[<p>During the last month, I have been uploading lightning tutorials on my Youtube channel.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2JI5_sda7eE?si=fNyVJdByYOnhB5qe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<p>In this brand-new series, I will show you the lightning fundamentals,installation, upgrading,tutorials, and tips.</p>
+<p>The objetive of this Youtube series is to provide a more dynamic resource. However, It is recommended to complement the video tutorials with the written documentation.</p>
+<p>Additionally, I recommend you to check it out my <a href="https://youtube.com/@alonsoibarrahector8773?si=tVnZo6VtZinRvJFV" target="_blank" rel="noopener noreferrer">Youtube Channel</a>. I usually upload VEX tutorials outside of the Lightning tutorials.</p>]]></content:encoded>
+            <category>Lightning</category>
+            <category>Release</category>
+        </item>
+        <item>
+            <title><![CDATA[v1.1.0 is here!💪]]></title>
+            <link>https://HectorAlonso18.github.io/Lightninglib/blog/Lightning v1.1.0</link>
+            <guid>https://HectorAlonso18.github.io/Lightninglib/blog/Lightning v1.1.0</guid>
+            <pubDate>Sun, 15 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[I am thrilled to announce that the first content version of lightning is out.]]></description>
+            <content:encoded><![CDATA[<p>I am thrilled to announce that the first content version of lightning is out.</p>
+<p>The <code>v1.1.0</code> adds new functions for chassis motion and a new brand arcade configuration.</p>
+<hr>
+<h1>What is new?</h1>
+<ul>
+<li>
+<p><strong>Added new arcade configuration 🕹️ (<code>E_TANK_OP_ARCADE_DOUBLE_ALTERNATIVE</code>)</strong>
+With this configuration now you can control de forward/backward movements using the right stick and control the turns using the left stick</p>
+</li>
+<li>
+<p><strong>New overloads for motion functions 🏎️</strong></p>
+<ul>
+<li><code>move_velocity(const int left_rpm, const int right_rpm)</code></li>
+<li><code>move_voltage(const int left_voltage_mv, const int right_voltage_mv)</code></li>
+<li><code>move(const int left_voltage, const int right_voltage)</code></li>
+</ul>
+<p>Now it is possible to control each side of the drive train. In previous versions you were just able to control the entire drive train.</p>
+</li>
+</ul>
+<hr>
+<h1>Sounds great, how can i start coding? 😳</h1>
+<p>Great! just dowloand the example project <a href="https://github.com/HectorAlonso18/Lightninglib/releases/tag/v1.1.0" target="_blank" rel="noopener noreferrer">here</a>.</p>
+<hr>
+<h1>How can i upgrade my lightning project ?</h1>
+<p>Easy, just follow these steps:</p>
+<ol>
+<li>Download the zip file <code>lightninglib@1.1.0.zip</code></li>
+<li>Go to the PROS terminal in your project</li>
+<li>Execute this command: <code>pros conduct fetch lightninglib@1.1.0.zip</code></li>
+<li>Then execute: <code>pros conduct apply lightninglib</code></li>
+<li>There you go! Start coding 😀</li>
+</ol>]]></content:encoded>
+            <category>Lightning</category>
+            <category>Release</category>
+        </item>
         <item>
             <title><![CDATA[Lightning is out!🥳]]></title>
             <link>https://HectorAlonso18.github.io/Lightninglib/blog/Lightningout</link>
