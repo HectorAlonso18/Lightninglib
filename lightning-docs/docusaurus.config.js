@@ -102,6 +102,7 @@ const config = {
           {to: '/docs/category/documentation-',label:'Docs',position:'left'},
           {to:'/docs/category/tutorials-',label:'Tutorials',position:'left'},
           {to:"/docs/category/python-utilities--",label:"Python Utilities",position:'left'},
+          {to:"/docs/category/youtube-series-%EF%B8%8F",label:"Youtube Series",position:'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/HectorAlonso18/Lightninglib',
