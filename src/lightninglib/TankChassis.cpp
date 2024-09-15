@@ -302,14 +302,29 @@ void TankChassis::move_velocity(const int rpm) {
   right_side.move_velocity(rpm);
 }
 
+void TankChassis::move_velocity(const int left_rpm, const int right_rpm){
+  left_side.move_velocity(left_rpm); 
+  right_side.move_velocity(right_rpm); 
+} 
+
 void TankChassis::move_voltage(const int voltage_mv) {
   left_side.move_voltage(voltage_mv);
   right_side.move_voltage(voltage_mv);
 }
 
+void TankChassis::move_voltage(const int left_voltage_mv, const int right_voltage_mv){
+  left_side.move_voltage(left_voltage_mv);
+  right_side.move_voltage(right_voltage_mv);
+} 
+
 void TankChassis::move(const int voltage) {
   left_side.move(voltage);
   right_side.move(voltage);
+}
+
+void TankChassis::move(const int left_voltage, const int right_voltage){
+  left_side.move(left_voltage);
+  right_side.move(right_voltage);
 }
 
 void TankChassis::raw_drive_distance(double distance, const int vel_rpm) {
