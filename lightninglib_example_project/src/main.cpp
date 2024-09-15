@@ -233,7 +233,7 @@ void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
 
   while (true) {
-   my_chassis.arcade(master);  //DRIVING ROBOT IN ARCADE MODE 
+   my_chassis.arcade(master,lightning::E_TANK_OP_ARCADE_DOUBLE_ALTERNATIVE);  //DRIVING ROBOT IN ARCADE MODE 
    
    /**
    If you want tank configuration use: my_chassis.tank(master); 

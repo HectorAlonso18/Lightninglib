@@ -30,7 +30,8 @@ typedef enum {
 typedef enum {
   E_TANK_OP_ARCADE_LEFT = 0,  // Left stick configuration
   E_TANK_OP_ARCADE_RIGHT,     // Right stick configuration
-  E_TANK_OP_ARCADE_DOUBLE     // Double stick configuration
+  E_TANK_OP_ARCADE_DOUBLE,     // Double stick configuration
+  E_TANK_OP_ARCADE_DOUBLE_ALTERNATIVE
 } tank_op_arcade_e_t;
 
 }  // namespace lightning
