@@ -166,6 +166,30 @@ void opcontrol() {
 }
 ```
 ---
+
+## Double arcade alternative
+
+This configuration allows you to control robot´s forward and backward direction with the right joystick´s Y-axis, and control the turning direciton with the left right joystick´s X-axis.
+
+:::tip
+This is an alternative way to drive the chassis, istead of using the default double configuration.
+:::
+
+To add the double configuration, you just need to use the ``arcade()`` function as follows:
+
+```cpp {4} title="main.cpp"
+void opcontrol() {
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
+  while (true) {
+   my_chassis.arcade(master,E_TANK_OP_ARCADE_DOUBLE_ALTERNATIVE);  
+
+   pros::delay(lightning::util::DELAY_TIME); 
+  }
+}
+```
+
+---
+
 ## Adding rates to arcade configurations
 When the robot moves too quickly, controlling the chassis can become challenging. To address this, you can adjust the rates to modify the joystick output, which will help slow down the robot.
 
