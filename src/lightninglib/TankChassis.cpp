@@ -1035,8 +1035,20 @@ void TankChassis::tank(pros::Controller& control) {
 }
 
 void TankChassis::reset_odometry() {
+  if(this->odom_configuration == ADI_ONE_ODOM || this->odom_configuration==ADI_TWO_ODOM || this->odom_configuration==ADI_TWO_ROTATED_ODOM){
   this->Encoder_Forward_tracker.reset();
+  pros::delay(20);
   this->Encoder_SideWays_tracker.reset();
+  pros::delay(20);
+  }
+
+  if(this->odom_configuration == ROTATION_ONE_ODOM || this->odom_configuration==ROTATION_TWO_ODOM || this->odom_configuration==ROTATION_TWO_ROTATED_ODOM){
+  this->Rotation_Forward_tracker.reset_position(); 
+  pros::delay(20);
+  this->Rotation_SideWays_tracker.reset_position();
+  pros::delay(20); 
+  }
+
   this->ForwardTracker_position_inches = 0;
   this->SideWaysTracker_position_inches = 0;
   orientation = 0;
