@@ -975,6 +975,14 @@ void TankChassis::arcade(pros::Controller& control,
         control.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) * turn_rate;
   }
 
+  if (arcade == lightning::E_TANK_OP_ARCADE_DOUBLE_ALTERNATIVE) {
+    power_driver =
+        control.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y) * power_rate;
+    turn_driver =
+        control.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) * turn_rate;
+  }
+
+
   left_side.move(power_driver + turn_driver);
   right_side.move(power_driver - turn_driver);
 }
@@ -1005,6 +1013,13 @@ void TankChassis::arcade_exponential(pros::Controller& control,
   if (arcade == lightning::E_TANK_OP_ARCADE_DOUBLE) {
     raw_joystick_x = control.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
     raw_joystick_y = control.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+  }
+
+  if (arcade == lightning::E_TANK_OP_ARCADE_DOUBLE_ALTERNATIVE) {
+    power_driver =
+        control.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
+    turn_driver =
+        control.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
   }
 
   power = util::smooth_Joystick_Output(raw_joystick_y, n_y);
