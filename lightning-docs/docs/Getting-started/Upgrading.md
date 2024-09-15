@@ -21,7 +21,7 @@ pros conduct fetch lightninglib@x.x.x.zip
 ```
 ### Applying lightning
 ```bash title="PROS Terminal"
-pros conduct apply lightning
+pros conduct apply lightninglib
 ```
 ## Verifying installation
 To verify if Lightning is now in your project follow the next steps: 

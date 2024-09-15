@@ -51,7 +51,6 @@ lightning::tank_odom_e_t::NO_ODOM,
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
 3.25, //Wheel Diameter
 1.3333); //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
-
 ```
 </TabItem>
 
@@ -124,8 +123,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 {-1,-1},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 0, //Sideways tracking wheel  diameter in inches
 0); //Sideways that exist between the forward tracker and the robot rotation center.
-
-
 ```
 </TabItem>
 
@@ -150,8 +147,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 {-3,-4},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
 1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
-
-
 ```
 </TabItem>
 
@@ -177,7 +172,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 {-3,-4},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
 1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
-
 ```
 </TabItem>
 
@@ -282,7 +276,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 2,//Sideways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
 1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
-
 ```
 </TabItem>
 
@@ -308,8 +301,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 2,//Sideways V5 ROTATION SENSOR PORT (using a negative number will reverse it!), setting 0 would cancel the tracker!
 2.507, //Sideways tracking wheel  diameter
 1.783); //Distance that exist between the Sideways tracker and the robot rotation center.
-
-
 ```
 </TabItem>
 
@@ -373,7 +364,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 void autonomous(){
     my_chassis.set_drive_constants(5 , .001 , 1, 450, 1, 25,50);  
 }
-
 ```
 </TabItem>
 
@@ -430,7 +420,6 @@ void autonomous(){
     my_chassis.set_drive_constants(5 , .001 , 1, 450, 1, 25,50);  
     my_chassis.set_drive_exit_conditions(1,350,2000); 
 }
-
 ```
 </TabItem>
 
@@ -487,7 +476,6 @@ void autonomous(){
     */
     my_chassis.set_drive_scale(.5); //Reducing the PID output. Using just 50% of the power. 
 }
-
 ```
 </TabItem>
 
@@ -539,7 +527,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 void autonomous(){
     my_chassis.set_turn_constants(5 , .001 , 1, 450, 1, 25,50);  
 }
-
 ```
 </TabItem>
 
@@ -596,7 +583,6 @@ void autonomous(){
     my_chassis.set_turn_constants(5 , .001 , 1, 450, 1, 25,50);  
     my_chassis.set_turn_exit_conditions(1,350,2000); 
 }
-
 ```
 </TabItem>
 
@@ -653,7 +639,6 @@ void autonomous(){
     */
     my_chassis.set_turn_scale(.5); //Reducing the PID output. Using just 50% of the power. 
 }
-
 ```
 </TabItem>
 
@@ -705,7 +690,6 @@ pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green?
 void autonomous(){
     my_chassis.set_swing_constants(5 , .001 , 1, 450, 1, 25,50);  
 }
-
 ```
 </TabItem>
 
@@ -762,7 +746,6 @@ void autonomous(){
     my_chassis.set_swing_constants(5 , .001 , 1, 450, 1, 25,50);  
     my_chassis.set_swing_exit_conditions(1,350,2000); 
 }
-
 ```
 </TabItem>
 
@@ -819,7 +802,6 @@ void autonomous(){
     */
     my_chassis.set_swing_scale(.5); //Reducing the PID output. Using just 50% of the power. 
 }
-
 ```
 </TabItem>
 
@@ -868,11 +850,9 @@ void move_velocity(const int rpm);
 <TabItem value="example">
 
 ```cpp {14}
-
 void autonomous(){
     my_chassis.move_velocity(500); //Running the Robot at 500 RPM. 
 }
-
 ```
 </TabItem>
 
@@ -884,10 +864,46 @@ void autonomous(){
 
 ---
 
+Sets the velocity for the motor chassis (Leftside or Rightside)
+
+<Tabs
+  groupId="TankChassis_motion_functions_move_velocity_2"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+void move_velocity(const int left_rpm, const int right_rpm); 
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp {14}
+void autonomous(){
+    my_chassis.move_velocity(500,500); //Running the Robot at 500 RPM.
+    //Left side 500 RPM and Righ Side 500 RPM  
+}
+```
+</TabItem>
+
+</Tabs>  
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``left_rpm``  | The left_side motors chassis velocity from +-100, +-200, or +-600 depending on the motor's gearset|
+| `right_rpm` | The right_side motors chassis velocity from +-100, +-200, or +-600 depending on the motor's gearset |
+
+---
+
 ### move_voltage()
 Sets the output voltage for the motors chassis from -12000 to 12000 in millivolts. 
-
-This function uses the following values of errno when an error state is reached:
 
 <Tabs
   groupId="TankChassis_motion_functions_move_voltage"
@@ -909,12 +925,9 @@ void move_voltage(const int voltage_mv);
 <TabItem value="example">
 
 ```cpp {14}
-
-
 void autonomous(){
     my_chassis.move_voltage(8000); //
 }
-
 ```
 </TabItem>
 
@@ -924,6 +937,42 @@ void autonomous(){
 | ------------- | ------------- |
 | ``voltage_mv``  |  The new voltage value from -12000 to 12000 millivolts.|
 
+---
+
+Sets the output voltage for the motors chassis sides (LEFT SIDE AND RIGHT SIDE) from -12000 to 12000 in millivolts. 
+
+<Tabs
+  groupId="TankChassis_motion_functions_move_voltage_2"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+void move_voltage(const int left_voltage_mv, const int right_voltage_mv);
+```
+</TabItem>
+
+
+<TabItem value="example">
+```cpp {14}
+void autonomous(){
+    //Leftside running at 8 volts and Right side runnint at 4 volts
+    my_chassis.move_voltage(8000, 4000); 
+}
+```
+</TabItem>
+
+</Tabs>  
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``left_voltage_mv``  |  The new voltage value from -12000 to 12000 millivolts for the left side.|
+| ``right_voltage_mv``  |  The new voltage value from -12000 to 12000 millivolts for the right side.|
 ---
 
 ### move()
@@ -967,6 +1016,45 @@ void autonomous(){
 
 ---
 
+Sets the voltage for the motors chassis sides (left and right sides) from -127 to 127.
+
+This is designed to map easily to the input from the controller's analog stick for simple opcontrol use.
+
+<Tabs
+  groupId="TankChassis_motion_functions_move"
+  defaultValue="proto"
+  values={[
+    { label: 'Prototype',  value: 'proto', },
+    { label: 'Example ',  value: 'example', },
+  ]
+}>
+
+<TabItem value="proto">
+
+```cpp
+void move(const int left_voltage, const int right_voltage); 
+```
+</TabItem>
+
+
+<TabItem value="example">
+
+```cpp {14}
+void autonomous(){
+    my_chassis.move(-127, 127);
+}
+```
+</TabItem>
+
+</Tabs>  
+
+| Parameters    |  |
+| ------------- | ------------- |
+| ``left_voltage``  | The new left side motors chassis voltage from -127 to 127.|
+| ``right_voltage``  | The new right side motors chassis voltage from -127 to 127.|
+
+---
+
 ### drive_to_point() 
 Drives the robot from a starting point to a target point. **Different versions of this function are available below.** 
 
@@ -997,7 +1085,6 @@ void drive_to_point(PID& drive_controller, PID& turn_controller, std::vector<dou
 <TabItem value="example">
 
 ```cpp {24}
-
 void autonomous(){
 
     lightning::PID drive_controller (5,.001,2,10,1); 
@@ -1022,7 +1109,6 @@ void autonomous(){
 
     my_chassis.drive_to_point(drive_controller,turn_controller, {0,24}, false); 
 }
-
 ```
 </TabItem>
 
@@ -1061,7 +1147,6 @@ void drive_to_point(PID& drive_controller, PID& turn_controller, std::vector<oka
 <TabItem value="example">
 
 ```cpp {24}
-
 void autonomous(){
 
     lightning::PID drive_controller (5,.001,2,10,1); 
@@ -1086,7 +1171,6 @@ void autonomous(){
 
     my_chassis.drive_to_point(drive_controller,turn_controller, {0_in,24_in}, false); 
 }
-
 ```
 </TabItem>
 
@@ -1124,7 +1208,6 @@ void drive_to_point(std::vector<double>target, bool reverse);
 <TabItem value="example">
 
 ```cpp {9}
-
 void autonomous(){
     my_chassis.set_drive_constants(5 , .001 , 1, 450, 1, 25,50);  
     my_chassis.set_drive_exit_conditions(1,350,2000); 
@@ -1134,7 +1217,6 @@ void autonomous(){
     
     my_chassis.drive_to_point({0,24},false); //USING THE my_chassis drive and turn pid! 
 }
-
 ```
 </TabItem>
 
@@ -1169,7 +1251,6 @@ void drive_to_point(std::vector<okapi::QLength> target, bool reverse);
 <TabItem value="example">
 
 ```cpp {9}
-
 void autonomous(){
     my_chassis.set_drive_constants(5 , .001 , 1, 450, 1, 25,50);  
     my_chassis.set_drive_exit_conditions(1,350,2000); 
@@ -1179,7 +1260,6 @@ void autonomous(){
     
     my_chassis.drive_to_point({0_in,24_in},false); //USING THE my_chassis drive and turn pid! 
 }
-
 ```
 </TabItem>
 
@@ -1224,7 +1304,6 @@ Drives the robot to follow a pre-computaded path using PID controllers created f
 <TabItem value="example">
 
 ```cpp {32}
-
 lightning::Path goal_path ({0,0,24,48},{0,24,48,64},true,3);  //PATH
 
 void autonomous(){
@@ -1257,7 +1336,6 @@ void autonomous(){
     
     my_chassis.follow_path(goal_path,drive_controller,turn_controller,12); 
 }
-
 ```
 </TabItem>
 
@@ -1287,7 +1365,6 @@ Drives the robot to follow a pre-computaded path using the ``Drive`` and ``Turn`
 
 ```cpp
  void follow_path(Path&path,float look_ahead_distance);
-
 ```
 </TabItem>
 
@@ -1295,7 +1372,6 @@ Drives the robot to follow a pre-computaded path using the ``Drive`` and ``Turn`
 <TabItem value="example">
 
 ```cpp {21}
-
 lightning::Path goal_path ({0,0,24,48},{0,24,48,64},true,3);  //PATH
 
 void autonomous(){
@@ -1317,7 +1393,6 @@ void autonomous(){
     
     my_chassis.follow_path(goal_path,12); 
 }
-
 ```
 </TabItem>
 
@@ -1345,7 +1420,6 @@ Drives the robot using a trapezoidal profile.
 
 ```cpp
  void move_with_motion_profile(TrapezoidalProfile& profile); 
-
 ```
 </TabItem>
 
@@ -1358,7 +1432,6 @@ void autonomous(){
     profile.update(48,.01); // 48 inches , .01 sec
     my_chassis.move_with_motion_profile(test_profile); 
 }
-
 ```
 </TabItem>
 
@@ -1398,7 +1471,6 @@ The user needs to set how many inches the robot would move.
 
 ```cpp
  void raw_drive_distance(double distance, const int vel_rpm);  
-
 ```
 </TabItem>
 
@@ -1412,7 +1484,6 @@ void autonomous(){
     my_chassis.stop(); //After 1.5 seconds that robot start moving Stops the chassis. 
     my_chassis.raw_drive_distance(-24,300); //Moving the robot 24 inches backwards at 300 RPM. 
 }
-
 ```
 </TabItem>
 
@@ -1445,7 +1516,6 @@ The user needs to set how many distance the robot would move.
 
 ```cpp
  void raw_drive_distance(const okapi::QLength distance, const int vel_rpm); 
-
 ```
 </TabItem>
 
@@ -1462,7 +1532,6 @@ void autonomous(){
     my_chassis.stop(); //After 1.5 seconds that robot start moving Stops the chassis. 
     my_chassis.raw_drive_distance(1_ft,300); //Moving the robot 1 foot forward at 300 RPM. 
 }
-
 ```
 </TabItem>
 
@@ -1498,7 +1567,6 @@ This function controls the robot to move a certain distance using a user-defined
 
 ```cpp
 void drive_distance(PID& drive_control, PID& turn_control, double distance, double target_orientation); 
-
 ```
 </TabItem>
 
@@ -1533,7 +1601,6 @@ void autonomous(){
     //Running 48 inches in a straight line at a 0-degree orientation in backwards.
     my_chassis.drive_distance(drive_controller,turn_controller,-48,0); 
 }
-
 ```
 </TabItem>
 
@@ -1566,7 +1633,6 @@ This function controls the robot to move a certain distance using a user-defined
 ```cpp
 void drive_distance(PID& distance_control, PID& turn_controller, 
 const okapi::QLength distance, const okapi::QAngle  target_orientation);  
-
 ```
 </TabItem>
 
@@ -1601,7 +1667,6 @@ void autonomous(){
     //Running 2 tile in a straight line at a 0-radians orientation in backwards.
     my_chassis.drive_distance(drive_controller,turn_controller,-2_tiles,0_rad); 
 }
-
 ```
 </TabItem>
 
@@ -1632,7 +1697,6 @@ This function controls the robot to move a certain distance using the ``drive_pi
 
 ```cpp
 void drive_distance(const double distance, const double target_orientation);  
-
 ```
 </TabItem>
 
@@ -1650,9 +1714,7 @@ void autonomous(){
     
     //Running 24 inches in a straight line at a 0-degree orientation.  
     my_chassis.drive_distance(24,0); 
-   
 }
-
 ```
 </TabItem>
 
@@ -1681,7 +1743,6 @@ This function controls the robot to move a certain distance using the ``drive_pi
 
 ```cpp
 void drive_distance(const okapi::QLength distance, const okapi::QAngle target_orientation); 
-
 ```
 </TabItem>
 
@@ -1699,9 +1760,7 @@ void autonomous(){
     
     //Running 24 inches in a straight line at a 0-degree orientation.  
     my_chassis.drive_distance(24_in,0_deg); 
-   
 }
-
 ```
 </TabItem>
 
@@ -1735,7 +1794,6 @@ The turning direction is determinated depending of which direction means less tr
 
 ```cpp
  void turn_absolute(PID&turn_control,double target_orientation);
-
 ```
 </TabItem>
 
@@ -1756,9 +1814,7 @@ void autonomous(){
     my_chassis.turn_absolute(turn_controller,180); //turning 180 degrees. 
     my_chassis.turn_absolute(turn_controller,270); //turning 270 degrees. 
     my_chassis.turn_absolute(turn_controller,360); //turning 360 degrees. 
-   
 }
-
 ```
 </TabItem>
 
@@ -1786,7 +1842,6 @@ void autonomous(){
 
 ```cpp
 void turn_absolute(PID& turn_control,okapi::QAngle target_orientation); 
-
 ```
 </TabItem>
 
@@ -1807,9 +1862,7 @@ void autonomous(){
     my_chassis.turn_absolute(turn_controller,180_deg); //turning 180 degrees. 
     my_chassis.turn_absolute(turn_controller,270_deg); //turning 270 degrees. 
     my_chassis.turn_absolute(turn_controller,3.1415_rad); //turning pi radians = turning 180 degrees.  
-   
 }
-
 ```
 </TabItem>
 
