@@ -263,6 +263,22 @@ class TankChassis {
    * motor's gearset
    */
   void move_velocity(const int rpm);
+  
+   /**
+   * @brief Sets the velocity for the motors chassis (LEFTSIDE AND RIGHT SIDE).
+   *
+   * @note This velocity corresponds to different actual speeds depending on the gearset
+   * used for the chassis. This results in a range of +-100 for E_MOTOR_GEARSET_36,
+   * +-200 for E_MOTOR_GEARSET_18, and +-600 for E_MOTOR_GEARSET_6. The velocity
+   * is held with PID to ensure consistent speed, as opposed to setting the
+   * motor's voltage.
+   *
+   * @param left_rpm The left_side motors chassis velocity from +-100, +-200, or +-600 depending on the
+   * motor's gearset
+   * @param right_rpm the right_side motors chassis velocity from +-100, +-200, or +-600 depending on the
+   * motor's gearset
+   */
+  void move_velocity(const int left_rpm, const int right_rpm); 
 
   /**
    * @brief Sets the output voltage for the motors chassis from -12000 to 12000 in millivolts
@@ -274,6 +290,20 @@ class TankChassis {
    *        The new voltage value from -12000 to 12000 millivolts
    */
   void move_voltage(const int voltage_mv);
+  
+    /**
+   * @brief Sets the output voltage for the motors chassis (LEFT SIDE AND RIGHT SIDE) from -12000 to 12000 in millivolts
+   *
+   * This function uses the following values of errno when an error state is
+   * reached:
+   *
+   * @param left_voltage_mv
+   *        The new voltage value from -12000 to 12000 millivolts for the left side
+   * @param right_voltage_mv
+   *        The new voltage value from -12000 to 12000 millivolts for the right side
+   */
+
+  void move_voltage(const int left_voltage_mv, const int right_voltage_mv); 
 
   /**
    * @brief Sets the voltage for the motors chassis from -127 to 127.
@@ -284,6 +314,18 @@ class TankChassis {
    *        The new motors chassis voltage from -127 to 127
    */
   void move(const int voltage);
+
+  /**
+   * @brief Sets the voltage for the motors chassis (LEFT AND RIGHT SIDE) from -127 to 127.
+   *
+   * This is designed to map easily to the input from the controller's analog
+   * stick for simple opcontrol use.
+   * @param left_voltage
+   *        The new left side motors chassis voltage from -127 to 127
+   * @param right_voltage
+   *        The new right side motors chassis voltage from -127 to 127
+   */
+  void move(const int left_voltage, const int right_voltage); 
 
   /**
    *@brief Drives the robot from a starting point to a target point using custom PID controller (Created for the user).
