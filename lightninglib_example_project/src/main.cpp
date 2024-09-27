@@ -46,6 +46,11 @@ void init_track(void*) {
 
     if (my_chassis.get_odometry_configuration() != lightning::NO_ODOM) {
 
+    if (my_chassis.get_odometry_configuration() != lightning::NO_ODOM) {
+
+      snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
+      snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
+      snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
       snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
       snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
       snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
@@ -56,8 +61,17 @@ void init_track(void*) {
       my_chassis.track_pose();
       pros::delay(10);
     }
+      pros::lcd::set_text(2, buffer_x);
+      pros::lcd::set_text(3, buffer_y);
+      pros::lcd::set_text(4, buffer_theta);
+      my_chassis.track_pose();
+      pros::delay(10);
+    }
 
     else {
+      snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
+      pros::lcd::set_text(2, buffer_theta);
+      pros::delay(10);
       snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
       pros::lcd::set_text(2, buffer_theta);
       pros::delay(10);
@@ -233,6 +247,7 @@ void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
 
   while (true) {
+    //Left stick as default
    my_chassis.arcade(master);  //DRIVING ROBOT IN ARCADE MODE 
    
    /**
