@@ -424,6 +424,8 @@ class TankChassis {
    https://la.mathworks.com/help/nav/ug/pure-pursuit-controller.html
    */
   void follow_path(Path& path, float look_ahead_distance);
+  
+  void run_MotionLight_profile(char* motion_light_file); 
 
   /**
    *@brief Drives the robot using a trapezoidal profile

@@ -10,6 +10,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #include <iostream>
 #include <vector>
 
+#include "MotionLightReader.hpp"
 #include "lightninglib/Math.h"
 #include "lightninglib/PurePursuit.hpp"
 #include "lightninglib/TankChassis.h"
@@ -561,6 +562,22 @@ void TankChassis::follow_path(Path& path, float look_ahead_distance) {
 }
 
 // TE FALTA MODIFICAR LA DE ARRIBA
+
+void TankChassis::run_MotionLight_profile(char* motion_light_file){
+  MotionLightReader::Profile profiler; 
+  profiler.ReadMotionLightFile(motion_light_file); 
+
+  for(int i =0; i<profiler.Velocities.size(); i++){
+    //Transforming lineal velocity in m/s to the wheel´s velocity in RPMS
+    float wheels_velocity = (profiler.Velocities[i] * 60) / (M_PI * this->wheels_diameter);
+    /*
+    In order to get the equivalent motor velocity, we need to transform the wheel's velocity to motor velocity.
+    This can be done by multiplying by the gear ratio.
+    */
+    float motors_velocity =wheels_velocity * this->gear_ratio; 
+    this->move_velocity(motors_velocity); 
+  }
+}
 
 void TankChassis::move_with_motion_profile(TrapezoidalProfile& profile) {
   float output_motors = 0;
