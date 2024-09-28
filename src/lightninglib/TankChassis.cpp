@@ -17,6 +17,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #include "lightninglib/util.hpp"
 #include "okapi/api/units/QAngle.hpp"
 #include "okapi/api/units/QLength.hpp"
+#include "pros/device.hpp"
 #include "pros/misc.h"
 #include "pros/motors.h"
 #include "pros/rtos.hpp"
@@ -568,15 +569,18 @@ void TankChassis::run_MotionLight_profile(char* motion_light_file){
   profiler.ReadMotionLightFile(motion_light_file); 
 
   for(int i =0; i<profiler.Velocities.size(); i++){
-    //Transforming lineal velocity in m/s to the wheel´s velocity in RPMS
-    float wheels_velocity = (profiler.Velocities[i] * 60) / (M_PI * this->wheels_diameter);
+    //Transforming lineal velocity in m/s to the wheel´s velocity in RPMS 
+    //We are convertir the wheel diameter from inches to meters OJO .
+    float wheels_velocity = (profiler.Velocities[i] * 60) / (M_PI *this->wheels_diameter* .0254);
     /*
     In order to get the equivalent motor velocity, we need to transform the wheel's velocity to motor velocity.
     This can be done by multiplying by the gear ratio.
     */
     float motors_velocity =wheels_velocity * this->gear_ratio; 
     this->move_velocity(motors_velocity); 
+    pros::delay(profiler.SampleTimeSec*1000); 
   }
+  stop(); 
 }
 
 void TankChassis::move_with_motion_profile(TrapezoidalProfile& profile) {
