@@ -962,7 +962,7 @@ double TankChassis::get_y() const { return position[1]; }
 double TankChassis::get_motor_group_position(pros::MotorGroup& motor_group) {
   std::vector<double> motors_position = motor_group.get_position_all();
 
-  int number_of_motors = motor_group.size() - 1;
+  int number_of_motors = motor_group.size();
   double sum = 0;
 
   for (auto i = 0; i < motor_group.size(); i++) {
