@@ -17,7 +17,6 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #include "lightninglib/util.hpp"
 #include "okapi/api/units/QAngle.hpp"
 #include "okapi/api/units/QLength.hpp"
-#include "pros/device.hpp"
 #include "pros/misc.h"
 #include "pros/motors.h"
 #include "pros/rtos.hpp"
@@ -108,6 +107,7 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
     this->SideWays_center_distance = 0;
     this->SideWays_diameter = 0;
     this->SideWaysTracker_frequency = 0;
+    
     odom.set_physical_distances(this->ForwardTracker_center_distance, this->SideWays_center_distance);
   }
 
@@ -564,23 +564,45 @@ void TankChassis::follow_path(Path& path, float look_ahead_distance) {
 
 // TE FALTA MODIFICAR LA DE ARRIBA
 
-void TankChassis::run_MotionLight_profile(char* motion_light_file){
+void TankChassis::run_MotionLight_profile(const char* motion_light_file,PID& turn_control ,double target_orientation){
   MotionLightReader::Profile profiler; 
   profiler.ReadMotionLightFile(motion_light_file); 
+
+  target_orientation = reduce_angle_0_to_360(target_orientation);
+  turn_control.set_integral_zone(target_orientation * .3);
+  turn_control.initialization();
+  
+  float current_orientation = get_orientation(); 
 
   for(int i =0; i<profiler.Velocities.size(); i++){
     //Transforming lineal velocity in m/s to the wheel´s velocity in RPMS 
     //We are convertir the wheel diameter from inches to meters OJO .
     float wheels_velocity = (profiler.Velocities[i] * 60) / (M_PI *this->wheels_diameter* .0254);
-    /*
-    In order to get the equivalent motor velocity, we need to transform the wheel's velocity to motor velocity.
-    This can be done by multiplying by the gear ratio.
-    */
+     
+    //In order to get the equivalent motor velocity, we need to transform the wheel's velocity to motor velocity.
+    //This can be done by multiplying by the gear ratio.
+    
     float motors_velocity =wheels_velocity * this->gear_ratio; 
-    this->move_velocity(motors_velocity); 
+    
+    current_orientation = get_orientation(); 
+    turn_control.update(reduce_angle_180_to_180(target_orientation - current_orientation));
+
+    this->move_velocity(motors_velocity+ turn_control.get_output(),motors_velocity - turn_control.get_output()); 
     pros::delay(profiler.SampleTimeSec*1000); 
   }
-  stop(); 
+  stop();  
+}
+
+void TankChassis::run_MotionLight_profile(const char* motion_light_file,PID& turn_control, const okapi::QAngle target_orientation){
+  run_MotionLight_profile(motion_light_file,turn_control,target_orientation.convert(okapi::degree)); 
+}
+
+void TankChassis::run_MotionLight_profile(const char* motion_light_file, double target_orientation){
+  run_MotionLight_profile(motion_light_file,this->turn_pid,target_orientation); 
+}
+
+void TankChassis::run_MotionLight_profile(const char* motion_light_file, const okapi::QAngle target_orientation){
+  run_MotionLight_profile(motion_light_file,target_orientation.convert(okapi::degree)); 
 }
 
 void TankChassis::move_with_motion_profile(TrapezoidalProfile& profile) {
@@ -960,22 +982,15 @@ double TankChassis::get_x() const { return position[0]; }
 double TankChassis::get_y() const { return position[1]; }
 
 double TankChassis::get_motor_group_position(pros::MotorGroup& motor_group) {
-  std::vector<double> motors_position = motor_group.get_position_all();
+  const std::vector<double>& motors_position = motor_group.get_position_all();
 
   int number_of_motors = motor_group.size();
   double sum = 0;
 
   for (auto i = 0; i < motor_group.size(); i++) {
-    if (std::isnan(motors_position[i]) || std::isinf(motors_position[i])) {
-      sum += 0;
-      number_of_motors -= 1;
-    }
-
-    else {
-      sum += motors_position[i];
-    }
-  }
-
+    sum += motors_position[i];
+  } 
+  
   return sum / number_of_motors;
 }
 

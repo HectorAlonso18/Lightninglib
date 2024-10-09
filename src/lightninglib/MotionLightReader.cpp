@@ -8,7 +8,7 @@
 namespace lightning {
 namespace MotionLightReader {
 
-void Profile::ReadMotionLightFile(const char* motion_file_name) {
+void Profile::ReadMotionLightFile(const char*  motion_file_name) {
   std::ifstream motion_file(motion_file_name);
   if (!motion_file.is_open()) {
     std::cerr << "Error opening the file" << "\n";
