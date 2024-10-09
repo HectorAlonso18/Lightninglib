@@ -194,8 +194,8 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
 }
 
 void TankChassis::track_pose() {
-  const float cos_theta = cos(to_rad(this->odometry_rotation_deg));
-  const float sin_theta = sin(to_rad(this->odometry_rotation_deg));
+  float cos_theta = cos(to_rad(this->odometry_rotation_deg));
+  float sin_theta = sin(to_rad(this->odometry_rotation_deg));
 
   while (1) {
     odom.update_position(get_ForwardTracker_position(), get_SideWays_position(), get_orientation());
@@ -211,7 +211,7 @@ void TankChassis::track_pose() {
     else {
       this->position = {odom.x_position, odom.y_position};
       this->orientation = odom.orientation_degrees;
-      this->pose = {odom.x_position, odom.y_position, odom.orientation_degrees};
+      this->pose = {position[0], position[1], odom.orientation_degrees};
     }
 
     pros::delay(lightning::util::DELAY_TIME);

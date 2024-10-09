@@ -32,9 +32,9 @@ NOTE: if your odometry configuration is "NO_ODOM" you can erase the function.
 */
 void init_track(void*) {
  while (1) {
-    char buffer_x[32];
-    char buffer_y[32];
-    char buffer_theta[32];
+    static char buffer_x[32];
+    static char buffer_y[32];
+    static char buffer_theta[32];
 
     if (my_chassis.get_odometry_configuration() != lightning::NO_ODOM) {
 
@@ -145,7 +145,7 @@ void autonomous() {
  */
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
-
+  std::cout<<lightning::util::SD_CARD_ACTIVE; 
   while (true) {
    my_chassis.arcade(master,lightning::E_TANK_OP_ARCADE_RIGHT);  //DRIVING ROBOT IN ARCADE MODE 
 
