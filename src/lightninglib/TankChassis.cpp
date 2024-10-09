@@ -107,7 +107,7 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
     this->SideWays_center_distance = 0;
     this->SideWays_diameter = 0;
     this->SideWaysTracker_frequency = 0;
-    
+
     odom.set_physical_distances(this->ForwardTracker_center_distance, this->SideWays_center_distance);
   }
 
@@ -759,6 +759,16 @@ void TankChassis::set_orientation(okapi::QAngle current_orientation) {
   this->orientation = current_orientation.convert(okapi::degree);
 }
 
+void TankChassis::set_voltage_limit(const std::int32_t left_side_voltage_limit, const std::int32_t right_side_voltage_limit) {
+  this->left_side.set_voltage_limit_all(left_side_voltage_limit); 
+  this->right_side.set_voltage_limit_all(right_side_voltage_limit); 
+}
+
+void TankChassis::set_current_limit(const std::int32_t left_side_current_limit, const std::int32_t right_side_current_limit) {
+  this->left_side.set_current_limit(left_side_current_limit); 
+  this->right_side.set_current_limit(right_side_current_limit); 
+}
+
 void TankChassis::set_brake(const pros::motor_brake_mode_e_t mode) {
   this->actual_brake = mode;
   left_side.set_brake_mode_all(mode);
@@ -921,25 +931,25 @@ void TankChassis::stop() {
   this->right_side.brake();
 }
 
-lightning::tank_odom_e_t TankChassis::get_odometry_configuration(){
+lightning::tank_odom_e_t TankChassis::get_odometry_configuration() const {
   return this->odom_configuration; 
 }
 
-double TankChassis::get_odometry_rotation(){
+double TankChassis::get_odometry_rotation() const {
   return this->odometry_rotation_deg; 
 } 
 
-std::vector<double> TankChassis::get_pose() {
+std::vector<double> TankChassis::get_pose() const {
   return this->pose;
   // return {{fixed_abs_global_x, fixed_abs_global_y, orientation}};
 }
 
-std::vector<double> TankChassis::get_position() {
+std::vector<double> TankChassis::get_position() const {
   return this->position;
   // return {{fixed_abs_global_x, fixed_abs_global_y}};
 }
 
-double TankChassis::get_ForwardTracker_position() {
+double TankChassis::get_ForwardTracker_position(){
   if (this->odom_configuration == NO_ODOM) {
     this->ForwardTracker_position_inches = 0;
   }
@@ -971,7 +981,7 @@ double TankChassis::get_SideWays_position() {
   return this->SideWaysTracker_position_inches;
 }
 
-int TankChassis::get_current_index() {
+int TankChassis::get_current_index() const {
   return this->current_index;
 }
 
@@ -994,15 +1004,230 @@ double TankChassis::get_motor_group_position(pros::MotorGroup& motor_group) {
   return sum / number_of_motors;
 }
 
-double TankChassis::get_average_motors_position_deg() {
+double TankChassis::get_left_side_current_draw(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return left_side.get_current_draw(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < left_side.size(); i++) {
+    sum += left_side.get_current_draw(i);
+  }
+
+  return sum / left_side.size();
+}
+
+double TankChassis::get_right_side_current_draw(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return right_side.get_current_draw(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < right_side.size(); i++) {
+    sum += right_side.get_current_draw(i);
+  }
+
+  return sum / right_side.size();
+}
+
+double TankChassis::get_left_side_efficiency(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return left_side.get_efficiency(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < left_side.size(); i++) {
+    sum += left_side.get_efficiency(i);
+  }
+
+  return sum / left_side.size();
+}
+
+double TankChassis::get_right_side_efficiency(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return right_side.get_efficiency(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < right_side.size(); i++) {
+    sum += right_side.get_efficiency(i);
+  }
+
+  return sum / right_side.size();
+}
+
+double TankChassis::get_left_side_power(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return left_side.get_power(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < left_side.size(); i++) {
+    sum += left_side.get_power(i);
+  }
+
+  return sum / left_side.size();
+}
+
+double TankChassis::get_right_side_power(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return right_side.get_power(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < right_side.size(); i++) {
+    sum += right_side.get_power(i);
+  }
+
+  return sum / right_side.size();
+}
+
+double TankChassis::get_left_side_temperature(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return left_side.get_temperature(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < left_side.size(); i++) {
+    sum += left_side.get_temperature(i);
+  }
+
+  return sum / left_side.size();
+}
+
+double TankChassis::get_right_side_temperature(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return right_side.get_temperature(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < right_side.size(); i++) {
+    sum += right_side.get_temperature(i);
+  }
+
+  return sum / right_side.size();
+}
+
+double TankChassis::get_left_side_torque(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return left_side.get_torque(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < left_side.size(); i++) {
+    sum += left_side.get_torque(i);
+  }
+
+  return sum / left_side.size();
+}
+
+double TankChassis::get_right_side_torque(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return right_side.get_torque(index);
+  }
+
+  double sum = 0;
+  for (auto i = 0; i < right_side.size(); i++) {
+    sum += right_side.get_torque(i);
+  }
+
+  return sum / right_side.size();
+}
+
+std::int32_t TankChassis::get_left_side_voltage(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return left_side.get_voltage(index);
+  }
+
+  std::int32_t sum = 0;
+  for (auto i = 0; i < left_side.size(); i++) {
+    sum += left_side.get_voltage(i);
+  }
+
+  return sum / left_side.size();
+}
+
+std::int32_t TankChassis::get_right_side_voltage(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return right_side.get_voltage(index);
+  }
+
+  std::int32_t sum = 0;
+  for (auto i = 0; i < right_side.size(); i++) {
+    sum += right_side.get_voltage(i);
+  }
+
+  return sum / right_side.size();
+}
+
+
+std::int32_t TankChassis::left_side_is_over_current(const bool get_all_motors, const std::uint8_t index) const {
+  if(!get_all_motors){
+    return left_side.is_over_current(index); 
+  }
+
+  
+  for(int i=0; i<left_side.size(); i++){
+    if(left_side.is_over_current(index)){
+      return 1; 
+    }
+  }
+  
+  return 0; 
+}
+
+std::int32_t TankChassis::right_side_is_over_current(const bool get_all_motors, const std::uint8_t index) const{
+  if(!get_all_motors){
+    return right_side.is_over_current(index); 
+  }
+
+  
+  for(int i=0; i<right_side.size(); i++){
+    if(right_side.is_over_current(index)){
+      return 1; 
+    }
+  }
+  
+  return 0; 
+}
+
+std::int32_t TankChassis::left_side_is_over_temp(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return left_side.is_over_temp(index);
+  }
+
+  for (int i = 0; i < left_side.size(); i++) {
+    if (left_side.is_over_temp(index)) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+std::int32_t TankChassis::right_side_is_over_temp(const bool get_all_motors, const std::uint8_t index) const {
+  if (!get_all_motors) {
+    return right_side.is_over_temp(index);
+  }
+
+  for (int i = 0; i < right_side.size(); i++) {
+    if (right_side.is_over_temp(index)) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+double TankChassis::get_average_motors_position_deg(){
   return (get_left_position_deg() + get_right_position_deg()) / 2;
 }
 
-double TankChassis::get_left_position_deg() {
+double TankChassis::get_left_position_deg(){
   return get_motor_group_position(left_side);
 }
 
-double TankChassis::get_right_position_deg() {
+double TankChassis::get_right_position_deg(){
   return get_motor_group_position(right_side);
 }
 
@@ -1010,15 +1235,15 @@ double TankChassis::get_average_motors_position_inches() {
   return (get_left_position_inches() + get_right_position_inches()) / 2;
 }
 
-double TankChassis::get_left_position_inches() {
+double TankChassis::get_left_position_inches()  {
   return ((get_left_position_deg() / 360) * (M_PI * this->wheels_diameter));
 }
 
-double TankChassis::get_right_position_inches() {
+double TankChassis::get_right_position_inches(){
   return ((get_right_position_deg() / 360) * (M_PI * this->wheels_diameter));
 }
 
-double TankChassis::get_actual_rpm() {
+double TankChassis::get_actual_rpm() const {
   std::vector<double> left_velocity = left_side.get_actual_velocity_all();
   std::vector<double> righ_velocity = right_side.get_actual_velocity_all();
 
@@ -1038,15 +1263,15 @@ double TankChassis::get_actual_rpm() {
   return average_velocity / get_gear_ratio();
 }
 
-double TankChassis::get_actual_velocity() {
+double TankChassis::get_actual_velocity() const {
   return (rpm_to_linear(get_actual_rpm(), wheels_diameter)) / 60;
 }
 
-double TankChassis::get_max_rpm() { return max_rpm; }
+double TankChassis::get_max_rpm() const { return max_rpm; }
 
-double TankChassis::get_max_velocity() { return max_vel; }
+double TankChassis::get_max_velocity() const { return max_vel; }
 
-double TankChassis::get_max_accel() { return this->max_accel; }
+double TankChassis::get_max_accel() const  { return this->max_accel; }
 
 float TankChassis::get_wheels_diameter() const { return wheels_diameter; }
 
@@ -1054,8 +1279,12 @@ float TankChassis::get_center_distance() const { return center_distance; }
 
 pros::motor_gearset_e TankChassis::get_gearing() const { return cartridge; }
 
-pros::MotorUnits TankChassis::get_encoders_units() {
+pros::MotorUnits TankChassis::get_encoders_units() const {
   return left_side.get_encoder_units(0);
+}
+
+pros::MotorBrake TankChassis::get_actual_brake() const {
+  return left_side.get_brake_mode(0); 
 }
 
 float TankChassis::get_gear_ratio() const { return gear_ratio; }

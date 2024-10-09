@@ -6,6 +6,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #pragma once
 
+#include <cstdint>
 #include <initializer_list>
 #include <vector>
 
@@ -682,6 +683,21 @@ class TankChassis {
    *@param current_orientation the current orientation in okapi units.
    */
   void set_orientation(okapi::QAngle current_orientation);
+  
+  /**
+   *@brief Sets the voltage limit for a motor in the motor group in millivolts.
+   *@param left_side_voltage_limit left side voltage limit 
+   *@param right_side_voltage_limit right side voltage limit
+   */
+  void set_voltage_limit(const std::int32_t left_side_voltage_limit, const std::int32_t right_side_voltage_limit); 
+  
+  /**
+   *@brief Sets the voltage limit for a motor in the motor group in millivolts.
+   *@param left_side_current_limit left side current limit 
+   *@param right_side_current_limit right side current limit
+   *@note default 2500 ma
+   */
+  void set_current_limit(const std::int32_t left_side_current_limit, const std::int32_t right_side_current_limit); 
 
   /**
    * @brief Sets the chassis motors brake mode.
@@ -799,43 +815,43 @@ class TankChassis {
 
  public:
   
-  lightning::tank_odom_e_t get_odometry_configuration(); 
+  lightning::tank_odom_e_t get_odometry_configuration() const ; 
   
   /**
     *@brief Gets the odometry rotation in degrees.  
     * The odometry rotation is needed for ROTATED configurations like: ADI_TWO_ROTATED_ODOM and ROTATION_TWO_ROTATED_ODOM
    */
-  double get_odometry_rotation(); 
+  double get_odometry_rotation() const ; 
 
   /**
    * @brief Gets the current pose (the position and orientation vector)
    * @return The pose vector
    */
-  std::vector<double> get_pose();
+  std::vector<double> get_pose() const ;
 
   /**
    *@brief get the current index of a path when the robot its following it.
    *@return the path index.
    */
-  int get_current_index();
+  int get_current_index() const ;
 
   /**
    * @brief Gets the current position (x,y)
    * @return The position vector.
    */
-  std::vector<double> get_position();
+  std::vector<double> get_position() const ;
 
   /**
    *@brief Gets the forwardtracker position value.
    *@return the forwardtracker position.
    */
-  double get_ForwardTracker_position();
+  double get_ForwardTracker_position() ;
 
   /**
    *@brief Gets the Sidewaystracker position value.
    *@return the sidewaystracker position.
    */
-  double get_SideWays_position();
+  double get_SideWays_position() ;
 
   /**
    * @brief Gets the current orientation (theta)
@@ -860,9 +876,153 @@ class TankChassis {
    *@brief Gets the average position from a motor group.
    *@return the average motor position.
    */
-  double get_motor_group_position(pros::MotorGroup& motor_group);
+  double get_motor_group_position(pros::MotorGroup& motor_group) ;
 
  public:
+  /**
+   *@brief Gets the current drawn by the left side motors in mA.
+   *@param get_all_motors If you want to get the average current draw, set to true. However,
+   if you want to get the current draw of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the left side.
+   *@return return the current drawn by the left side in mA.
+   */
+  double get_left_side_current_draw(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the current drawn by the right side's motors in mA.
+   *@param get_all_motors If you want to get the average current draw, set to true. However,
+   if you want to get the current draw of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the right side.
+   *@return return the current drawn by the right side in mA.
+   */
+  double get_right_side_current_draw(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the efficiency of left side's motors in percent.
+   *@param get_all_motors If you want to get the average efficiency, set to true. However,
+   if you want to get the efficiency of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the left side.
+   *@return return the efficiency of left side´s motors in percent.
+   */
+  double get_left_side_efficiency(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the efficiency of right side's motors in percent.
+   *@param get_all_motors If you want to get the average efficiency, set to true. However,
+   if you want to get the efficiency of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the right side.
+   *@return return the efficiency of right side´s motors in percent.
+   */
+  double get_right_side_efficiency(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the power of left side's motors in Watts.
+   *@param get_all_motors If you want to get the average power, set to true. However,
+   if you want to get the power of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the left side.
+   *@return return the power of left side´s motors in Watts.
+   */
+  double get_left_side_power(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+ *@brief Gets the power of right side's motors in Watts.
+ *@param get_all_motors If you want to get the average power, set to true. However,
+ if you want to get the power of a specific motor, set to false.
+ *@param index Optional parameter. The zero indexed index of the motor in the right side.
+ *@return return the power of right side´s motors in Watts.
+ */
+  double get_right_side_power(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the temperature of left side's motors in degrees Celsius.
+   *@param get_all_motors If you want to get the average temperature, set to true. However,
+   if you want to get the temperature of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the left side.
+   *@return return the temperature of left side´s motors in degrees Celsius.
+   */
+  double get_left_side_temperature(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+  *@brief Gets the temperature of right side's motors in degrees Celsius.
+  *@param get_all_motors If you want to get the average temperature, set to true. However,
+  if you want to get the temperature of a specific motor, set to false.
+  *@param index Optional parameter. The zero indexed index of the motor in the right side.
+  *@return return the temperature of right side´s motors in degrees Celsius.
+  */
+  double get_right_side_temperature(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+  *@brief Gets the torque of left side's motors in Newton Meters (Nm).
+  *@param get_all_motors If you want to get the average torque, set to true. However,
+  if you want to get the torque of a specific motor, set to false.
+  *@param index Optional parameter. The zero indexed index of the motor in the left side.
+  *@return return the torque of left side´s motors in Newton Meters (Nm).
+  */
+  double get_left_side_torque(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the torque of right side's motors in Newton Meters (Nm).
+   *@param get_all_motors If you want to get the average torque, set to true. However,
+   if you want to get the torque of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the right side.
+   *@return return the torque of right side´s motors in Newton Meters (Nm).
+   */
+  double get_right_side_torque(const bool get_all_motors, const std::uint8_t index = 0) const;
+  
+   /**
+   *@brief Gets the voltage of left side's motors in millivolts.
+   *@param get_all_motors If you want to get the average voltage, set to true. However,
+   if you want to get the voltage of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the left side.
+   *@return return the voltage of left side´s motors in millivolts.
+   */
+  std::int32_t get_left_side_voltage(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the voltage of right side's motors in millivolts.
+   *@param get_all_motors If you want to get the average voltage, set to true. However,
+   if you want to get the voltage of a specific motor, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the right side.
+   *@return return the voltage of right side´s motors in millivolts.
+  */
+  std::int32_t get_right_side_voltage(const bool get_all_motors, const std::uint8_t index = 0) const;
+  
+  /**
+   *@brief Checks if left side is drawing over its current limit.
+   *@param get_all_motors Set to true if you want to check if the entire left side is over current. However,
+   if you want to check if a specific motor is over current, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the left side.
+   *@return 1 if the motor's current limit is being exceeded and 0 if the current limit is not exceeded
+  */
+  std::int32_t left_side_is_over_current(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Checks if right side is drawing over its current limit.
+   *@param get_all_motors Set to true if you want to check if the entire right side is over current. However,
+   if you want to check if a specific motor is over current, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the right side.
+   *@return 1 if the motor's current limit is being exceeded and 0 if the current limit is not exceeded
+  */
+  std::int32_t right_side_is_over_current(const bool get_all_motors, const std::uint8_t index = 0) const;
+  
+  /**
+   *@brief Gets the temperature limit flag for the left side.
+   *@param get_all_motors Set to true if you want to check if the entire left side is over temperature. However,
+   if you want to check if a specific motor is over temperature, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the left side.
+   *@return 1 if the temperature limit is exceeded and 0 if the temperature is below the limit
+  */
+  std::int32_t left_side_is_over_temp(const bool get_all_motors, const std::uint8_t index = 0) const;
+
+  /**
+   *@brief Gets the temperature limit flag for the right side.
+   *@param get_all_motors Set to true if you want to check if the entire right side is over temperature. However,
+   if you want to check if a specific motor is over temperature, set to false.
+   *@param index Optional parameter. The zero indexed index of the motor in the right side.
+   *@return 1 if the temperature limit is exceeded and 0 if the temperature is below the limit
+  */
+  std::int32_t right_side_is_over_temp(const bool get_all_motors, const std::uint8_t index = 0) const;
+
   /**
    *@brief Gets the drive-train average mposition in degrees.
    *@return return the average motor position in degrees.
@@ -885,7 +1045,7 @@ class TankChassis {
    *@brief Gets the drive train average position in inches.
    *@return return the average motor position in inches.
    */
-  double get_average_motors_position_inches();
+  double get_average_motors_position_inches() ;
 
   /**
    *@brief Gets the left side  of the drive train average position in inches.
@@ -908,31 +1068,31 @@ class TankChassis {
    *
    * @note This velocity is the average of the base motors' output.
    */
-  double get_actual_rpm();
+  double get_actual_rpm() const ;
 
   /**
    * @brief Gets the current chassis lineal velocity
    * @return The maximum Drive train lineal velocity.
    */
-  double get_actual_velocity();
+  double get_actual_velocity() const ;
 
   /**
    * @brief Gets maximum robot RPM.
    * @return The maximum Drive train RPM.
    */
-  double get_max_rpm();
+  double get_max_rpm() const ;
 
   /**
    * @brief Gets the maximum robot lineal velocity.
    * @return The maximum robot lineal velocity.
    */
-  double get_max_velocity();
+  double get_max_velocity() const ;
 
   /**
    * @brief Gets the maximum robot lineal acceleration.
    * @return The maximum robot lineal acceleration.
    */
-  double get_max_accel();
+  double get_max_accel() const ;
 
   /**
    * @brief Gets the robot wheels diameter.
@@ -960,13 +1120,13 @@ class TankChassis {
    * @brief Gets the units for recording position by the chassis motors
    * @return Motors encoder units
    */
-  pros::MotorUnits get_encoders_units();
+  pros::MotorUnits get_encoders_units() const ;
 
   /**
    * @brief Gets the current brake mode
    * @return Motors brake
    */
-  pros::motor_brake_mode_e_t get_actual_brake();
+  pros::MotorBrake get_actual_brake() const ;
 
   /**
    * @addtogroup Gets the chassis gear ratio
