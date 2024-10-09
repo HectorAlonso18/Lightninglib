@@ -425,7 +425,12 @@ class TankChassis {
    */
   void follow_path(Path& path, float look_ahead_distance);
   
-  void run_MotionLight_profile(char* motion_light_file); 
+  void run_MotionLight_profile(const char* motion_light_file, PID& turn_control ,double target_orientation); 
+  
+  void run_MotionLight_profile(const char* motion_light_file,PID& turn_control, const okapi::QAngle target_orientation); 
+
+  void run_MotionLight_profile(const char* motion_light_file, double target_orientation); 
+  void run_MotionLight_profile(const char* motion_light_file, const okapi::QAngle target_orientation); 
 
   /**
    *@brief Drives the robot using a trapezoidal profile
