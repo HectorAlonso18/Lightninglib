@@ -1,42 +1,29 @@
 #include "main.h"
-#include "liblvgl/llemu.hpp"
-#include "lightninglib/TankChassis.h"
-#include "lightninglib/TankChassis.hpp"
-#include "pros/motors.h"
 
+
+//Chassis declaration
 //Chassis declaration, for Odometry with a one tracking wheel using ADI, ENCODER 
 lightning::TankChassis my_chassis( 
  //Odometry configuration
-lightning::tank_odom_e_t::ADI_ONE_ODOM,
+lightning::tank_odom_e_t::NO_ODOM,
 //Declaration of drivetrain motors
-{-11,-12,-13,-14}, //Left side ports (using a negative number will reverse it!)
-{20,19,18,17},    //Right side ports (using a negative number will reverse it!)
-5,   //IMU port 
+{20}, //Left side ports (using a negative number will reverse it!)
+{-10},    //Right side ports (using a negative number will reverse it!)
+6,   //IMU port 
 pros::E_MOTOR_GEAR_600, //Which motor cartride are you using, blue,red,green? 
 3.25, //Wheel Diameter in inches
-1.3333, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
-{-1,-2}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
-2.507, //Forward tracking wheel  diameter in inches
-1.783, //Distance that exist between the forward tracker and the robot rotation center in inches.
+1, //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
+{-1,-1}, //Forward ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
+0, //Forward tracking wheel  diameter in inches
+0, //Distance that exist between the forward tracker and the robot rotation center in inches.
 {-1,-1},//SIDEWAYS ADI ENCODER PORTS (using a negative number will reverse it!), setting -1,-1 would cancel the tracker!
 0, //Sideways tracking wheel  diameter in inches
 0); //Forward tracking wheel  diameter in inches
 
-/*DECLARATION OF A CHASSIS WITHOUT ODOMETRY
-lightning::TankChassis chassis_without_odometry(
-  lightning::tank_odom_e_t::NO_ODOM, //No odometry 
-  {1,2,3}, //Left side ports (using a negative number will reverse it!)
-  {4,5,6}, //Right side ports (using a negative number will reverse it!)
-  7, //IMU port 
-  pros::E_MOTOR_GEAR_BLUE, //Which motor cartride are you using, blue,red,green? 
-  3.25, //Wheel Diameter in inches
-  1.3333 //what is the gear ratio (Is the result of Driven/Driving, Drive:Driving)
-); */
-
-
 /*Odometry function 
-This function is dedicated to make the math for your odometry system and print the odometry information. 
-WARNING: If you have and want odometry, don´t delete the function. 
+This function is dedicated to make the math for your odometry system. 
+WARNING: If you have and want odometry, dont delete the function. 
+NOTE: if your odometry configuration is "NO_ODOM" you can erase the function. 
 */
 void init_track(void*) {
  while (1) {
@@ -46,21 +33,10 @@ void init_track(void*) {
 
     if (my_chassis.get_odometry_configuration() != lightning::NO_ODOM) {
 
-    if (my_chassis.get_odometry_configuration() != lightning::NO_ODOM) {
-
-      snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
-      snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
-      snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
       snprintf(buffer_x, 32, "X: %.4f", my_chassis.get_x());
       snprintf(buffer_y, 32, "Y: %.4f", my_chassis.get_y());
       snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
 
-      pros::lcd::set_text(2, buffer_x);
-      pros::lcd::set_text(3, buffer_y);
-      pros::lcd::set_text(4, buffer_theta);
-      my_chassis.track_pose();
-      pros::delay(10);
-    }
       pros::lcd::set_text(2, buffer_x);
       pros::lcd::set_text(3, buffer_y);
       pros::lcd::set_text(4, buffer_theta);
@@ -71,9 +47,7 @@ void init_track(void*) {
     else {
       snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
       pros::lcd::set_text(2, buffer_theta);
-      pros::delay(10);
-      snprintf(buffer_theta, 32, "Theta: %.4f", my_chassis.get_orientation());
-      pros::lcd::set_text(2, buffer_theta);
+
       pros::delay(10);
     }
   }
@@ -103,7 +77,9 @@ void initialize() {
     It s recommended to use a 3000 milliseconds delay. 
     */
     my_chassis.reset_IMU(); 
-    pros::delay(3000); 
+    pros::delay(3000);
+    my_chassis.tare_motors_position(); 
+    pros::delay(100); 
     //Setting the initial orientation
     my_chassis.set_orientation(0_deg);
   }
@@ -135,99 +111,43 @@ void autonomous() {
   AUTON_TASKS.start_task("TRACK_AND_PRINT", init_track);
 
 
-  //CONFIGURING PID CONSTANTS
-
-  /*
-  In the next lines we would configuring our PID controllers: 
-  SWING_PID -> Is the PID controller that acts when we want to make swing turns. swing turns are turn but just using one side of our chassis
-
-  TURN_PID -> Is the PID controller that acts when we want to make turns. 
-
-  DRIVE_PID -> Is the PID controller that acts when we want to travel a distance. 
-
-  NOTE we could create our own pid object and use it in the same functions
-  */
   float limit_integral = 150 / .00350;
   my_chassis.set_swing_constants(1.75, 0.00350, 3.15, 500, 1, limit_integral,
                                  175);
   my_chassis.set_swing_exit_conditions(1, 500, 2500);
 
-  my_chassis.set_drive_constants(9, 0, 1.75, 250, 1, 0, 100);
-  my_chassis.set_drive_exit_conditions(.15, 250, 500);
+  my_chassis.set_drive_constants(3, 0, 0, 500, 1, 0, 0);
+  my_chassis.set_drive_exit_conditions(.15, 500, 2500);
 
-  my_chassis.set_turn_constants(1.75, 0, 0, 300, 1, 0, 0);
+  my_chassis.set_turn_constants(30, 0, 0, 450, 1, limit_integral, 0);
   my_chassis.set_turn_exit_conditions(1, 100, 5000);
-
-  //creating our own pid objects 
-  lightning::PID turn_controller (1.75, 0, 0,10,1); 
-  //configuring our pid object. 
-  turn_controller.set_integral_power_limit(limit_integral); 
-  turn_controller.set_derivative_tolerance(0); 
-  turn_controller.set_error_tolerance(1); 
-  turn_controller.set_jump_time(100); 
-  turn_controller.set_max(300);
-
-  //using the pid object. 
-  my_chassis.turn_absolute(turn_controller,180_deg); 
   
+  //For example if you have a motion.light file in your computer, copy that file in the sd card, then plug the sd card into the brain
+  //Then you will able to run the motion profile 
+  //https://hectoralonso18.github.io/MotionLight/docs/Tutorials/How_to_use_motion_light
+  my_chassis.run_MotionLight_profile("motion.light.txt",0_deg); 
 
+  //NEW FUNCTIONS: 
+  my_chassis.left_side_is_over_current(true); 
+  my_chassis.right_side_is_over_current(true); 
+  my_chassis.left_side_is_over_temp(true); 
+  my_chassis.right_side_is_over_temp(true);
 
-  //MAKING SOME TURNS 
-  my_chassis.turn_absolute(90_deg); //WITH OKAPI UNITS 
-  my_chassis.turn_absolute(90);  //NORMAL UNITS (DEGREES)
+  my_chassis.get_left_side_temperature(true); 
+  my_chassis.get_left_side_current_draw(true);
+  my_chassis.get_left_side_efficiency(true);
+  my_chassis.get_left_side_power(true); 
+  my_chassis.get_left_side_torque(true); 
+  my_chassis.get_left_side_voltage(true); 
 
-  //MAKING SWING TURNS
-  //In the next function we are indicating that we want to block the LEFTSIDE of our chassis. 
-  my_chassis.swing_turn_absolute(lightning::swing_direction_e_t::LEFT_SWING,180_deg); 
-  my_chassis.swing_turn_absolute(lightning::swing_direction_e_t::RIGHT_SWING,90); 
+  //THe same for the right side.. 
+
+  ///
+
+  my_chassis.turn_to_point({24_in,24_in}); 
   
-  //Driving in a straigh line (FORWARD)
-  //USES THE DRIVE PID to travel some amout of distane in this case: 24 inches 
-  //USES THE TURN PID to block the orientation of the bot
-  my_chassis.drive_distance(24_in,0_deg);  //okapi units
-  my_chassis.drive_distance(1_ft, 0_deg); 
-
-  my_chassis.drive_distance(24,0); //Using default units (inches,degrees); 
-
-  //DRIVING (BACKWARDS)
-  //WE JUST NEED TO SET THE DISTANCE TO NEGATIVE 
-  my_chassis.drive_distance(-24_in,0_deg); 
-
-  /*
-  DRIVING FORWARD OR BACKWARDS WITHOUT USING CUSTOM PID CONTROLLER, JUST USING THE INTEGRATED MOTORS PID
-  */
-  my_chassis.raw_drive_distance(24,300); 
-  my_chassis.raw_drive_distance(24_in,200); 
-  
-  
-  
- /*
- SETTING THE BRAKE MODE FOR OUR CHASSIS
- */
-  my_chassis.set_brake(pros::E_MOTOR_BRAKE_COAST); 
-  my_chassis.set_brake(pros::E_MOTOR_BRAKE_HOLD);
-  my_chassis.set_brake(pros::E_MOTOR_BRAKE_BRAKE); 
-
-  //STOPPING THE ROBOT
-  my_chassis.stop(); 
-  
-
-  //FOLLOW A PATH USING PURE PURSUIT!
-  //Its recommended that the first point of the path be equal that your robot position. 
-  lightning::Path regresar(
-	{my_chassis.get_x(), 0}, //The x coordinates (inches)
-	 {my_chassis.get_y(), 0}, //The y coordinates (inches)
-    false,  //going backwards ? 
-	1 //the space that would exist between each point for the injection method.
-	);
-
-  regresar.upgrade(); //UPGRADING THE PATH
-  regresar.set_max_lineal_velocity(2); //Setting the maximun lineal velocity for this path (inches/sec)
-  regresar.make_calcs(1.75);  //k constant
-  pros::delay(20); //give some time to make the calculations 
-
-  my_chassis.follow_path(regresar, 12); //the robot would start following the path using pure pursuit. 
-  
+  //Implementation of the boomberang controller
+  my_chassis.drive_to_pose({24_in,24_in},90_deg,.05_in); 
 }
 
 /**
@@ -245,14 +165,10 @@ void autonomous() {
  */
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
-
+  std::cout<<lightning::util::SD_CARD_ACTIVE; 
   while (true) {
-    //Left stick as default
-   my_chassis.arcade(master);  //DRIVING ROBOT IN ARCADE MODE 
-
-   /**
-   If you want tank configuration use: my_chassis.tank(master); 
-   */
+   my_chassis.arcade(master,lightning::E_TANK_OP_ARCADE_RIGHT);  //DRIVING ROBOT IN ARCADE MODE 
+  
    pros::delay(lightning::util::DELAY_TIME); 
   }
 }
