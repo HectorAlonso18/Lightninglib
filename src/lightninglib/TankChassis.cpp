@@ -194,16 +194,27 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
 }
 
 void TankChassis::track_pose() {
-  float cos_theta = cos(to_rad(this->odometry_rotation_deg));
-  float sin_theta = sin(to_rad(this->odometry_rotation_deg));
+  
+  double fixed_x = odom.x_position; 
+  double fixed_y = odom.y_position ; 
+  double fixed_prev_x= odom.prev_x_position; 
+  double fixed_prev_y= odom.prev_y_position; 
 
   while (1) {
     odom.update_position(get_ForwardTracker_position(), get_SideWays_position(), get_orientation());
 
     // Rotated odometry is easy, we just need to apply a 2d rotation matrix to our odometry coordinates, rotating -45 degrees.
     if (this->odom_configuration == ADI_TWO_ROTATED_ODOM || this->odom_configuration == ROTATION_TWO_ROTATED_ODOM) {
-      this->position[0] = odom.x_position * cos_theta - odom.y_position * sin_theta;
-      this->position[1] = odom.x_position * sin_theta + odom.y_position * cos_theta;
+      fixed_x = (cos(to_rad(this->odometry_rotation_deg)) * odom.x_position)  +  (-sin(to_rad(odometry_rotation_deg)) *odom.y_position);
+      fixed_y = (sin(to_rad(this->odometry_rotation_deg)) * odom.x_position)  +  (cos(to_rad(odometry_rotation_deg)) * odom.y_position);
+      
+      fixed_x = std::isnan(fixed_x) ? fixed_prev_x : fixed_x; 
+      fixed_y = std::isnan(fixed_y) ? fixed_prev_y: fixed_y;  
+
+      fixed_prev_x = fixed_x; 
+      fixed_prev_y = fixed_y; 
+      
+      this->position = {fixed_x,fixed_y}; 
       this->orientation = odom.orientation_degrees;
       this->pose = {position[0], position[1], orientation};
     }
@@ -224,7 +235,7 @@ void TankChassis::set_coordinates(const okapi::QLength x, const okapi::QLength y
 }
 
 void TankChassis::set_odometry_rotation(const double angle_of_rotation_deg){
-  this->odometry_rotation_deg = angle_of_rotation_deg; 
+  this->odometry_rotation_deg = reduce_angle_0_to_360(angle_of_rotation_deg); 
 } 
 
 void TankChassis::set_drive_constants(float kp, float ki, float kd, float max, float scale, float integral_power_limit, float derivative_tolerance) {

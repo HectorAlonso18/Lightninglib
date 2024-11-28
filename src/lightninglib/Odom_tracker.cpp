@@ -5,6 +5,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
 #include "lightninglib/Odom_tracker.hpp"
+#include <cmath>
 
 #include "lightninglib/Math.h"
 
@@ -26,6 +27,9 @@ void OdomTracker::set_position(float x_position, float y_position,
   this->x_position = x_position;
   this->y_position = y_position;
   this->orientation_degrees = orientation_degrees;
+
+  this->prev_x_position = x_position; 
+  this->prev_y_position = y_position; 
 
   this->forward.position = forward_position;
   this->sideways.position = sideways_position;
@@ -87,6 +91,13 @@ void OdomTracker::update_position(float ForwardTracker_position,
 
   this->x_position += X_position_delta;
   this->y_position += Y_position_delta;
+  
+  //In case that the new coordinate is not a number, the coordiantes will take the previous values
+  x_position = std::isnan(this->x_position) ? prev_x_position: x_position; 
+  y_position = std::isnan(this->y_position) ? prev_y_position: y_position;  
+
+  this->prev_x_position = x_position; 
+  this->prev_y_position = y_position; 
 }
 
 }  // namespace lightning
