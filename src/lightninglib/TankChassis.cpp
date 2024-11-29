@@ -33,6 +33,7 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
       abs_global_x(0),
       abs_global_y(0),
       orientation(0),
+      prev_orientation(0),
       max_accel(0),
       max_rpm(0),
       max_vel(0),
@@ -80,7 +81,13 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
 TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<std::int8_t>& left_side_ports, const std::initializer_list<std::int8_t>& right_side_ports,
                          const char gyro_port, const pros::motor_gearset_e_t gearset, float wheel_diameter, float gear_ratio, const std::vector<int>& Encoder_Forward_Tracker_ports, const float Forward_Tracker_diameter, const float Forward_Tracker_distance_to_center,
                          const std::vector<int>& Encoder_SideWays_Tracker_ports, const float SideWays_Tracker_wheel_diameter, const float SideWays_Tracker_distance_to_center)
-    : left_side(left_side_ports), right_side(right_side_ports), gyro(gyro_port), Encoder_Forward_tracker(abs(Encoder_Forward_Tracker_ports[0]), abs(Encoder_Forward_Tracker_ports[1]), util::is_reversed(Encoder_Forward_Tracker_ports[0])), Encoder_SideWays_tracker(abs(Encoder_SideWays_Tracker_ports[0]), abs(Encoder_SideWays_Tracker_ports[1]), util::is_reversed(Encoder_SideWays_Tracker_ports[0])), Rotation_Forward_tracker(-1), Rotation_SideWays_tracker(-1), abs_global_x(0), abs_global_y(0), orientation(0), max_accel(0), max_rpm(0), max_vel(0), odom_configuration(odom_config), drive_pid(1, 1, 1, lightning::util::DELAY_TIME, 1), turn_pid(drive_pid), swing_pid(drive_pid) {
+    : left_side(left_side_ports), right_side(right_side_ports), gyro(gyro_port), Encoder_Forward_tracker(abs(Encoder_Forward_Tracker_ports[0]), abs(Encoder_Forward_Tracker_ports[1]), util::is_reversed(Encoder_Forward_Tracker_ports[0])), Encoder_SideWays_tracker(abs(Encoder_SideWays_Tracker_ports[0]), abs(Encoder_SideWays_Tracker_ports[1]), util::is_reversed(Encoder_SideWays_Tracker_ports[0])), 
+    Rotation_Forward_tracker(-1), Rotation_SideWays_tracker(-1), 
+    abs_global_x(0), abs_global_y(0), orientation(0), prev_orientation(0), 
+    max_accel(0), max_rpm(0), max_vel(0), odom_configuration(odom_config), 
+    drive_pid(1, 1, 1, lightning::util::DELAY_TIME, 1),
+     turn_pid(drive_pid), swing_pid(drive_pid) {
+  
   this->wheels_diameter = wheel_diameter;
   this->cartridge = gearset;
   this->gear_ratio = gear_ratio;
@@ -142,6 +149,7 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
       abs_global_x(0),
       abs_global_y(0),
       orientation(0),
+      prev_orientation(0),
       max_accel(0),
       max_rpm(0),
       max_vel(0),
@@ -225,12 +233,14 @@ void TankChassis::track_pose() {
       
       this->position = {fixed_x,fixed_y}; 
       this->orientation = odom.orientation_degrees;
+      this->prev_orientation = orientation; 
       this->pose = {position[0], position[1], orientation};
     }
 
     else {
       this->position = {odom.x_position, odom.y_position};
       this->orientation = odom.orientation_degrees;
+      this->prev_orientation = orientation; 
       this->pose = {position[0], position[1], odom.orientation_degrees};
     }
 
@@ -777,6 +787,7 @@ void TankChassis::swing_turn_relative(lightning::swing_direction_e_t swing_direc
 void TankChassis::set_orientation(okapi::QAngle current_orientation) {
   gyro.set_heading(current_orientation.convert(okapi::degree));
   this->orientation = current_orientation.convert(okapi::degree);
+  this->prev_orientation = orientation; 
 }
 
 void TankChassis::set_voltage_limit(const std::int32_t left_side_voltage_limit, const std::int32_t right_side_voltage_limit) {
@@ -970,19 +981,20 @@ std::vector<double> TankChassis::get_position() const {
 }
 
 double TankChassis::get_ForwardTracker_position(){
+  
   if (this->odom_configuration == NO_ODOM) {
     this->ForwardTracker_position_inches = 0;
   }
 
   if (this->odom_configuration == ADI_ONE_ODOM || this->odom_configuration == ADI_TWO_ODOM || this->odom_configuration == ADI_TWO_ROTATED_ODOM) {
-    float degrees_to_ticks = ForwardTracker_ticks_per_revolution / 360; 
-    this->ForwardTracker_dead_zone = ((2 * gyro.get_heading() * ForwardTracker_center_distance)/ ForwardTracker_diameter) * degrees_to_ticks;
+    float delta_theta =  get_orientation() - this->prev_orientation; 
+    this->ForwardTracker_dead_zone = (delta_theta * 2 * ForwardTracker_center_distance* ForwardTracker_ticks_per_revolution) / (360 * ForwardTracker_diameter); 
     this->ForwardTracker_position_inches = (Encoder_Forward_tracker.get_value() - ForwardTracker_dead_zone)* this->ForwardTracker_frequency;
   }
 
   if (this->odom_configuration == ROTATION_ONE_ODOM || this->odom_configuration == ROTATION_TWO_ODOM || this->odom_configuration == ROTATION_TWO_ROTATED_ODOM) {
-    float degrees_to_ticks = ForwardTracker_ticks_per_revolution / 360; 
-    this->ForwardTracker_dead_zone = ((2 * gyro.get_heading() * ForwardTracker_center_distance)/ ForwardTracker_diameter) * degrees_to_ticks;
+    float delta_theta =  get_orientation() - this->prev_orientation; 
+    this->ForwardTracker_dead_zone = (delta_theta * 2 * ForwardTracker_center_distance* ForwardTracker_ticks_per_revolution) / (360 * ForwardTracker_diameter);
     this->ForwardTracker_position_inches = (Rotation_Forward_tracker.get_position() - ForwardTracker_dead_zone ) * this->ForwardTracker_frequency;
   }
 
@@ -995,14 +1007,14 @@ double TankChassis::get_SideWays_position() {
   }
 
   if (this->odom_configuration == ADI_TWO_ODOM || this->odom_configuration == ADI_TWO_ROTATED_ODOM) {
-    float degrees_to_ticks = SideWaysTracker_ticks_per_revolution / 360; 
-    this->SideWaysTracker_dead_zone= ((2 * gyro.get_heading() * SideWays_center_distance)/ SideWays_diameter) * degrees_to_ticks;
+    float delta_theta =  get_orientation() - this->prev_orientation; 
+    this->SideWaysTracker_dead_zone=  (delta_theta * 2 * SideWays_center_distance* SideWaysTracker_ticks_per_revolution) / (360 * SideWays_diameter); 
     this->SideWaysTracker_position_inches = (Encoder_SideWays_tracker.get_value() - SideWaysTracker_dead_zone )* this->SideWaysTracker_frequency;
   }
 
   if (this->odom_configuration == ROTATION_TWO_ODOM || this->odom_configuration == ROTATION_TWO_ROTATED_ODOM) {
-    float degrees_to_ticks = SideWaysTracker_ticks_per_revolution / 360; 
-    this->SideWaysTracker_dead_zone= ((2 * gyro.get_heading() * SideWays_center_distance)/ SideWays_diameter) * degrees_to_ticks;
+    float delta_theta =  get_orientation() - this->prev_orientation; 
+    this->SideWaysTracker_dead_zone=  (delta_theta * 2 * SideWays_center_distance* SideWaysTracker_ticks_per_revolution) / (360 * SideWays_diameter); 
     this->SideWaysTracker_position_inches = (Rotation_SideWays_tracker.get_position() - SideWaysTracker_dead_zone)* this->SideWaysTracker_frequency;
   }
 

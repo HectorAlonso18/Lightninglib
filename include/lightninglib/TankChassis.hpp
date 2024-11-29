@@ -76,6 +76,8 @@ class TankChassis {
   std::vector<double> pose;
   std::vector<double> position;
   double orientation;
+  double prev_orientation; 
+
   double abs_global_x;
   double abs_global_y;
 
