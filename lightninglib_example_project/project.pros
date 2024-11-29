@@ -254,7 +254,7 @@
                 "version": "8.3.8"
             },
             "lightninglib": {
-                "location": "C:\\Users\\eltor\\AppData\\Roaming\\PROS\\templates\\lightninglib@1.2.0-beta.1",
+                "location": "C:\\Users\\eltor\\AppData\\Roaming\\PROS\\templates\\lightninglib@1.2.0-beta.2",
                 "metadata": {
                     "origin": "local"
                 },
@@ -262,24 +262,24 @@
                 "py/object": "pros.conductor.templates.local_template.LocalTemplate",
                 "supported_kernels": "^4.1.0",
                 "system_files": [
-                    "include\\lightninglib\\TankChassis.hpp",
-                    "include\\lightninglib\\lightning_api.h",
-                    "include\\lightninglib\\PID.hpp",
-                    "include\\lightninglib\\Math.h",
-                    "include\\lightninglib\\util.hpp",
-                    "include\\lightninglib\\Odom_tracker.hpp",
                     "include\\lightninglib\\MotionLightReader.hpp",
-                    "include\\lightninglib\\TankChassis.h",
-                    "firmware\\lightninglib.a",
-                    "include\\lightninglib\\PurePursuit.hpp",
+                    "include\\lightninglib\\util.hpp",
+                    "include\\lightninglib\\Trapezoidal.hpp",
                     "include\\lightninglib\\FeedForward.hpp",
-                    "include\\lightninglib\\Path.hpp",
+                    "include\\lightninglib\\Odom_tracker.hpp",
+                    "include\\lightninglib\\PurePursuit.hpp",
+                    "include\\lightninglib\\Math.h",
+                    "firmware\\lightninglib.a",
+                    "include\\lightninglib\\TankChassis.h",
                     "include\\lightninglib\\TasksCreator.hpp",
-                    "include\\lightninglib\\Trapezoidal.hpp"
+                    "include\\lightninglib\\lightning_api.h",
+                    "include\\lightninglib\\Path.hpp",
+                    "include\\lightninglib\\PID.hpp",
+                    "include\\lightninglib\\TankChassis.hpp"
                 ],
                 "target": "v5",
                 "user_files": [],
-                "version": "1.2.0-beta.1"
+                "version": "1.2.0-beta.2"
             },
             "okapilib": {
                 "location": "C:\\Users\\eltor\\AppData\\Roaming\\PROS\\templates\\okapilib@5.0.0",

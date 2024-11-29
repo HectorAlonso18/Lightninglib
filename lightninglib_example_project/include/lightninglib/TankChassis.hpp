@@ -49,11 +49,15 @@ class TankChassis {
   float ForwardTracker_diameter;
   float ForwardTracker_frequency;
   float ForwardTracker_position_inches;
+  float ForwardTracker_ticks_per_revolution; 
+  float ForwardTracker_dead_zone; 
 
   float SideWays_center_distance;
   float SideWays_diameter;
   float SideWaysTracker_frequency;
   float SideWaysTracker_position_inches;
+  float SideWaysTracker_ticks_per_revolution; 
+  float SideWaysTracker_dead_zone;  
 
  private:
   float wheels_diameter;
@@ -72,6 +76,8 @@ class TankChassis {
   std::vector<double> pose;
   std::vector<double> position;
   double orientation;
+  double prev_orientation; 
+
   double abs_global_x;
   double abs_global_y;
 
