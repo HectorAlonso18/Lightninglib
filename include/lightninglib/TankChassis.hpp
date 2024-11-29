@@ -49,11 +49,15 @@ class TankChassis {
   float ForwardTracker_diameter;
   float ForwardTracker_frequency;
   float ForwardTracker_position_inches;
+  float ForwardTracker_ticks_per_revolution; 
+  float ForwardTracker_dead_zone; 
 
   float SideWays_center_distance;
   float SideWays_diameter;
   float SideWaysTracker_frequency;
   float SideWaysTracker_position_inches;
+  float SideWaysTracker_ticks_per_revolution; 
+  float SideWaysTracker_dead_zone;  
 
  private:
   float wheels_diameter;

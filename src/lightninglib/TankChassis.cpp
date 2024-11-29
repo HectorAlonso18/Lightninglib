@@ -65,11 +65,14 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   if (this->odom_configuration == NO_ODOM) {
     this->ForwardTracker_center_distance = 0;
     this->ForwardTracker_diameter = 0;
-    this->SideWaysTracker_frequency = 0;
+    this->ForwardTracker_frequency= 0;
+    this->ForwardTracker_ticks_per_revolution=0; 
 
     this->SideWays_center_distance = 0;
     this->SideWays_diameter = 0;
     this->SideWaysTracker_frequency = 0;
+    this->SideWaysTracker_ticks_per_revolution=0; 
+
     odom.set_physical_distances(this->ForwardTracker_center_distance, this->SideWays_center_distance);
   }
 }
@@ -102,7 +105,8 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   if (odom_config == ADI_ONE_ODOM) {
     this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center;
     this->ForwardTracker_diameter = Forward_Tracker_diameter;
-    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / 360;
+    this->ForwardTracker_ticks_per_revolution=360; 
+    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / ForwardTracker_ticks_per_revolution;
 
     this->SideWays_center_distance = 0;
     this->SideWays_diameter = 0;
@@ -114,11 +118,13 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   if (odom_config == ADI_TWO_ODOM || odom_config == ADI_TWO_ROTATED_ODOM) {
     this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center;
     this->ForwardTracker_diameter = Forward_Tracker_diameter;
-    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / 360;
+    this->ForwardTracker_ticks_per_revolution=360; 
+    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / ForwardTracker_ticks_per_revolution;
 
     this->SideWays_center_distance = SideWays_Tracker_distance_to_center;
     this->SideWays_diameter = SideWays_Tracker_wheel_diameter;
-    this->SideWaysTracker_frequency = (M_PI * SideWays_Tracker_wheel_diameter) / 360;
+    this->SideWaysTracker_ticks_per_revolution=360; 
+    this->SideWaysTracker_frequency = (M_PI * SideWays_Tracker_wheel_diameter) / SideWaysTracker_ticks_per_revolution;
 
     odom.set_physical_distances(this->ForwardTracker_center_distance, this->SideWays_center_distance);
   }
@@ -171,7 +177,8 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   if (odom_config == ROTATION_ONE_ODOM) {
     this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center;
     this->ForwardTracker_diameter = Forward_Tracker_diameter;
-    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / 36000;
+    this->ForwardTracker_ticks_per_revolution=36000; 
+    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / ForwardTracker_ticks_per_revolution;
 
     this->SideWays_center_distance = 0;
     this->SideWays_diameter = 0;
@@ -183,11 +190,13 @@ TankChassis::TankChassis(tank_odom_e_t odom_config, const std::initializer_list<
   if (odom_config == ROTATION_TWO_ODOM || odom_config == ROTATION_TWO_ROTATED_ODOM) {
     this->ForwardTracker_center_distance = Forward_Tracker_distance_to_center;
     this->ForwardTracker_diameter = Forward_Tracker_diameter;
-    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / 36000;
+    this->ForwardTracker_ticks_per_revolution=36000; 
+    this->ForwardTracker_frequency = (M_PI * Forward_Tracker_diameter) / ForwardTracker_ticks_per_revolution;
 
     this->SideWays_center_distance = SideWays_Tracker_distance_to_center;
     this->SideWays_diameter = SideWays_Tracker_wheel_diameter;
-    this->SideWaysTracker_frequency = (M_PI * SideWays_Tracker_wheel_diameter) / 36000;
+    this->SideWaysTracker_ticks_per_revolution= 36000; 
+    this->SideWaysTracker_frequency = (M_PI * SideWays_Tracker_wheel_diameter) / SideWaysTracker_ticks_per_revolution;
 
     odom.set_physical_distances(this->ForwardTracker_center_distance, this->SideWays_center_distance);
   }
@@ -966,11 +975,15 @@ double TankChassis::get_ForwardTracker_position(){
   }
 
   if (this->odom_configuration == ADI_ONE_ODOM || this->odom_configuration == ADI_TWO_ODOM || this->odom_configuration == ADI_TWO_ROTATED_ODOM) {
-    this->ForwardTracker_position_inches = Encoder_Forward_tracker.get_value() * this->ForwardTracker_frequency;
+    float degrees_to_ticks = ForwardTracker_ticks_per_revolution / 360; 
+    this->ForwardTracker_dead_zone = ((2 * gyro.get_heading() * ForwardTracker_center_distance)/ ForwardTracker_diameter) * degrees_to_ticks;
+    this->ForwardTracker_position_inches = (Encoder_Forward_tracker.get_value() - ForwardTracker_dead_zone)* this->ForwardTracker_frequency;
   }
 
   if (this->odom_configuration == ROTATION_ONE_ODOM || this->odom_configuration == ROTATION_TWO_ODOM || this->odom_configuration == ROTATION_TWO_ROTATED_ODOM) {
-    this->ForwardTracker_position_inches = Rotation_Forward_tracker.get_position() * this->ForwardTracker_frequency;
+    float degrees_to_ticks = ForwardTracker_ticks_per_revolution / 360; 
+    this->ForwardTracker_dead_zone = ((2 * gyro.get_heading() * ForwardTracker_center_distance)/ ForwardTracker_diameter) * degrees_to_ticks;
+    this->ForwardTracker_position_inches = (Rotation_Forward_tracker.get_position() - ForwardTracker_dead_zone ) * this->ForwardTracker_frequency;
   }
 
   return this->ForwardTracker_position_inches;
@@ -981,12 +994,16 @@ double TankChassis::get_SideWays_position() {
     this->SideWaysTracker_position_inches = 0;
   }
 
-  if (this->odom_configuration == ADI_ONE_ODOM || this->odom_configuration == ADI_TWO_ODOM || this->odom_configuration == ADI_TWO_ROTATED_ODOM) {
-    this->SideWaysTracker_position_inches = Encoder_SideWays_tracker.get_value() * this->SideWaysTracker_frequency;
+  if (this->odom_configuration == ADI_TWO_ODOM || this->odom_configuration == ADI_TWO_ROTATED_ODOM) {
+    float degrees_to_ticks = SideWaysTracker_ticks_per_revolution / 360; 
+    this->SideWaysTracker_dead_zone= ((2 * gyro.get_heading() * SideWays_center_distance)/ SideWays_diameter) * degrees_to_ticks;
+    this->SideWaysTracker_position_inches = (Encoder_SideWays_tracker.get_value() - SideWaysTracker_dead_zone )* this->SideWaysTracker_frequency;
   }
 
-  if (this->odom_configuration == ROTATION_ONE_ODOM || this->odom_configuration == ROTATION_TWO_ODOM || this->odom_configuration == ROTATION_TWO_ROTATED_ODOM) {
-    this->SideWaysTracker_position_inches = Rotation_SideWays_tracker.get_position() * this->SideWaysTracker_frequency;
+  if (this->odom_configuration == ROTATION_TWO_ODOM || this->odom_configuration == ROTATION_TWO_ROTATED_ODOM) {
+    float degrees_to_ticks = SideWaysTracker_ticks_per_revolution / 360; 
+    this->SideWaysTracker_dead_zone= ((2 * gyro.get_heading() * SideWays_center_distance)/ SideWays_diameter) * degrees_to_ticks;
+    this->SideWaysTracker_position_inches = (Rotation_SideWays_tracker.get_position() - SideWaysTracker_dead_zone)* this->SideWaysTracker_frequency;
   }
 
   return this->SideWaysTracker_position_inches;
